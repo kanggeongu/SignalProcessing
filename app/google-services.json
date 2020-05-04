@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "545644391457",
+    "firebase_url": "https://signalprocessing-867b3.firebaseio.com",
+    "project_id": "signalprocessing-867b3",
+    "storage_bucket": "signalprocessing-867b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545644391457:android:f8f58b15118879acab0760",
+        "android_client_info": {
+          "package_name": "com.example.signalprocessing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545644391457-pvpnqjq488pggoffp8qr4fa74c1rva8f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUdIShw4vpNjbhiWgYqSFqKjEAggVUNFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545644391457-pvpnqjq488pggoffp8qr4fa74c1rva8f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
