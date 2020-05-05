@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signin=(Button)findViewById(R.id.share_btn_signin);
         editemail=(EditText)findViewById(R.id.share_edit_email);
         editpw=(EditText)findViewById(R.id.share_edit_pw);
+        find=(Button)findViewById(R.id.share_btn_find);
 
         auto=getSharedPreferences("autologin", Activity.MODE_PRIVATE);
         loginID = auto.getString("inputId", null);
