@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GoogleSignInClient mGoogleSingInClient;
     private static final int RC_SIGN_IN=9001;
     private SignInButton glogin;
-    private Button signup,signin;
+    private Button signup,signin,find;
     private EditText editemail,editpw;
     private boolean isnewAccount=true;
     private SharedPreferences auto;
@@ -77,8 +77,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGoogleSingInClient= GoogleSignIn.getClient(MainActivity.this,gso);
 
         signup.setOnClickListener(this);
-        signin.setOnClickListener(this);
         glogin.setOnClickListener(this);
+
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email=editemail.getText().toString().trim();
+                String pw=editpw.getText().toString().trim();
+                if (email.equals("")) {
+                    showToast("이메일을 입력하세요");
+                } else if (pw.equals("")) {
+                    showToast("패스워드를 입력하세요");
+                } else {
+                    login(email, pw);
+                }
+            }
+        });
+
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,FindpwActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -89,17 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.share_btn_glogin:
                 gsignIn();
-                break;
-            case R.id.share_btn_signin:
-                String email=editemail.getText().toString().trim();
-                String pw=editpw.getText().toString().trim();
-                if (email.equals("")) {
-                    showToast("이메일을 입력하세요");
-                } else if (pw.equals("")) {
-                    showToast("패스워드를 입력하세요");
-                } else {
-                    login(email, pw);
-                }
                 break;
         }
     }
