@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateUI(user);
         }
 
-        if (loginID != null && loginPW != null) {
+        else if (loginID != null && loginPW != null) {
             login(loginID, loginPW);
         }
 
