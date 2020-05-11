@@ -8,6 +8,12 @@
     tools:context=".FreeBoardActivity">
 
     <Button
+        android:id="@+id/board_btn_mypage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="마이페이지" />
+
+    <Button
         android:id="@+id/board_btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

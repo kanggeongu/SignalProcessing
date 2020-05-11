@@ -15,7 +15,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
 
     private SharedPreferences auto;
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
-    private Button logout;
+    private Button logout,mypage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,12 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
 
         logout=(Button)findViewById(R.id.board_btn_logout);
         logout.setOnClickListener(this);
+
+        mypage=(Button)findViewById(R.id.board_btn_mypage);
+        mypage.setOnClickListener(this);
     }
 
-    private void updateUI(){
-        Intent intent=new Intent(FreeBoardActivity.this,MainActivity.class);
+    private void updateUI(Intent intent){
         startActivity(intent);
         finish();
     }
@@ -42,12 +44,17 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View view) {
+        Intent intent=null;
         switch(view.getId()){
             case R.id.board_btn_logout:
                 signOut();
+                intent=new Intent(FreeBoardActivity.this,MainActivity.class);
+                break;
+            case R.id.board_btn_mypage:
+                intent=new Intent(FreeBoardActivity.this,MypageActivity.class);
                 break;
         }
-        updateUI();
+        updateUI(intent);
     }
 
     @Override
