@@ -24,7 +24,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
     private FirebaseDatabase mDatabase=FirebaseDatabase.getInstance();
     private DatabaseReference mRef=mDatabase.getReference();
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
-    private Button logout,mypage;
+    private Button logout,mypage,waitanimal;
     private User user;
 
     @Override
@@ -38,8 +38,9 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         mypage=(Button)findViewById(R.id.board_btn_mypage);
         mypage.setOnClickListener(this);
 
-        mypage.setEnabled(false);
-        logout.setEnabled(false);
+        waitanimal=(Button)findViewById(R.id.board_btn_waitanimal);
+        waitanimal.setOnClickListener(this);
+
         loadInfo(mAuth.getCurrentUser().getEmail());
     }
 
@@ -56,8 +57,6 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                         user=userData;
                     }
                 }
-                mypage.setEnabled(true);
-                logout.setEnabled(true);
                 pdialog.dismiss();
             }
             @Override
@@ -91,6 +90,9 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
             case R.id.board_btn_mypage:
                 intent=new Intent(FreeBoardActivity.this,MypageActivity.class);
                 intent.putExtra("userInfo",user);
+                break;
+            case R.id.board_btn_waitanimal:
+                intent=new Intent(FreeBoardActivity.this,WaitAnimalActivity.class);
                 break;
         }
         updateUI(intent);
