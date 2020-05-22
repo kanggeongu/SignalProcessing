@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String userName;
     private String userEmail;
+    private String userUniv;
 
     User() {
         userName = "";
@@ -14,6 +15,14 @@ public class User implements Serializable {
     User(String userName, String userEmail) {
         this.userName = userName;
         this.userEmail = userEmail;
+    }
+
+    public String getUserUniv() {
+        return userUniv;
+    }
+
+    public void setUserUniv(String userUniv) {
+        this.userUniv = userUniv;
     }
 
     public String getUserName() {

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GoogleSignInClient mGoogleSingInClient;
     private static final int RC_SIGN_IN=9001;
     private SignInButton glogin;
-    private Button signup,signin,find;
+    private Button signup,signin,find,verify;
     private EditText editemail,editpw;
     private boolean isnewAccount=true;
     private SharedPreferences auto;
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editemail=(EditText)findViewById(R.id.share_edit_email);
         editpw=(EditText)findViewById(R.id.share_edit_pw);
         find=(Button)findViewById(R.id.share_btn_find);
+        verify=(Button)findViewById(R.id.share_btn_verify);
 
         auto=getSharedPreferences("autologin", Activity.MODE_PRIVATE);
         loginID = auto.getString("inputId", null);
@@ -99,6 +100,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,FindpwActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,VerifyEmailActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ShowMessageActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/showmessage_text_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="쪽지 내용 확인" />
+
+            <TextView
+                android:id="@+id/showmessage_text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="이름" />
+
+            <TextView
+                android:id="@+id/showmessage_text_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="내용" />
+
+            <Button
+                android:id="@+id/showmessage_btn_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="신고 신청" />
+
+            <Button
+                android:id="@+id/showmessage_btn_reply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="답장" />
+
+            <TextView
+                android:id="@+id/showmessage_text_guide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="내용을 작성하세요" />
+
+            <EditText
+                android:id="@+id/showmessage_edit_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:hint="답장 내용 작성" />
+
+            <Button
+                android:id="@+id/showmessage_btn_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="전송" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

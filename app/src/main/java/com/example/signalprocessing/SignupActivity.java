@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -57,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
                     showToast("닉네임 중복 검사가 필요합니다");
                 }
                 else{
-                    createUser(email,pw,nickname);
+                    isRestricted(email,pw,nickname);
                 }
             }
         });
@@ -72,6 +76,37 @@ public class SignupActivity extends AppCompatActivity {
                 else {
                     chkUser(nickname);
                 }
+            }
+        });
+    }
+
+    private void isRestricted(final String email,final String pw,final String nickname){
+        Date mDate=new Date(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMdd");
+        final String date=simpleDateFormat.format(mDate);
+        final String converted=email.replace('.','_');
+        mRef.child("Restricted").child(converted).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    Restricted restricted=dataSnapshot.getValue(Restricted.class);
+                    Log.e("Error","error"+restricted.toString());
+                    Log.e("Error","error"+restricted.getEndDate());
+                    Log.e("Error","error"+Integer.parseInt(date));
+                    if(restricted.getEndDate()<Integer.parseInt(date)){
+                        createUser(email,pw,nickname);
+                    }
+                    else{
+                        showToast("제재일까지는 회원가입이 불가합니다");
+                    }
+                }
+                else{
+                    createUser(email,pw,nickname);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
