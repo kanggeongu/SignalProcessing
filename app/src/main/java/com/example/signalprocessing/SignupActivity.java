@@ -122,11 +122,11 @@ public class SignupActivity extends AppCompatActivity {
                             // success listener 구현해야함
                             FirebaseUser user=mAuth.getCurrentUser();
                             sendEmail(user);
-                            updateUI(user);
+                            updateUI(user,userData);
                         }
                         else{
                             showToast("인터넷 연결 상태/이미 있는 이메일/파이어 베이스 서버 문제");
-                            updateUI(null);
+                            //updateUI(null);
                         }
                     }
                 });
@@ -146,14 +146,15 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUI(FirebaseUser user){
+    private void updateUI(FirebaseUser user, User userData){
         mAuth.signOut();
         if(user!=null) {
             boolean emailVerified = user.isEmailVerified();
             if (!emailVerified) {
                 showToast("이메일 인증 후 사용할 수 있습니다");
             }
-            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+            Intent intent = new Intent(SignupActivity.this, UniversityActivity.class);
+            intent.putExtra("userInfo",userData);
             startActivity(intent);
             finish();
         }

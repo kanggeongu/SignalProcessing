@@ -10,11 +10,13 @@ public class User implements Serializable {
     User() {
         userName = "";
         userEmail = "";
+        userUniv="";
     }
 
     User(String userName, String userEmail) {
         this.userName = userName;
         this.userEmail = userEmail;
+        userUniv="";
     }
 
     public String getUserUniv() {

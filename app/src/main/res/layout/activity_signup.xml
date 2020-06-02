@@ -35,6 +35,6 @@
         android:id="@+id/signup_btn_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원가입" />
+        android:text="대학교 선택하러 가기" />
 
 </LinearLayout>

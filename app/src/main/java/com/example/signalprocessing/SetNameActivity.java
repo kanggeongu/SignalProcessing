@@ -77,7 +77,8 @@ public class SetNameActivity extends AppCompatActivity implements View.OnClickLi
 
     public void updateUI(FirebaseUser user){
         if(user!=null){
-            Intent intent = new Intent(SetNameActivity.this,FreeBoardActivity.class);
+            Intent intent = new Intent(SetNameActivity.this,UniversityActivity.class);
+            intent.putExtra("userInfo",userData);
             startActivity(intent);
             finish();
         }

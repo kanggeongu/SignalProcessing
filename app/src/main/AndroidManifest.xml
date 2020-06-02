@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.signalprocessing">
 
     <application
@@ -9,10 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddWaitAnimalActivity"></activity>
+        <activity android:name=".AddWaitAnimalActivity" />
         <activity android:name=".WaitAnimalActivity" />
         <activity android:name=".VerifyEmailActivity" />
         <activity android:name=".ShowMessageActivity" />
+        <activity android:name=".PutUniversityActivity" />
+        <activity android:name=".UniversityActivity" />
         <activity android:name=".MypageActivity" />
         <activity android:name=".FindpwActivity" />
         <activity android:name=".SetNameActivity" />
@@ -26,5 +29,8 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:ignore="ManifestOrder" />
 
 </manifest>
