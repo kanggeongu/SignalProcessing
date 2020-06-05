@@ -62,6 +62,7 @@ public class UniversityActivity extends AppCompatActivity {
         final List<Universityitem> uv = new ArrayList<>();
         Intent intent = getIntent();
         final User user=(User)intent.getSerializableExtra("userInfo");
+        final boolean ischange=intent.getBooleanExtra("ischange",false);
         mDatabaseReference.child("Universities").addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -73,15 +74,22 @@ public class UniversityActivity extends AppCompatActivity {
                 uv.sort(new Comparator<Universityitem>(){
                     @Override
                     public int compare(Universityitem o1, Universityitem o2) {
-                        int followers1 = o1.getFollowers();
-                        int followers2 = o2.getFollowers();
+                        String name1 = o1.getUniversityName();
+                        String name2 = o2.getUniversityName();
 
-                        if(followers1 == followers2) return 0;
-                        else if(followers1<followers2) return 1;
-                        else return -1;
+                        if(name1.equals(user.getUserUniv())) return -1;
+                        else if(name2.equals(user.getUserUniv())) return 1;
+                        else {
+                            int followers1 = o1.getFollowers();
+                            int followers2 = o2.getFollowers();
+
+                            if (followers1 == followers2) return 0;
+                            else if (followers1 < followers2) return 1;
+                            else return -1;
+                        }
                     }
                 });
-                mAdapter = new UniversityAdapter(uv,mContext,user.getUserName());
+                mAdapter = new UniversityAdapter(uv,mContext,user,ischange);
                 recyclerView.setAdapter(mAdapter);
             }
 

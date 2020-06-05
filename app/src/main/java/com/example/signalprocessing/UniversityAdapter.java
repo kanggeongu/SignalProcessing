@@ -3,6 +3,8 @@ package com.example.signalprocessing;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.BoringLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
     private List<Universityitem> unfilteredList;
     private Context mContext;
     private String userId;
+    private Boolean ischange;
+    private User user;
 
     private FirebaseDatabase Database = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = Database.getReference();
@@ -88,11 +92,13 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
 
     // Provide a suitable constructor (depends on the kind of dataset)
 
-    public UniversityAdapter(List<Universityitem> myDataset, Context context, String userId) {
+    public UniversityAdapter(List<Universityitem> myDataset, Context context, User user, Boolean ischange) {
         mDataset = myDataset;
         unfilteredList = myDataset;
         mContext = context;
-        this.userId = userId;
+        this.user=user;
+        userId=user.getUserName();
+        this.ischange = ischange;
     }
 
     // Create new views (invoked by the layout manager)
@@ -117,19 +123,11 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
         Glide.with(mContext).load(university.getPhoto()).into(holder.Image_uni);
         holder.LikeNum.setText(String.valueOf(university.getFollowers()));
         final int[] follow = {university.getFollowers()};
-        mDatabaseReference.child("Users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final User user=dataSnapshot.getValue(User.class);
-                if(user.getUserUniv().equals(university.getUniversityName())) {
-                    holder.LikeButton.setBackgroundResource(R.drawable.red_fill_heart);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+        if(user.getUserUniv().equals(university.getUniversityName())) {
+            holder.LikeButton.setBackgroundResource(R.drawable.red_fill_heart);
+        }
+
         holder.LikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,9 +141,17 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                             holder.LikeNum.setText(String.valueOf(follow[0]));
                             mDatabaseReference.child("Users").child(userId).child("userUniv").setValue(university.getUniversityName());
                             mDatabaseReference.child("Universities").child(university.getUniversityName()).child("followers").setValue(follow[0]);
-                            Intent intent = new Intent(mContext, MainActivity.class);
-                            mContext.startActivity(intent);
-                            ((Activity)mContext).finish();
+                            if(ischange){
+                                Intent intent = new Intent(mContext, MypageActivity.class);
+                                intent.putExtra("userInfo",user);
+                                mContext.startActivity(intent);
+                                ((Activity)mContext).finish();
+                            }
+                            else {
+                                Intent intent = new Intent(mContext, MainActivity.class);
+                                mContext.startActivity(intent);
+                                ((Activity) mContext).finish();
+                            }
                         } else if (user.getUserUniv().equals(university.getUniversityName())) {
                             holder.LikeButton.setBackgroundResource(R.drawable.red_empty_heart);
                             follow[0]--;
