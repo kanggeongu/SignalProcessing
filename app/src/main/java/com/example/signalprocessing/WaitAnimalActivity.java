@@ -52,7 +52,7 @@ public class WaitAnimalActivity extends AppCompatActivity {
     }
 
     public void updateUI(){
-        Intent intent=new Intent(WaitAnimalActivity.this,FreeBoardActivity.class);
+        Intent intent=new Intent(WaitAnimalActivity.this,ConnectorActivity.class);
         startActivity(intent);
         finish();
     }

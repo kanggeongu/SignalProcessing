@@ -79,6 +79,7 @@ public class SetNameActivity extends AppCompatActivity implements View.OnClickLi
         if(user!=null){
             Intent intent = new Intent(SetNameActivity.this,UniversityActivity.class);
             intent.putExtra("userInfo",userData);
+            // 여기에?
             startActivity(intent);
             finish();
         }

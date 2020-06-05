@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ConnectorActivity">
+
+    <Button
+        android:id="@+id/board_btn_waitanimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="대기동물페이지" />
+
+    <Button
+        android:id="@+id/board_btn_mypage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="마이페이지" />
+
+    <Button
+        android:id="@+id/board_btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그아웃" />
+
+    <Button
+        android:id="@+id/board_btn_board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="자유게시판" />
+
+</LinearLayout>

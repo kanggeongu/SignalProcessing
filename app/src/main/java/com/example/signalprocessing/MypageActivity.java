@@ -46,7 +46,7 @@ public class MypageActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private TextView textName,textUniv,textEmail,textRead;
-    private Button btnSend,btnReceive,btnUserBye,btnPW;
+    private Button btnSend,btnReceive,btnUserBye,btnPW,btnUniv;
     private View thislayout;
 
     private User user;
@@ -74,6 +74,7 @@ public class MypageActivity extends AppCompatActivity {
         textEmail=(TextView)findViewById(R.id.mypage_textid);
         textUniv=(TextView)findViewById(R.id.mypage_textuniv);
 
+        btnUniv=findViewById(R.id.mypage_btn_univ);
         btnSend=(Button)findViewById(R.id.mypage_btn_send);
         btnReceive=(Button)findViewById(R.id.mypage_btn_receive);
         btnUserBye=(Button)findViewById(R.id.mypage_btn_bye);
@@ -151,6 +152,17 @@ public class MypageActivity extends AppCompatActivity {
                 isSend=true;
                 //loadMessageInfo(user.getUserName());
                 messageAdapter.notifyDataSetChanged();
+            }
+        });
+
+        btnUniv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),UniversityActivity.class);
+                intent.putExtra("ischange",true);
+                intent.putExtra("userInfo",user);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -270,10 +282,16 @@ public class MypageActivity extends AppCompatActivity {
         finish();
     }
 
+    public void updateConnectorPage(){
+        Intent intent=new Intent(MypageActivity.this,ConnectorActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        updateUI();
+        updateConnectorPage();
     }
 
     private void sortArray(){

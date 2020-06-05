@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void updateUI(FirebaseUser user){
         if(user!=null) {
-            Intent intent = new Intent(MainActivity.this,FreeBoardActivity.class);
+            Intent intent = new Intent(MainActivity.this,ConnectorActivity.class);
             startActivity(intent);
             finish();
         }
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(user!=null){
             boolean emailVerified=user.isEmailVerified();
             if(emailVerified){
-                Intent intent=new Intent(MainActivity.this,FreeBoardActivity.class);
+                Intent intent=new Intent(MainActivity.this,ConnectorActivity.class);
                 startActivity(intent);
                 finish();
             }

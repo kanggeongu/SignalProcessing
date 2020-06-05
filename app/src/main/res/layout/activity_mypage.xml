@@ -27,6 +27,12 @@
         android:text="학교 (수정 안됨)" />
 
     <Button
+        android:id="@+id/mypage_btn_univ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="대학 수정" />
+
+    <Button
         android:id="@+id/mypage_btn_editpw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -139,6 +139,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                             holder.LikeButton.setBackgroundResource(R.drawable.red_fill_heart);
                             follow[0]++;
                             holder.LikeNum.setText(String.valueOf(follow[0]));
+                            user.setUserUniv(university.getUniversityName());
                             mDatabaseReference.child("Users").child(userId).child("userUniv").setValue(university.getUniversityName());
                             mDatabaseReference.child("Universities").child(university.getUniversityName()).child("followers").setValue(follow[0]);
                             if(ischange){
