@@ -96,9 +96,11 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.board_btn_waitanimal:
                 intent=new Intent(getApplicationContext(),WaitAnimalActivity.class);
+                intent.putExtra("userInfo",user);
                 break;
             case R.id.board_btn_board:
                 intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
+                intent.putExtra("userInfo",user);
                 break;
         }
         updateUI(intent);

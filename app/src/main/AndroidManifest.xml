@@ -14,7 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConnectorActivity"></activity>
+        <activity android:name=".CocommentActivity"></activity>
+        <activity android:name=".SendMessage" />
+        <activity android:name=".commentActivity" />
+        <activity android:name=".writeArticleActivity" />
+        <activity android:name=".PopUpActivity" />
+        <activity android:name=".ConnectorActivity" />
         <activity android:name=".AddWaitAnimalActivity" />
         <activity android:name=".WaitAnimalActivity" />
         <activity android:name=".VerifyEmailActivity" />
