@@ -39,7 +39,9 @@ public class PopUpActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.buttonSearch:
-
+                intent = new Intent(getApplicationContext(), SearchActivity.class);
+                intent.putExtra("userInformation", user);
+                startActivity(intent);
                 break;
         }
 

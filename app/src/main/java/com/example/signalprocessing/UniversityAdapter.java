@@ -3,8 +3,7 @@ package com.example.signalprocessing;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.BoringLayout;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -79,6 +79,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
         TextView Name_uni;
         TextView LikeNum;
         Button LikeButton;
+        CardView mView;
 
         private ViewHolder(@NonNull View v) {
             super(v);
@@ -87,6 +88,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
             Name_uni=v.findViewById(R.id.universityName);
             LikeNum=v.findViewById(R.id.LikeNum);
             LikeButton=v.findViewById(R.id.LikeButton);
+            mView=v.findViewById(R.id.uvItemView);
         }
     }
 
@@ -108,7 +110,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                                                      int viewType) {
         // create a new view
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.university_detail, parent, false);
+                .inflate(R.layout.item_university, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -122,6 +124,19 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
         holder.Name_uni.setText(university.getUniversityName());
         Glide.with(mContext).load(university.getPhoto()).into(holder.Image_uni);
         holder.LikeNum.setText(String.valueOf(university.getFollowers()));
+        //아이템 레이아웃 크기 변경
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) holder.itemView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int deviceWidth = displayMetrics.widthPixels;
+        deviceWidth = deviceWidth / 2 - 10;
+        int deviceHeight = (int) (deviceWidth * 1.25);
+        holder.mView.getLayoutParams().width=deviceWidth;
+        holder.mView.getLayoutParams().height=deviceHeight;
+        holder.Name_uni.getLayoutParams().width=deviceWidth/2;
+        holder.LikeButton.getLayoutParams().width=deviceWidth/4;
+        holder.LikeNum.getLayoutParams().width=deviceWidth/4;
+        holder.mView.requestLayout();
+
         final int[] follow = {university.getFollowers()};
 
         if(user.getUserUniv().equals(university.getUniversityName())) {

@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,9 +25,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomViewHolder> {
+public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomViewHolder> implements Filterable {
 
     private ArrayList<Article> arrayList;
+    private ArrayList<Article> unfilteredList;
     private User user;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -33,6 +36,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
 
     public ArticleAdapter(ArrayList<Article> arrayList) {
         this.arrayList = arrayList;
+        unfilteredList = arrayList;
     }
 
     @NonNull
@@ -211,6 +215,36 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
     @Override
     public int getItemCount() {
         return (arrayList != null ? arrayList.size() : 0);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if(charString.isEmpty()) {
+                    arrayList=unfilteredList;
+                } else {
+                    ArrayList<Article> filteringList = new ArrayList<>();
+                    for(Article item : unfilteredList) {
+                        if(item.getContent().toLowerCase().contains(charString.toLowerCase())) {
+                            filteringList.add(item);
+                        }
+                    }
+                    arrayList = filteringList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = arrayList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                arrayList = (ArrayList<Article>)results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
