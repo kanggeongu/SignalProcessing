@@ -4,8 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical"
     tools:context=".AddWaitAnimalActivity">
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bmjua"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:text="신규동물 신청서" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-2dp"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/pic_done_final" />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,128 +39,211 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="기존에 있는 동물 등록하기" />
-
-            <Button
-                android:id="@+id/addwait_btn_addPhoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="갤러리 열기" />
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/yellow_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:gravity="center"
+                android:text="사진"
+                android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:id="@+id/addwait_img_img"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/img_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="동물 이름" />
+                <Button
+                    android:id="@+id/addwait_btn_addPhoto"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/empty_yellow_round_rectangle"
+                    android:fontFamily="@font/boldnanum"
+                    android:text="갤러리"
+                    android:textColor="@color/colorAccent" />
 
-                <EditText
-                    android:id="@+id/addwait_edit_name"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:hint="이름" />
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/addwait_btn_Camera"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/empty_yellow_round_rectangle"
+                    android:fontFamily="@font/boldnanum"
+                    android:text="카메라"
+                    android:textColor="@color/colorAccent" />
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="30dp" />
 
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="이름 뜻" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/yellow_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:gravity="center"
+                android:text="동물 이름"
+                android:textColor="@color/colorWhite" />
 
-                <EditText
-                    android:id="@+id/addwait_edit_meaning"
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:hint="이름 뜻" />
-            </LinearLayout>
-
-            <LinearLayout
+            <EditText
+                android:id="@+id/addwait_edit_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/brown_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:hint="이름"
+                android:padding="5dp"
+                android:textSize="15dp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:text="동물 성별" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
 
-                <Spinner
-                    android:id="@+id/addwait_spinner_gender"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:text="Name" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/yellow_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:gravity="center"
+                android:text="이름 뜻"
+                android:textColor="@color/colorWhite" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/addwait_edit_meaning"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/brown_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:hint="이름 뜻"
+                android:padding="5dp"
+                android:textSize="15dp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="최초 발견 위치" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
 
-                <EditText
-                    android:id="@+id/addwait_edit_location"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:hint="최초 발견 위치" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/yellow_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:gravity="center"
+                android:text="동물 성별"
+                android:textColor="@color/colorWhite" />
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/addwait_spinner_gender"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/boldnanum" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="특징" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
 
-                <EditText
-                    android:id="@+id/addwait_edit_feature"
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:hint="특징" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/yellow_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:gravity="center"
+                android:text="최초 발견 위치"
+                android:textColor="@color/colorWhite" />
+
+            <EditText
+                android:id="@+id/addwait_edit_location"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/brown_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:hint="최초 발견 위치"
+                android:padding="5dp"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/yellow_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:gravity="center"
+                android:text="특징"
+                android:textColor="@color/colorWhite" />
+
+            <EditText
+                android:id="@+id/addwait_edit_feature"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/brown_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:hint="특징"
+                android:padding="5dp"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/addwait_btn_upload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="대기동물 신청하기" />
-
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/fill_brown_round_rectangle"
+                android:fontFamily="@font/boldnanum"
+                android:text="신규 동물 신청하기"
+                android:textColor="@color/colorWhite" />
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

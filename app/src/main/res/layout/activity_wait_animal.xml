@@ -7,23 +7,160 @@
     android:orientation="vertical"
     tools:context=".WaitAnimalActivity">
 
-    <Button
-        android:id="@+id/wait_btn_addwait"
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/bmjua"
+        android:gravity="center"
+        android:text="대기동물 목록"
+        android:textSize="30dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/empty_yellow_round_rectangle"
         android:orientation="vertical">
 
-        <TextView
-            android:text="대시보드"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="1dp"
+                android:fontFamily="@font/nanumfont"
+                android:gravity="center"
+                android:text="대시보드"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/yellow_round_rectangle"
+                    android:gravity="center"
+                    android:text="전체"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/wait_text_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/yellow_round_rectangle"
+                    android:gravity="center"
+                    android:text="승인"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/wait_text_admit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/yellow_round_rectangle"
+                    android:gravity="center"
+                    android:text="반려"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/wait_text_reject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/yellow_round_rectangle"
+                    android:gravity="center"
+                    android:text="진행중"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/wait_text_ing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="20dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
+    <Button
+        android:id="@+id/wait_btn_addwait"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/bmjua"
+        android:text="글쓰기" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/wait_rview"
