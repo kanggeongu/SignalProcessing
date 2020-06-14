@@ -8,6 +8,12 @@
     tools:context=".ConnectorActivity">
 
     <Button
+        android:id="@+id/board_btn_namecontest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이름공모" />
+
+    <Button
         android:id="@+id/board_btn_waitanimal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

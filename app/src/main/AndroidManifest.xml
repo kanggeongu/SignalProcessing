@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         tools:ignore="ManifestOrder" />
@@ -18,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity"/>
+        <activity android:name=".NameContestAddContestIdea"></activity>
+        <activity android:name=".NameContestIdeaViewHome" />
+        <activity android:name=".AddNameContestActivity" />
+        <activity android:name=".NameContestActivity" />
+        <activity android:name=".SearchActivity" />
         <activity android:name=".CocommentActivity" />
         <activity android:name=".SendMessage" />
         <activity android:name=".commentActivity" />
@@ -43,6 +46,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.signalprocessing"

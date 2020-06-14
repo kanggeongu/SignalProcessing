@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NameContestIdeaViewHome">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout_name_contest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_weight="7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_bottom"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewContestTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="시작 시간 ~ 끝나는 시간"
+                        android:gravity="center"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_weight="1"
+                    android:id="@+id/recyclerViewContestIdea"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbarFadeDuration="0"
+                    android:scrollbarSize="5dp"
+                    android:scrollbarThumbVertical="@android:color/darker_gray"
+                    android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:background="@drawable/ic_add_circle_outline_black_24dp"
+            android:onClick="onClickAddContestIdea"
+            android:text="" />
+    </FrameLayout>
+</LinearLayout>
