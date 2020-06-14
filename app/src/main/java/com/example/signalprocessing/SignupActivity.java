@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,37 +31,36 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private FirebaseDatabase mDatabase=FirebaseDatabase.getInstance();
     private DatabaseReference mRef=mDatabase.getReference();
-    private EditText editemail,editpw,editname;
     private Button esignup,check;
     private String confirmed="";
+    private boolean isValid=true;
+
+    private TextInputLayout textInputPassword;
+    private TextInputLayout textInputEmail;
+    private TextInputLayout textInputName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        editemail=(EditText)findViewById(R.id.signup_edit_email);
-        editpw=(EditText)findViewById(R.id.signup_edit_pw);
-        editname=(EditText)findViewById(R.id.signup_edit_name);
         esignup=(Button)findViewById(R.id.signup_btn_signup);
         check=(Button)findViewById(R.id.signup_btn_check);
+
+        textInputPassword=findViewById(R.id.signup_input_password);
+        textInputEmail=findViewById(R.id.signup_input_email);
+        textInputName=findViewById(R.id.signup_input_nickname);
 
         esignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email=editemail.getText().toString().trim();
-                String pw=editpw.getText().toString().trim();
-                String nickname=editname.getText().toString().trim();
-                if(email.equals("")){
-                    showToast("이메일을 입력하세요");
-                }
-                else if(pw.equals("")){
-                    showToast("패스워드를 입력하세요");
-                }
-                else if(!nickname.equals(confirmed)){
-                    showToast("닉네임 중복 검사가 필요합니다");
-                }
-                else{
+                String email=textInputEmail.getEditText().getText().toString().trim();
+                String pw=textInputPassword.getEditText().getText().toString().trim();
+                String nickname=textInputName.getEditText().getText().toString().trim();
+                validatePassword(pw);
+                validateEmail(email);
+                validateName(nickname);
+                if(isValid){
                     isRestricted(email,pw,nickname);
                 }
             }
@@ -69,7 +69,7 @@ public class SignupActivity extends AppCompatActivity {
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nickname=editname.getText().toString().trim();
+                String nickname=textInputName.getEditText().getText().toString().trim();
                 if(nickname.equals("")){
                     showToast("닉네임을 입력하세요");
                 }
@@ -78,6 +78,40 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void validatePassword(String password){
+        if(password.length()<8){
+            textInputPassword.setError("비밀번호는 8자리 이상이어야 합니다");
+            isValid=false;
+        }
+        else{
+            textInputPassword.setError(null);
+        }
+    }
+
+    private void validateEmail(String email){
+        if(email.length()==0){
+            textInputEmail.setError("이메일을 입력하세요");
+            isValid=false;
+        }
+        else{
+            textInputEmail.setError(null);
+        }
+    }
+
+    private void validateName(String name){
+        if(name.equals("")){
+            textInputName.setError("닉네임을 입력하세요");
+            isValid=false;
+        }
+        else if(!name.equals(confirmed)){
+            textInputName.setError("아이디 중복 검사가 필요합니다");
+            isValid=false;
+        }
+        else{
+            textInputName.setError(null);
+        }
     }
 
     private void isRestricted(final String email,final String pw,final String nickname){
@@ -90,9 +124,6 @@ public class SignupActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     Restricted restricted=dataSnapshot.getValue(Restricted.class);
-                    Log.e("Error","error"+restricted.toString());
-                    Log.e("Error","error"+restricted.getEndDate());
-                    Log.e("Error","error"+Integer.parseInt(date));
                     if(restricted.getEndDate()<Integer.parseInt(date)){
                         createUser(email,pw,nickname);
                     }
@@ -122,11 +153,11 @@ public class SignupActivity extends AppCompatActivity {
                             // success listener 구현해야함
                             FirebaseUser user=mAuth.getCurrentUser();
                             sendEmail(user);
-                            updateUI(user,userData);
+                            updateUI(user);
                         }
                         else{
                             showToast("인터넷 연결 상태/이미 있는 이메일/파이어 베이스 서버 문제");
-                            //updateUI(null);
+                            updateUI(null);
                         }
                     }
                 });
@@ -146,15 +177,14 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUI(FirebaseUser user, User userData){
+    private void updateUI(FirebaseUser user){
         mAuth.signOut();
         if(user!=null) {
             boolean emailVerified = user.isEmailVerified();
             if (!emailVerified) {
                 showToast("이메일 인증 후 사용할 수 있습니다");
             }
-            Intent intent = new Intent(SignupActivity.this, UniversityActivity.class);
-            intent.putExtra("userInfo",userData);
+            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorAccent"
     tools:context=".ShowMessageActivity">
 
     <ScrollView
@@ -14,58 +15,158 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/white_round_rectangle"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/showmessage_text_category"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="쪽지 내용 확인" />
+                android:layout_height="15dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/icon_mail"
+                    android:paddingTop="5dp"
+                    android:layout_gravity="center_vertical"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <TextView
+                    android:id="@+id/showmessage_text_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/bmjua"
+                    android:textSize="25dp"
+                    android:padding="5dp"
+                    android:text="쪽지 내용 확인" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/icon_mail"
+                    android:paddingTop="5dp"
+                    android:layout_gravity="center_vertical"
+                    tools:ignore="VectorDrawableCompat" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
             <TextView
                 android:id="@+id/showmessage_text_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/bmjua"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
                 android:text="이름" />
 
             <TextView
                 android:id="@+id/showmessage_text_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/brown_round_rectangle"
+                android:fontFamily="@font/bmjua"
+                android:textSize="15dp"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="내용" />
 
-            <Button
-                android:id="@+id/showmessage_btn_report"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="신고 신청" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/showmessage_btn_reply"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="답장" />
+                <Button
+                    android:id="@+id/showmessage_btn_report"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/empty_border"
+                    android:layout_marginRight="10dp"
+                    android:text="신고 신청"
+                    android:fontFamily="@font/bmjua"
+                    android:textColor="@color/colorDarkRed" />
+
+                <Button
+                    android:id="@+id/showmessage_btn_reply"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/fill_brown_round_rectangle"
+                    android:textColor="@color/colorWhite"
+                    android:fontFamily="@font/bmjua"
+                    android:layout_weight="1"
+                    android:layout_marginRight="100dp"
+                    android:layout_marginLeft="100dp"
+                    android:text="답장" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/showmessage_text_guide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/bmjua"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
                 android:visibility="gone"
-                android:text="내용을 작성하세요" />
+                android:text="보낼 쪽지를 작성하세요" />
 
             <EditText
                 android:id="@+id/showmessage_edit_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/brown_round_rectangle"
+                android:fontFamily="@font/bmjua"
+                android:textSize="15dp"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:visibility="gone"
-                android:hint="답장 내용 작성" />
+                android:hint="내용을 작성하세요" />
 
             <Button
                 android:id="@+id/showmessage_btn_send"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/fill_brown_round_rectangle"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/bmjua"
+                android:layout_weight="1"
+                android:layout_marginRight="100dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginBottom="20dp"
                 android:visibility="gone"
                 android:text="전송" />
+
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"></LinearLayout>
 </LinearLayout>

@@ -5,36 +5,131 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_vertical"
     tools:context=".SignupActivity">
 
-    <EditText
-        android:id="@+id/signup_edit_email"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="이메일" />
+        android:fontFamily="@font/bmjua"
+        android:gravity="center"
+        android:text="회원가입"
+        android:textSize="25dp" />
 
-    <EditText
-        android:id="@+id/signup_edit_pw"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="비밀번호" />
+        android:fontFamily="@font/bmjua"
+        android:textSize="20dp" />
 
-    <EditText
-        android:id="@+id/signup_edit_name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_input_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="닉네임" />
+        app:errorEnabled="true">
 
-    <Button
-        android:id="@+id/signup_btn_check"
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/skin_brown_round_rectangle"
+            android:hint="이메일"
+            android:padding="10dp"
+            android:textSize="15dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_input_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="닉네임 중복 검사" />
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/skin_brown_round_rectangle"
+            android:hint="비밀번호"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textSize="15dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_input_nickname"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/skin_brown_round_rectangle"
+                android:hint="닉네임"
+                android:padding="10dp"
+                android:textSize="15dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bmjua"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/signup_btn_check"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:background="@drawable/fill_brown_round_rectangle"
+            android:fontFamily="@font/bmjua"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="중복 검사"
+            android:textColor="@color/colorWhite"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:fontFamily="@font/bmjua" />
 
     <Button
         android:id="@+id/signup_btn_signup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="대학교 선택하러 가기" />
+        android:layout_height="45dp"
+        android:background="@drawable/yellow_round_rectangle"
+        android:textColor="@color/colorWhite"
+        android:fontFamily="@font/bmjua"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="15dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginRight="120dp"
+        android:text="회원가입" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:fontFamily="@font/bmjua" />
 
 </LinearLayout>

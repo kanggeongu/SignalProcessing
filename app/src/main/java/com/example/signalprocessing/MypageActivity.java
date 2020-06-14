@@ -81,21 +81,6 @@ public class MypageActivity extends AppCompatActivity {
         btnPW=(Button)findViewById(R.id.mypage_btn_editpw);
         thislayout=findViewById(R.id.thislayout);
 
-        // 임시 메세지 넣기, 나중에 지워
-        Button btnHelloSend=(Button)findViewById(R.id.mypage_btn_hellosend);
-        btnHelloSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Message chatroom=new Message();
-                chatroom.setSender(user.getUserName());
-                chatroom.setReceiver("네이버언주");
-                chatroom.setDate("2020-05-08");
-                chatroom.setContents("hello!");
-                chatroom.setIsRead("읽지 않음");
-                addItem(chatroom);
-            }
-        });
-
         rview=(RecyclerView)findViewById(R.id.mypage_rview);
         rview.setLayoutManager(new LinearLayoutManager(this));
         messageAdapter=new MessageAdapter();

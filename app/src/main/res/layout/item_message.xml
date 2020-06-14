@@ -18,6 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:textSize="15dp"
+            android:padding="5dp"
+            android:fontFamily="@font/boldnanum"
             android:text="보낸 사람 별명" />
 
         <TextView
@@ -26,6 +28,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="right"
+            android:fontFamily="@font/boldnanum"
             android:textSize="10dp"
             android:text="05/10 10:55" />
 
@@ -42,6 +45,8 @@
             android:layout_weight="8"
             android:layout_height="wrap_content"
             android:text="마지막으로 보낸 메세지"
+            android:padding="5dp"
+            android:fontFamily="@font/boldnanum"
             android:textSize="10dp" />
 
         <TextView
@@ -51,8 +56,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="10dp"
+            android:fontFamily="@font/boldnanum"
             android:textColor="@android:color/holo_red_dark"
             android:text="읽지않음" />
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="1dp"
+        android:background="@drawable/topbottom_yellow"/>
 </LinearLayout>

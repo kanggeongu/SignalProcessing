@@ -16,11 +16,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WaitAnimalActivity extends AppCompatActivity {
+public class WaitAnimalActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseDatabase mDatabase=FirebaseDatabase.getInstance();
     private DatabaseReference mRef=mDatabase.getReference();
@@ -39,11 +42,14 @@ public class WaitAnimalActivity extends AppCompatActivity {
     private AllDataAdapter radapter;
 
     private RecyclerView rview;
-    private Button btnAdd;
     private TextView textAll,textAdmit,textReject,textIng;
     private int numAll=0,numAdmit=0,numReject=0,numIng=0;
 
     private User user;
+
+    private boolean isFabOpen=false;
+    private Animation fab_open,fab_close;
+    private FloatingActionButton fab,fab1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,28 +64,14 @@ public class WaitAnimalActivity extends AppCompatActivity {
         textReject=findViewById(R.id.wait_text_reject);
         textIng=findViewById(R.id.wait_text_ing);
 
-        btnAdd=(Button)findViewById(R.id.wait_btn_addwait);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(WaitAnimalActivity.this);
-                builder.setTitle("알림").setMessage("대기 동물 명단에 이미 있는 항목인지 확인하세요")
-                        .setCancelable(true).setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        moveAddPage();
-                    }
-                })
-                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog dialog=builder.create();
-                dialog.show();
-            }
-        });
+        fab_open= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
+        fab_close=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+
+        fab=(FloatingActionButton)findViewById(R.id.mypage_fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.mypage_fab1);
+
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
 
         rview=(RecyclerView)findViewById(R.id.wait_rview);
         rview.setLayoutManager(new LinearLayoutManager(this));
@@ -124,6 +116,34 @@ public class WaitAnimalActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onClick(View view) {
+        Intent intent=null;
+        switch(view.getId()){
+            case R.id.mypage_fab:
+                anim();
+                break;
+            case R.id.mypage_fab1:
+                anim();
+                showError();
+                break;
+        }
+    }
+
+    public void anim(){
+        if(isFabOpen){
+            fab1.startAnimation(fab_close);
+            fab1.setClickable(false);
+            isFabOpen=false;
+        }
+        else{
+            fab1.startAnimation(fab_open);
+            fab1.setClickable(true);
+            isFabOpen=true;
+        }
+    }
+
     class AllDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         @NonNull
@@ -136,8 +156,7 @@ public class WaitAnimalActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
             final WaitItem item=items.get(position);
-            final String name=item.getName();
-            ((CustomViewHolder)holder).textname.setText(name);
+            ((CustomViewHolder)holder).textname.setText(item.getName());
             Glide.with(WaitAnimalActivity.this).load(item.getPicture()).into(((CustomViewHolder) holder).img);
             (((CustomViewHolder)holder).img).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -151,6 +170,8 @@ public class WaitAnimalActivity extends AppCompatActivity {
                     dialog.show();
                 }
             });
+            ((CustomViewHolder)holder).status.setText(item.getStatus());
+            ((CustomViewHolder)holder).detail.setText(item.getFeature());
         }
 
         @Override
@@ -159,22 +180,36 @@ public class WaitAnimalActivity extends AppCompatActivity {
         }
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
-            private TextView textname;
+            private TextView textname,status,detail;
             private ImageView img;
 
             public CustomViewHolder(View view) {
                 super(view);
                 textname=(TextView)view.findViewById(R.id.item_waitanimal_name);
                 img=(ImageView)view.findViewById(R.id.item_waitanimal_img);
+                status=(TextView)view.findViewById(R.id.item_waitanimal_status);
+                detail=(TextView)view.findViewById(R.id.item_waitanimal_detail);
             }
         }
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        updateUI();
+    public void showError(){
+        AlertDialog.Builder builder=new AlertDialog.Builder(WaitAnimalActivity.this);
+        builder.setTitle("알림").setMessage("대기 동물 명단에 이미 있는 항목인지 확인하세요")
+                .setCancelable(true).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                moveAddPage();
+            }
+        })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog dialog=builder.create();
+        dialog.show();
     }
 
     public void moveAddPage(){
@@ -185,9 +220,15 @@ public class WaitAnimalActivity extends AppCompatActivity {
     }
 
     public void updateUI(){
-        Intent intent=new Intent(WaitAnimalActivity.this,ConnectorActivity.class);
+        Intent intent=new Intent(WaitAnimalActivity.this,FreeBoardActivity.class);
         intent.putExtra("userInfo",user);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        updateUI();
     }
 }
