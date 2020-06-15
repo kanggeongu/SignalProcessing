@@ -118,7 +118,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
 
                 break;
             case R.id.board_btn_animalbook:
-                intent = new Intent(getApplicationContext(), AnimalBookActivity.class);
+                intent = new Intent(getApplicationContext(), LocationActivity.class);
                 intent.putExtra("userInfo", user);
                 break;
         }

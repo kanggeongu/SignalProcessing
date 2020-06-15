@@ -15,12 +15,14 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/brown_round_rectangle">
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/swipe_layout">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewFreeBoard"
@@ -30,11 +32,11 @@
 
             <Button
                 android:id="@+id/buttonPopUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="bottom|center"
-                android:background="@drawable/ic_add_circle_outline_black_24dp"
-                android:onClick="onClick" />
+                android:onClick="onClick"
+                android:background="@drawable/ic_add_circle_outline_black_24dp" />
 
         </FrameLayout>
     </LinearLayout>

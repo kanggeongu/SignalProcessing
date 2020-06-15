@@ -184,7 +184,7 @@ public class SignupActivity extends AppCompatActivity {
             if (!emailVerified) {
                 showToast("이메일 인증 후 사용할 수 있습니다");
             }
-            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+            Intent intent = new Intent(SignupActivity.this, UniversityActivity.class);
             startActivity(intent);
             finish();
         }

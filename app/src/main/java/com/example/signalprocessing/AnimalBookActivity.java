@@ -91,6 +91,7 @@ public class AnimalBookActivity extends AppCompatActivity {
 
     class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
+        String animalID;
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -133,6 +134,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                             intent.putExtra("성별", gender.getText().toString());
                             intent.putExtra("userInfo", getIntent().getSerializableExtra("userInfo"));
                             intent.putExtra("animalID", AnimalBooks.get(pos).getAnimalID());
+                            animalID=AnimalBooks.get(pos).getAnimalID();
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
                             Bitmap bitmap = ((BitmapDrawable)animal.getDrawable()).getBitmap();
                             float scale = (1024/(float)bitmap.getWidth());
@@ -161,13 +163,17 @@ public class AnimalBookActivity extends AppCompatActivity {
             ((CustomViewHolder)holder).location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(AnimalBookActivity.this,LocationActivity.class);
+                    intent.putExtra("userInfo",user);
+                    intent.putExtra("university",""/*동물 도감 대학 정보 넘겨주기*/);
+                    intent.putExtra("animalId",animalID);
+                    startActivity(intent);
                 }
             });
 
             final String animalID = AnimalBooks.get(position).getAnimalID();
 
-            databaseReference.child("Users").child(user.getUserEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("Users").child(user.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     user = dataSnapshot.getValue(User.class);

@@ -128,17 +128,19 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) holder.itemView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int deviceWidth = displayMetrics.widthPixels;
-        deviceWidth = deviceWidth / 2 - 10;
+        deviceWidth = deviceWidth / 2 - 40;
         int deviceHeight = (int) (deviceWidth * 1.25);
         holder.mView.getLayoutParams().width=deviceWidth;
         holder.mView.getLayoutParams().height=deviceHeight;
         holder.Name_uni.getLayoutParams().width=deviceWidth/2;
-        holder.LikeButton.getLayoutParams().width=deviceWidth/4;
+        holder.LikeButton.getLayoutParams().width=deviceWidth/4-20;
         holder.LikeNum.getLayoutParams().width=deviceWidth/4;
         holder.mView.requestLayout();
 
         final int[] follow = {university.getFollowers()};
-
+        if(follow[0]>=100){
+            holder.LikeNum.setTextSize(20);
+        }
         if(user.getUserUniv().equals(university.getUniversityName())) {
             holder.LikeButton.setBackgroundResource(R.drawable.red_fill_heart);
         }

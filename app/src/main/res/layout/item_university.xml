@@ -4,53 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/yellow_round_rectangle"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/uvItemView"
         android:layout_width="200dp"
         android:layout_height="250dp"
         android:layout_margin="5dp"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardCornerRadius="10dp">
 
         <LinearLayout
+            android:id="@+id/uvItemLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/brown_round_rectangle">
 
             <ImageView
                 android:id="@+id/universityImage"
                 android:layout_height="0dp"
                 android:layout_width="match_parent"
-                android:layout_weight="4"/>
+                android:layout_weight="4"
+                android:layout_margin="4dp" />
 
 
             <RelativeLayout
                 android:layout_height="0dp"
                 android:layout_width="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/no_top_radius_brown">
                 <TextView
                     android:id="@+id/universityName"
                     android:layout_width="100dp"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:gravity="center"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/bmfont"/>
 
                 <Button
                     android:id="@+id/LikeButton"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="0dp"
+                    android:layout_margin="5dp"
                     android:layout_toRightOf="@+id/universityName"
                     android:background="@drawable/red_empty_heart" />
 
                 <TextView
                     android:id="@+id/LikeNum"
                     android:layout_width="50dp"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:gravity="center"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/LikeButton"/>
+                    android:layout_toRightOf="@id/LikeButton"
+                    android:fontFamily="@font/bmfont"/>
             </RelativeLayout>
 
 

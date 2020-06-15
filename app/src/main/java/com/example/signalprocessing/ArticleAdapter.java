@@ -1,7 +1,9 @@
 package com.example.signalprocessing;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -76,6 +79,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
 
         //신고
         addReport(holder, article);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) holder.itemView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int deviceWidth = displayMetrics.widthPixels;
+        deviceWidth = deviceWidth - 50;
+        int deviceHeight = (int) (deviceWidth * 0.6);
+        holder.mView.getLayoutParams().width=deviceWidth;
+        holder.mView.getLayoutParams().height=deviceHeight;
     }
 
     //쪽지
@@ -257,6 +268,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         protected TextView textViewUserName, textViewContent, textViewTheNumberOfLovers;
         protected Button buttonUser, buttonDelete, buttonAddLover, buttonAddComment, buttonAddReporter;
         protected ImageView imageView;
+        protected CardView mView;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -274,6 +286,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
             this.buttonAddReporter = (Button)itemView.findViewById(R.id.buttonAddReporter);
 
             this.imageView = (ImageView)itemView.findViewById(R.id.imageView);
+            this.mView=(CardView)itemView.findViewById(R.id.mArticleView);
         }
     }
 }
