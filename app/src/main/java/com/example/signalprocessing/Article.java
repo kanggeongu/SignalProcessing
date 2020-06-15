@@ -11,25 +11,25 @@ public class Article {
     private String content;
     private List<String> lovers;
     private List<String> reporters;
-    private List<String> images;
+    private String image;
 
     Article() {
         userID = "";
         univName = "";
         content = "";
+        image = "";
         lovers = new ArrayList<>();
         reporters = new ArrayList<>();
-        images = new ArrayList<>();
     }
 
-    Article(String articleID, String univName, String userID, String content) {
+    Article(String articleID, String univName, String userID, String content, String image) {
         this.articleID = articleID;
         this.univName = univName;
         this.userID = userID;
         this.content = content;
+        this.image = image;
         lovers = new ArrayList<>();
         reporters = new ArrayList<>();
-        images = new ArrayList<>();
     }
 
     public String getArticleID() {
@@ -80,12 +80,12 @@ public class Article {
         this.reporters = reporters;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public boolean addLover(String loverID) {

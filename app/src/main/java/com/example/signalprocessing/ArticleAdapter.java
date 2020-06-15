@@ -2,6 +2,7 @@ package com.example.signalprocessing;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +59,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         //유저 닉네임, 게시글 내용
         holder.textViewUserName.setText(article.getUserID());
         holder.textViewContent.setText(article.getContent());
+        Log.e("자유게시판 사진", article.getImage().toString());
+        Glide.with(FreeBoardActivity.context).load(article.getImage()).into(holder.imageView);
 
         //쪽지
         addMessage(holder);

@@ -24,7 +24,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
     private FirebaseDatabase mDatabase=FirebaseDatabase.getInstance();
     private DatabaseReference mRef=mDatabase.getReference();
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
-    private Button logout,mypage,waitanimal,freeboard, namecontest;
+    private Button logout,mypage,waitanimal,freeboard, namecontest, animalbook;
     private User user;
 
     @Override
@@ -46,6 +46,9 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
 
         namecontest = (Button)findViewById(R.id.board_btn_namecontest);
         namecontest.setOnClickListener(this);
+
+        animalbook = (Button)findViewById(R.id.board_btn_animalbook);
+        animalbook.setOnClickListener(this);
 
         loadInfo(mAuth.getCurrentUser().getEmail());
     }
@@ -113,6 +116,10 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
                 intent = new Intent(getApplicationContext(), NameContestActivity.class);
                 intent.putExtra("userInfo",user);
 
+                break;
+            case R.id.board_btn_animalbook:
+                intent = new Intent(getApplicationContext(), AnimalBookActivity.class);
+                intent.putExtra("userInfo", user);
                 break;
         }
         updateUI(intent);
