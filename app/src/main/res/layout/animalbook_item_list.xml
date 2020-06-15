@@ -36,12 +36,12 @@
                 android:inputType="textPersonName"
                 android:textSize="24sp" />
 
-            <ImageView
+            <Button
                 android:id="@+id/loc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2.5"
-                app:srcCompat="@drawable/location" />
+                android:background="@drawable/location" />
 
             <Button
                 android:id="@+id/like"

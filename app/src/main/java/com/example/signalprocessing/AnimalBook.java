@@ -9,7 +9,6 @@ public class AnimalBook {
     private String mean;
     private String location;
     private String gender;
-    private String userID;
     private String image;
     private String animalID;
     private ArrayList<String> liker;
@@ -54,13 +53,6 @@ public class AnimalBook {
         this.gender = gender;
     }
 
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
 
     public String getImage() {
         return image;
@@ -79,7 +71,6 @@ public class AnimalBook {
     }
 
     public AnimalBook() {
-        userID = "";
         name = "";
         mean = "";
         location = "";
@@ -88,8 +79,7 @@ public class AnimalBook {
         liker = new ArrayList<>();
     }
 
-    public AnimalBook(String userID, String name, String mean, String location, String gender, String image) {
-        this.userID = userID;
+    public AnimalBook(String name, String mean, String location, String gender, String image) {
         this.name = name;
         this.mean = mean;
         this.location = location;
@@ -100,7 +90,6 @@ public class AnimalBook {
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("userID", userID);
         result.put("name", name);
         result.put("mean", mean);
         result.put("location", location);

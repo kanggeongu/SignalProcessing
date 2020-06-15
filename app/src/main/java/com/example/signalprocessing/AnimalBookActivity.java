@@ -108,6 +108,7 @@ public class AnimalBookActivity extends AppCompatActivity {
             ImageView animal;
             Button like;
             TextView likes;
+            Button loc;
 
             CustomViewHolder(View view) {
                 super(view);
@@ -120,7 +121,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                 content = new ArrayList<>();
                 likes = view.findViewById(R.id.likes);
                 like = view.findViewById(R.id.like);
-
+                loc = view.findViewById(R.id.loc);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -160,7 +161,7 @@ public class AnimalBookActivity extends AppCompatActivity {
             Glide.with(AnimalBookActivity.this).load(AnimalBooks.get(position).getImage()).into(((CustomViewHolder) holder).animal);
 
             //위치 인텐트 넘어가는 곳
-            ((CustomViewHolder)holder).location.setOnClickListener(new View.OnClickListener() {
+            ((CustomViewHolder)holder).loc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(AnimalBookActivity.this,LocationActivity.class);

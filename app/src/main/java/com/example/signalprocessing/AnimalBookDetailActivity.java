@@ -42,7 +42,6 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
     private ImageView image;
     private Button add;
     private User user;
-    private AnimalBook animalBook2;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private ArrayList<Content> contents;
@@ -175,7 +174,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
                                 Content content = dataSnapshot.getValue(Content.class);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalBookDetailActivity.this);
 
-                                builder.setTitle("작성자 정보").setMessage("아이디: " + content.getUserID());
+                                builder.setTitle("작성자 정보").setMessage("아이디: " + content.getUserEmail());
 
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override

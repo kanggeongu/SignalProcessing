@@ -69,7 +69,7 @@ public class writeArticleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_write_article);
 
         contents = findViewById(R.id.contents);
         btn_save = findViewById(R.id.btn_save);
