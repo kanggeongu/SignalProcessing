@@ -13,6 +13,7 @@
         <activity android:name=".LocationActivity"/>
         <activity android:name=".Content"></activity>
         <activity android:name=".AnimalBookActivity" />
+        <activity android:name=".AnimalBookDetailActivity"/>
         <activity android:name=".NameContestAddContestIdea" />
         <activity android:name=".NameContestIdeaViewHome" />
         <activity android:name=".AddNameContestActivity" />

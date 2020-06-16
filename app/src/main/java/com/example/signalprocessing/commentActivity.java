@@ -8,12 +8,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +33,7 @@ public class commentActivity extends AppCompatActivity {
     private RecyclerView recyclerViewComment;
     private TextView textViewUserID, textViewArticleContent;
     private EditText editTextWriteComment;
+    private ImageView articleimage;
 
     public String articleID;
     private Article article;
@@ -75,6 +79,7 @@ public class commentActivity extends AppCompatActivity {
     private void initPallete() {
         textViewUserID = (TextView)findViewById(R.id.textViewUserID);
         textViewArticleContent = (TextView)findViewById(R.id.textViewArticleContent);
+        articleimage = (ImageView)findViewById(R.id.artticleimage);
         editTextWriteComment = (EditText)findViewById(R.id.editTextWriteComment);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout);
 
@@ -96,7 +101,7 @@ public class commentActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 article = dataSnapshot.getValue(Article.class);
-                init(article.getUserID(), article.getContent());
+                init(article.getUserID(), article.getContent(), article.getImage());
                 viewComments();
             }
 
@@ -107,9 +112,14 @@ public class commentActivity extends AppCompatActivity {
         });
     }
 
-    private void init(String userID, String content) {
+    private void init(String userID, String content, String image) {
         textViewUserID.setText(userID);
         textViewArticleContent.setText(content);
+        if(image!=""){
+            Glide.with(commentActivity.this).load(image).into(articleimage);
+        }else{
+            articleimage.setVisibility(View.GONE);
+        }
     }
 
     private void viewComments() {

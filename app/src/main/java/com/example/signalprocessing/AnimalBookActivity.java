@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -137,7 +138,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                             intent.putExtra("animalID", AnimalBooks.get(pos).getAnimalID());
                             animalID=AnimalBooks.get(pos).getAnimalID();
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            Bitmap bitmap = ((BitmapDrawable)animal.getDrawable()).getBitmap();
+                            Bitmap bitmap = ((GlideBitmapDrawable)animal.getDrawable()).getBitmap();
                             float scale = (1024/(float)bitmap.getWidth());
                             int image_w = (int) (bitmap.getWidth() * scale);
                             int image_h = (int) (bitmap.getHeight() * scale);
