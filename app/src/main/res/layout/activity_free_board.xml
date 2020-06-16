@@ -8,38 +8,138 @@
     android:orientation="vertical"
     tools:context=".FreeBoardActivity">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:background="@drawable/brown_round_rectangle">
+            android:orientation="vertical">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_navi"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="15dp"
+                    app:srcCompat="@drawable/icon_menu" />
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="45dp"
+                    android:fontFamily="@font/bmjua"
+                    android:gravity="center"
+                    android:text="메뉴바"
+                    android:textSize="10dp" />
+
+                <ImageView
+                    android:id="@+id/img_logout"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="40dp"
+                    app:srcCompat="@drawable/icon_logout" />
+
+                <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginRight="37dp"
+                    android:fontFamily="@font/bmjua"
+                    android:gravity="center"
+                    android:text="로그아웃"
+                    android:textSize="10dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:paddingTop="15dp"
+                    android:src="@drawable/temp_logo" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginRight="0dp"
+                    android:background="@drawable/brown_topbottom_rectangle"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bmjua"
+                        android:gravity="center"
+                        android:text="경북대학교 자유게시판"
+                        android:textColor="@color/colorBrown"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/swipe_layout">
+                android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewFreeBoard"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/swipe_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/buttonPopUp"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="bottom|center"
-                android:onClick="onClick"
-                android:background="@drawable/ic_add_circle_outline_black_24dp" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewFreeBoard"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </LinearLayout>
 
-        </FrameLayout>
-    </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonPopUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:background="@drawable/ic_add_circle_outline_black_24dp"
+            android:onClick="onClick" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/mypage_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="40dp"
+            android:clickable="true"
+            android:src="@drawable/img_icon" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/mypage_fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="120dp"
+            android:clickable="true"
+            android:visibility="invisible"
+            app:pressedTranslationZ="10dp" />
+
+    </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

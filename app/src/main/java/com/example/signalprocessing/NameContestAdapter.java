@@ -56,13 +56,14 @@ public class NameContestAdapter extends RecyclerView.Adapter<NameContestAdapter.
 
         /*startTime = startTime.substring(0,4) + "-" + startTime.substring(4,6) + "-" + startTime.substring(6,8) + "-" +
                 startTime.substring(8, 10) + "-" + startTime.substring(10, 12);*/
-        endTime = endTime.substring(0,4) + "-" + endTime.substring(4,6) + "-" + endTime.substring(6,8) + "-" +
-                endTime.substring(8, 10) + "-" + endTime.substring(10, 12);
+        endTime = endTime.substring(4,6) + "월" + endTime.substring(6,8) + "일 " +
+                endTime.substring(8, 10) + ":" + endTime.substring(10, 12);
         holder.textViewTime.setText(endTime);
 
         int t = arrayList.get(position).getParticipants() == null? 0 : arrayList.get(position).getParticipants().size();
         holder.textViewTheNumberOfParticipants.setText("참여자 수 " + t);
-        holder.textViewOneSentence.setText(arrayList.get(position).getUserName() + " 한마디 -> " + arrayList.get(position).getOneSentence());
+        //holder.textViewOneSentence.setText(arrayList.get(position).getUserName() + " 한마디 -> " + arrayList.get(position).getOneSentence());
+        holder.textViewOneSentence.setText(arrayList.get(position).getOneSentence());
 
         Glide.with(NameContestActivity.context).load(arrayList.get(position).getImage()).into(holder.imageViewnameContest);
 

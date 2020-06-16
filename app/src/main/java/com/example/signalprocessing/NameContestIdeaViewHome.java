@@ -10,9 +10,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-public class NameContestIdeaViewHome extends AppCompatActivity {
+public class NameContestIdeaViewHome extends AppCompatActivity implements View.OnClickListener{
 
     public String NameContestID;
     private TextView textViewContestTime;
@@ -41,6 +44,10 @@ public class NameContestIdeaViewHome extends AppCompatActivity {
     public static Context context;
     public String startTime, endTime;
 
+    private boolean isFabOpen=false;
+    private Animation fab_open,fab_close;
+    private FloatingActionButton fab,fab1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +59,15 @@ public class NameContestIdeaViewHome extends AppCompatActivity {
         initPallete();
         setTime();
         func();
+
+        fab_open= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
+        fab_close=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+
+        fab=(FloatingActionButton)findViewById(R.id.mypage_fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.mypage_fab1);
+
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
 
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
@@ -67,6 +83,33 @@ public class NameContestIdeaViewHome extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent=null;
+        switch(view.getId()){
+            case R.id.mypage_fab:
+                anim();
+                break;
+            case R.id.mypage_fab1:
+                anim();
+                onClickAddContestIdea();
+                break;
+        }
+    }
+
+    public void anim(){
+        if(isFabOpen){
+            fab1.startAnimation(fab_close);
+            fab1.setClickable(false);
+            isFabOpen=false;
+        }
+        else{
+            fab1.startAnimation(fab_open);
+            fab1.setClickable(true);
+            isFabOpen=true;
+        }
     }
 
     private void initPallete() {
@@ -88,8 +131,10 @@ public class NameContestIdeaViewHome extends AppCompatActivity {
                         startTime.substring(8, 10) + "-" + startTime.substring(10, 12) + "-" + startTime.substring(12, 14);*/
 
                 endTime = nameContestData.getEndTime();
-                String endTime1 = endTime.substring(0,4) + "-" + endTime.substring(4,6) + "-" + endTime.substring(6,8) + "-" +
-                        endTime.substring(8, 10) + "-" + endTime.substring(10, 12);
+//                String endTime1 = endTime.substring(2,4) + "/" + endTime.substring(4,6) + "/" + endTime.substring(6,8) + " " +
+//                        endTime.substring(8, 10) + ":" + endTime.substring(10, 12);
+                String endTime1 = "종료 시간 : "+endTime.substring(4,6) + "월" + endTime.substring(6,8) + "일 " +
+                        endTime.substring(8, 10) + ":" + endTime.substring(10, 12);
 
                 textViewContestTime.setText(endTime1);
             }
@@ -126,12 +171,11 @@ public class NameContestIdeaViewHome extends AppCompatActivity {
         });
     }
 
-    public void onClickAddContestIdea(View v) {
+    public void onClickAddContestIdea() {
         Long now = System.currentTimeMillis();
         Date mDate = new Date(now);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String curTime = simpleDateFormat.format(mDate);
-
 
 
         if(Long.parseLong(endTime) < Long.parseLong(curTime)) {

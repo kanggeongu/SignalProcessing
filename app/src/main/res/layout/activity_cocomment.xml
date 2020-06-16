@@ -8,9 +8,9 @@
     tools:context=".CocommentActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipe_layout">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -64,24 +64,36 @@
                             android:id="@+id/LayoutWriteComment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <EditText
                                 android:id="@+id/editTextWriteCocomment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5"
+                                android:layout_weight="6"
+                                android:background="@drawable/brown_round_rectangle"
                                 android:ems="10"
                                 android:hint="답글을 작성하세요"
-                                android:text="" />
+                                android:padding="10dp"
+                                android:text=""
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent" />
 
                             <Button
                                 android:id="@+id/buttonWriteCocomment"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_weight="1"
+                                android:background="@drawable/fill_brown_round_rectangle"
                                 android:onClick="onClickCocomment"
-                                android:text="작성" />
+                                android:text="작성"
+                                android:textColor="@color/colorWhite" />
 
                         </LinearLayout>
 
@@ -89,6 +101,7 @@
                             android:id="@+id/recyclerViewCocomment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:layout_weight="5" />
 
                     </LinearLayout>

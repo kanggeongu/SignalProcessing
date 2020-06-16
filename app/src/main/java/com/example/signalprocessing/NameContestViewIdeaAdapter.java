@@ -58,11 +58,11 @@ public class NameContestViewIdeaAdapter extends RecyclerView.Adapter<NameContest
         holder.textViewReason.setText(arrayList.get(position).getReason());
 
         if(arrayList.get(position).getVoters().contains(user.getUserName())) {
-            holder.buttonCheck.setBackgroundResource(R.drawable.ic_check_box_black_24dp);
+            holder.buttonCheck.setBackgroundResource(R.drawable.icon_full_box);
             Flag = true;
         }
         else {
-            holder.buttonCheck.setBackgroundResource(R.drawable.ic_check_box_outline_blank_black_24dp);
+            holder.buttonCheck.setBackgroundResource(R.drawable.icon_empty_box);
         }
 
         holder.buttonCheck.setOnClickListener(new View.OnClickListener() {
@@ -86,12 +86,12 @@ public class NameContestViewIdeaAdapter extends RecyclerView.Adapter<NameContest
                 }
 
                 if(arrayList.get(position).addVoter(user.getUserName())) {
-                    holder.buttonCheck.setBackgroundResource(R.drawable.ic_check_box_black_24dp);
+                    holder.buttonCheck.setBackgroundResource(R.drawable.icon_full_box);
                     Toast.makeText(v.getContext(), "투표하였습니다", Toast.LENGTH_SHORT).show();
                     Flag = true;
                 }
                 else {
-                    holder.buttonCheck.setBackgroundResource(R.drawable.ic_check_box_outline_blank_black_24dp);
+                    holder.buttonCheck.setBackgroundResource(R.drawable.icon_empty_box);
                     Toast.makeText(v.getContext(), "취소하였습니다", Toast.LENGTH_SHORT).show();
                     Flag = false;
                 }
