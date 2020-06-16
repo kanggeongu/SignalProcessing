@@ -84,14 +84,14 @@ public class NameContestIdeaViewHome extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 NameContestData nameContestData = dataSnapshot.getValue(NameContestData.class);
                 startTime = nameContestData.getStartTime();
-                String startTime1 = startTime.substring(0,4) + "-" + startTime.substring(4,6) + "-" + startTime.substring(6,8) + "-" +
-                        startTime.substring(8, 10) + "-" + startTime.substring(10, 12) + "-" + startTime.substring(12, 14);
+                /*String startTime1 = startTime.substring(0,4) + "-" + startTime.substring(4,6) + "-" + startTime.substring(6,8) + "-" +
+                        startTime.substring(8, 10) + "-" + startTime.substring(10, 12) + "-" + startTime.substring(12, 14);*/
 
                 endTime = nameContestData.getEndTime();
                 String endTime1 = endTime.substring(0,4) + "-" + endTime.substring(4,6) + "-" + endTime.substring(6,8) + "-" +
-                        endTime.substring(8, 10) + "-" + endTime.substring(10, 12) + "-" + endTime.substring(12, 14);
+                        endTime.substring(8, 10) + "-" + endTime.substring(10, 12);
 
-                textViewContestTime.setText(startTime1 + " ~\n\t" + endTime1);
+                textViewContestTime.setText(endTime1);
             }
 
             @Override

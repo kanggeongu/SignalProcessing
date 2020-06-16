@@ -10,7 +10,8 @@ public class WaitItem implements Serializable {
 
     }
 
-    public WaitItem(String writer,String name, String mean, String location, String feature, String gender, String picture,String status) {
+    public WaitItem(String writer,String name, String mean, String location, String feature,
+                    String gender, String picture,String status) {
         this.writer=writer;
         this.name = name;
         this.mean = mean;

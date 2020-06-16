@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +48,7 @@ public class FreeBoardActivity extends AppCompatActivity{
     //
     public static Context context;
     public User user;
+    private Intent intent;
 
     //리사이클러뷰에 필요한 것들
     private LinearLayoutManager linearLayoutManager;
@@ -216,10 +218,52 @@ public class FreeBoardActivity extends AppCompatActivity{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.buttonPopUp:
-                Intent intent = new Intent(getApplicationContext(), PopUpActivity.class);
-                intent.putExtra("userInformation", user);
-                startActivity(intent);
+                FreeBoardDialog freeBoardDialog = new FreeBoardDialog(this);
+                freeBoardDialog.show();
                 break;
+        }
+    }
+
+    class FreeBoardDialog extends Dialog {
+
+        Button buttonWriteArticle1, buttonSearch, buttonComplete;
+
+        public FreeBoardDialog(@NonNull Context context) {
+            super(context);
+            setContentView(R.layout.free_board_dialog);
+
+            initPalette();
+        }
+
+        private void initPalette() {
+            buttonWriteArticle1 = (Button)findViewById(R.id.buttonWriteArticle1);
+            buttonWriteArticle1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intent = new Intent(getApplicationContext(), writeArticleActivity.class);
+                    intent.putExtra("userInformation", user);
+                    startActivity(intent);
+                }
+            });
+
+            buttonSearch = (Button)findViewById(R.id.buttonSearch);
+            buttonSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intent = new Intent(getApplicationContext(), SearchActivity.class);
+                    intent.putExtra("userInformation", user);
+                    startActivity(intent);
+                }
+            });
+
+
+            buttonComplete = (Button)findViewById(R.id.buttonComplete);
+            buttonComplete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
         }
     }
 

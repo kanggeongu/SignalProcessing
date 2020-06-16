@@ -301,7 +301,8 @@ public class AddWaitAnimalActivity extends AppCompatActivity implements AdapterV
     }
 
     private void addFinalData(final WaitItem data){
-        mRef.child("Waits").child("경북대학교").push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+        Long now = System.currentTimeMillis();
+        mRef.child("Waits").child("경북대학교").child(Long.toString(now)).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){

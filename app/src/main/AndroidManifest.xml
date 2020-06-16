@@ -23,7 +23,6 @@
         <activity android:name=".SendMessage" />
         <activity android:name=".commentActivity" />
         <activity android:name=".writeArticleActivity" />
-        <activity android:name=".PopUpActivity" />
         <activity android:name=".ConnectorActivity" />
         <activity android:name=".AddWaitAnimalActivity" />
         <activity android:name=".WaitAnimalActivity" />
