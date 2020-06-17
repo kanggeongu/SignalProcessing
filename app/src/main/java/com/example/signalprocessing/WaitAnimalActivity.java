@@ -12,9 +12,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -268,6 +271,14 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                     View newView= LayoutInflater.from(WaitAnimalActivity.this).inflate(R.layout.show_image,null,false);
                     builder.setView(newView);
                     final ImageView imgView=(ImageView)newView.findViewById(R.id.showimage_img);
+                    Display display = getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+                    imgView.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            size.y * 2 / 3
+                    ));
+
                     final AlertDialog dialog=builder.create();
                     Glide.with(WaitAnimalActivity.this).load(item.getPicture()).into(imgView);
                     dialog.show();

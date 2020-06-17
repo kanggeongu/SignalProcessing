@@ -133,7 +133,8 @@ public class ShowMessageActivity extends AppCompatActivity {
     }
 
     public void addUserMessage(final Message myMessage){
-        mRef.child("Users").child(user.getUserName()).child("Messages").push().setValue(myMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
+        Long now = System.currentTimeMillis();
+        mRef.child("Users").child(user.getUserName()).child("Messages").child(Long.toString(now)).setValue(myMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
@@ -148,7 +149,8 @@ public class ShowMessageActivity extends AppCompatActivity {
     }
 
     public void addDestMessage(final Message myMessage){
-        mRef.child("Users").child(destUser).child("Messages").push().setValue(myMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
+        Long now = System.currentTimeMillis();
+        mRef.child("Users").child(destUser).child("Messages").child(Long.toString(now)).setValue(myMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){

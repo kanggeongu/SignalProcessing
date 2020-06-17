@@ -36,11 +36,14 @@ public class NameContestActivity extends AppCompatActivity {
 
     public User user;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private TextView textViewNumberOfContest;
     private RecyclerView recyclerViewNameContest;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<NameContestViewData> arrayList;
     private NameContestAdapter nameContestAdapter;
+
+    // 대시보드
+    private TextView wait_text_all, wait_text_admit, wait_text_reject, wait_text_ing;
+    private int numAll=0,numAdmit=0,numReject=0,numIng=0;
 
     public static Context context;
 
@@ -72,11 +75,15 @@ public class NameContestActivity extends AppCompatActivity {
     }
 
     private void initPallete() {
-        textViewNumberOfContest = (TextView)findViewById(R.id.textViewNumberOfContest);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout_name_contest);
         recyclerViewNameContest = (RecyclerView)findViewById(R.id.recyclerViewNameContest);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewNameContest.setLayoutManager(linearLayoutManager);
+
+        wait_text_all = (TextView)findViewById(R.id.wait_text_all);
+        wait_text_admit = (TextView)findViewById(R.id.wait_text_admit);
+        wait_text_reject = (TextView)findViewById(R.id.wait_text_reject);
+        wait_text_ing = (TextView)findViewById(R.id.wait_text_ing);
     }
 
     private void func() {
@@ -91,7 +98,7 @@ public class NameContestActivity extends AppCompatActivity {
         databaseReference.child("NameContests").child(user.getUserUniv()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int cnt = 0;
+                numAll=numAdmit=numReject=numIng=0;
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     NameContestData nameContestData = snapshot.getValue(NameContestData.class);
                     NameContestViewData nameContestViewData = new NameContestViewData(
@@ -104,15 +111,27 @@ public class NameContestActivity extends AppCompatActivity {
                     Date mDate = new Date(now);
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                     String curTime = simpleDateFormat.format(mDate);
-                    if(Long.parseLong(curTime) <= Long.parseLong(nameContestData.getEndTime())) {
-                        cnt++;
+                    if(Long.parseLong(curTime) <= Long.parseLong(nameContestData.getEndTime()) && nameContestData.getStatus().equals("심사중")) {
+                        numIng++;
+                    }
+                    else if(nameContestData.getStatus().equals("심사완료")) {
+                        numAdmit++;
+                    }
+                    else {
+                        numReject++;
                     }
 
                     arrayList.add(nameContestViewData);
+                    numAll++;
                 }
                 Collections.sort(arrayList);
                 nameContestAdapter.notifyDataSetChanged();
-                textViewNumberOfContest.setText("진행 중인 공모전 개수 : " + cnt);
+
+                wait_text_all.setText("" + numAll);
+                wait_text_admit.setText("" + numAdmit);
+                wait_text_reject.setText("" + numReject);
+                wait_text_ing.setText("" + numIng);
+
                 progressDialog.dismiss();
             }
 
