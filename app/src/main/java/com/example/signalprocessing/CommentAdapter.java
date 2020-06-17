@@ -79,10 +79,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
         holder.buttonUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), SendMessage.class);
-                intent.putExtra("sendUser", user.getUserName());
-                intent.putExtra("receiveUser", holder.textViewUserName.getText().toString());
-                v.getContext().startActivity(intent);
+
             }
         });
     }

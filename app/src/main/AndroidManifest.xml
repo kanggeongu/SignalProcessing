@@ -20,7 +20,6 @@
         <activity android:name=".NameContestActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".CocommentActivity" />
-        <activity android:name=".SendMessage" />
         <activity android:name=".commentActivity" />
         <activity android:name=".writeArticleActivity" />
         <activity android:name=".ConnectorActivity" />
