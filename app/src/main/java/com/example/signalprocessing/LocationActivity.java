@@ -78,7 +78,7 @@ public class LocationActivity extends AppCompatActivity {
         final float[] y = new float[1];
         tf = getResources().getFont(R.font.bmjua);
 
-        final String uvName=user.getUserUniv();//인텐트나 다른 무언가로 동물 도감의 대학 정보 가져오기
+        final String uvName="경북대학교";//인텐트나 다른 무언가로 동물 도감의 대학 정보 가져오기
         final String animalId=intent.getStringExtra("animalId");
         final List<Location> Loc = new ArrayList<>();
         class NewRunnable implements Runnable {
@@ -87,30 +87,20 @@ public class LocationActivity extends AppCompatActivity {
             }
 
             public void run() {
-                // TODO : thread running codes.
                 layoutX=mapImage.getWidth();
                 layoutY=mapImage.getHeight();
-                mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Location").addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Locations").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Location lc = postSnapshot.getValue(Location.class);
                             Loc.add(lc);
                         }
-                        if (Loc == null) {
-                            isexist = -1;
-                        } else {
-                            isexist = 1;
-                            int size = Loc.size();
-                            layoutX = mapImage.getWidth();
-                            layoutY = mapImage.getHeight();
-                            for (int i = 0; i < size; i++) {
-                                addView(Loc.get(i).getUserName(), Loc.get(i).getContent(), Loc.get(i).getX() * layoutX + 30, Loc.get(i).getY() * layoutY + 189, i);
-                                num[0]++;
-                            }
-
+                        int size = Loc.size();
+                        for (int i = 0; i < size; i++) {
+                            addView(Loc.get(i).getUserName(), Loc.get(i).getContent(), Loc.get(i).getX() * layoutX + 30, Loc.get(i).getY() * layoutY + 189, i);
+                            num[0]++;
                         }
-
                     }
 
                     @Override
@@ -147,14 +137,15 @@ public class LocationActivity extends AppCompatActivity {
 
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
-                        if(y[0]>layoutY+189 || y[0]<189){
-                            Toast.makeText(mContext,"지도 밖으로 벗어났습니다",Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            if (num[0] < 5 && addnum == 1) {
-                                addView(user.getUserName(), "", x[0], y[0], num[0]);
-                            } else if (addnum == 1) {
-                                addView(user.getUserName(), "", x[0], y[0], fullnum % 5);
+                        if(addnum==1) {
+                            if (y[0] > layoutY + 189 || y[0] < 189) {
+                                Toast.makeText(mContext, "지도 밖으로 벗어났습니다", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (num[0] < 5) {
+                                    addView(user.getUserName(), "", x[0], y[0], num[0]);
+                                } else {
+                                    addView(user.getUserName(), "", x[0], y[0], fullnum % 5);
+                                }
                             }
                         }
                         break;
@@ -222,7 +213,7 @@ public class LocationActivity extends AppCompatActivity {
                     }
                     else {
                         if(num[0]==5){
-                            mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Location").addListenerForSingleValueEvent(new ValueEventListener() {
+                            mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Locations").addListenerForSingleValueEvent(new ValueEventListener() {
                                 final List<Location> Lt = new ArrayList<>();
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -237,7 +228,7 @@ public class LocationActivity extends AppCompatActivity {
                                     newloc.setX((x[0]-30)/layoutX);
                                     newloc.setY((y[0]-189)/layoutY);
                                     Lt.add(newloc);
-                                    mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Location").setValue(Lt);
+                                    mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Locations").setValue(Lt);
                                 }
 
                                 @Override
@@ -254,12 +245,11 @@ public class LocationActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Location lc = new Location();
-                                    lc.setUserName(/*user.getUserName()*/"병주");
+                                    lc.setUserName(user.getUserName());
                                     lc.setContent(content);
                                     lc.setX((x[0]-30)/layoutX);
                                     lc.setY((y[0]-194)/layoutY);
-                                    //mDatabaseReference.child("Location").child("isNew").removeValue();
-                                    mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Location").child(String.valueOf(num[0]-1)).setValue(lc);
+                                    mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Locations").child(String.valueOf(num[0]-1)).setValue(lc);
                                 }
 
                                 @Override
@@ -319,7 +309,7 @@ public class LocationActivity extends AppCompatActivity {
         textView.setGravity(Gravity.CENTER);
         textView.setTypeface(tf);
         linearLayout.addView(textView);
-        Log.d("좌표","X : "+x+" Y : "+y);
+
         ImageView imageView = new ImageView(this);
         imageView.setImageResource(R.drawable.ic_place_yellow);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(
@@ -329,35 +319,30 @@ public class LocationActivity extends AppCompatActivity {
         linearLayout.addView(imageView);
         switch(n){
             case 0:
-                Log.d("번호","1111");
                 ll1.setX(x-80);
                 ll1.setY(y-130);
                 ll1.removeAllViews();
                 ll1.addView(linearLayout);
                 break;
             case 1:
-                Log.d("번호","2222");
                 ll2.setX(x-80);
                 ll2.setY(y-130);
                 ll2.removeAllViews();
                 ll2.addView(linearLayout);
                 break;
             case 2:
-                Log.d("번호","3333");
                 ll3.setX(x-80);
                 ll3.setY(y-130);
                 ll3.removeAllViews();
                 ll3.addView(linearLayout);
                 break;
             case 3:
-                Log.d("번호","4444");
                 ll4.setX(x-80);
                 ll4.setY(y-130);
                 ll4.removeAllViews();
                 ll4.addView(linearLayout);
                 break;
             case 4:
-                Log.d("번호","5555");
                 ll5.setX(x-80);
                 ll5.setY(y-130);
                 ll5.removeAllViews();

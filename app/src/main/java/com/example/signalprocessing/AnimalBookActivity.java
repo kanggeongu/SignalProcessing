@@ -92,7 +92,6 @@ public class AnimalBookActivity extends AppCompatActivity {
 
     class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-        String animalID;
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -136,7 +135,6 @@ public class AnimalBookActivity extends AppCompatActivity {
                             intent.putExtra("성별", gender.getText().toString());
                             intent.putExtra("userInfo", getIntent().getSerializableExtra("userInfo"));
                             intent.putExtra("animalID", AnimalBooks.get(pos).getAnimalID());
-                            animalID=AnimalBooks.get(pos).getAnimalID();
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
                             Bitmap bitmap = ((GlideBitmapDrawable)animal.getDrawable()).getBitmap();
                             float scale = (1024/(float)bitmap.getWidth());
@@ -161,6 +159,7 @@ public class AnimalBookActivity extends AppCompatActivity {
             ((CustomViewHolder)holder).location.setText(AnimalBooks.get(position).getLocation());
             Glide.with(AnimalBookActivity.this).load(AnimalBooks.get(position).getImage()).into(((CustomViewHolder) holder).animal);
 
+            final String animalID = AnimalBooks.get(position).getAnimalID();
             //위치 인텐트 넘어가는 곳
             ((CustomViewHolder)holder).loc.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -173,7 +172,6 @@ public class AnimalBookActivity extends AppCompatActivity {
                 }
             });
 
-            final String animalID = AnimalBooks.get(position).getAnimalID();
 
             databaseReference.child("Users").child(user.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
