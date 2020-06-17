@@ -117,10 +117,10 @@ public class commentActivity extends AppCompatActivity {
     private void init(String userID, String content, String image) {
         textViewUserID.setText(userID);
         textViewArticleContent.setText(content);
-        if(image!=""){
-            Glide.with(commentActivity.this).load(image).into(articleimage);
-        }else{
+        if(image.equals("")){
             articleimage.setVisibility(View.GONE);
+        }else{
+            Glide.with(commentActivity.this).load(image).into(articleimage);
         }
     }
 

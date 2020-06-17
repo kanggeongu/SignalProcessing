@@ -64,7 +64,11 @@ public class writeArticleActivity extends AppCompatActivity {
     private Uri downloadUri;
     private String imageFilePath;
     private Uri cameraUri;
+    private Calendar c = Calendar.getInstance();
     private User user;
+    private Article article;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+    private Long now = System.currentTimeMillis();
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private ProgressDialog pdialog=null;
@@ -94,12 +98,23 @@ public class writeArticleActivity extends AppCompatActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                upload();
+                article = new Article(Long.toString(now), user.getUserUniv(), user.getUserName(), contents.getText().toString(), "", dateFormat.format(c.getTime()));
+                if(file!=null){
+                    upload(file);
+                }
+                databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.v("123213", "finish");
+                        pdialog.dismiss();
+                        finish();
+                    }
+                });
             }
         });
     }
 
-    public void upload(){
+    public void upload(Uri file){
         Log.v("123123", "upload()");
         pdialog=new ProgressDialog(writeArticleActivity.this);
         pdialog.setTitle("업로드 중입니다");
@@ -135,15 +150,12 @@ public class writeArticleActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.v("123123", "success");
                             downloadUri = task.getResult();
-                            Long now = System.currentTimeMillis();
-                            Calendar c = Calendar.getInstance();
                             c.setTimeInMillis(now);
                             c.add(Calendar.DATE, 7);
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                             Log.v("123123", "before null");
                             assert downloadUri != null;
                             Log.v("123123", "after null");
-                            Article article = new Article(Long.toString(now), user.getUserUniv(), user.getUserName(), contents.getText().toString(), downloadUri.toString(), dateFormat.format(c.getTime()));
+                            article.setImage(downloadUri.toString());
                             databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
