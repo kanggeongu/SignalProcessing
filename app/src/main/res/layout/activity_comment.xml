@@ -10,6 +10,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/swipe_layout">
 
         <ScrollView
@@ -24,6 +26,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/top_gray_border"
+                    android:paddingTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -33,11 +38,44 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textViewUserID"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:textSize="20dp" />
+                            android:text="작성자"
+                            android:paddingRight="15dp"
+                            android:paddingLeft="15dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:background="@drawable/yellow_round_rectangle"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:id="@+id/textViewUserID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            app:srcCompat="@drawable/icon_mail"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="3dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="쪽지 전송"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/colorBrown"
+                            android:textSize="12dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -51,21 +89,33 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textSize="12dp"
+                            android:background="@drawable/empty_yellow_round_rectangle"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:layout_marginTop="10dp"
                             android:text="" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"/>
 
                         <ImageView
                             android:id="@+id/artticleimage"
-                            android:layout_width="400dp"
-                            android:layout_height="400dp"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp"
                             android:layout_gravity="center"
-                            android:layout_weight="1"
-                            app:srcCompat="?attr/actionModeBackground" />
+                            android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/LayoutComment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/top_gray_border"
+                        android:paddingTop="20dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -79,7 +129,7 @@
                             <EditText
                                 android:id="@+id/editTextWriteComment"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="5"
                                 android:background="@drawable/brown_round_rectangle"
                                 android:ems="10"
@@ -105,8 +155,9 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerViewComment"
+                            android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="match_parent" />
                     </LinearLayout>
 
                 </LinearLayout>

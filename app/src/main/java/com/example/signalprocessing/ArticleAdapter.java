@@ -63,7 +63,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         holder.textViewUserName.setText(article.getUserID());
         holder.textViewContent.setText(article.getContent());
         Log.e("자유게시판 사진", article.getImage().toString());
-        Glide.with(FreeBoardActivity.context).load(article.getImage()).into(holder.imageView);
+
+        // 이미지 추가=> 맞나
+        if(!article.getImage().equals("")) {
+            holder.imageView.setVisibility(View.VISIBLE);
+            Glide.with(FreeBoardActivity.context).load(article.getImage()).into(holder.imageView);
+        }
 
         //쪽지
         addMessage(holder);
@@ -87,7 +92,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         ((Activity) holder.itemView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int deviceWidth = displayMetrics.widthPixels;
         deviceWidth = deviceWidth - 50;
-        int deviceHeight = (int) (deviceWidth * 0.6);
+        int deviceHeight = (int) (deviceWidth * 0.5);
         holder.mView.getLayoutParams().width=deviceWidth;
         holder.mView.getLayoutParams().height=deviceHeight;
     }
