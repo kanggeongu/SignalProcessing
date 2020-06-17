@@ -6,7 +6,7 @@
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
     android:padding="10dp"
-    android:background="@drawable/brown_topbottom_rectangle"
+    android:background="@drawable/bottom_brown_border"
     android:orientation="vertical">
 
     <LinearLayout
@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="10dp"
+            android:gravity="right"
             android:text="" />
 
     </LinearLayout>

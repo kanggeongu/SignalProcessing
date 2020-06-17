@@ -7,6 +7,21 @@
     android:orientation="vertical"
     tools:context=".commentActivity">
 
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bmjua"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:text="게시글 확인하기" />
+
+    </RelativeLayout>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,96 +41,98 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/top_gray_border"
-                    android:paddingTop="20dp"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/LayoutUserID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="작성자"
-                            android:paddingRight="15dp"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:background="@drawable/yellow_round_rectangle"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/textViewUserID"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textSize="15dp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            app:srcCompat="@drawable/icon_mail"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="3dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="쪽지 전송"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/colorBrown"
-                            android:textSize="12dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/LayoutArticleContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:background="@drawable/white_yellow_round_rectangle"
+                        android:padding="15dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textViewArticleContent"
+                        <LinearLayout
+                            android:id="@+id/LayoutUserID"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="12dp"
-                            android:background="@drawable/empty_yellow_round_rectangle"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="" />
+                            android:orientation="horizontal">
 
-                        <TextView
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/yellow_round_rectangle"
+                                android:paddingLeft="15dp"
+                                android:paddingTop="5dp"
+                                android:paddingRight="15dp"
+                                android:paddingBottom="5dp"
+                                android:text="작성자"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:id="@+id/textViewUserID"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:textSize="15dp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                app:srcCompat="@drawable/icon_mail" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="3dp"
+                                android:paddingTop="5dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="5dp"
+                                android:text="쪽지 전송"
+                                android:textColor="@color/colorBrown"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/LayoutArticleContent"
                             android:layout_width="match_parent"
-                            android:layout_height="20dp"/>
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/artticleimage"
-                            android:layout_width="300dp"
-                            android:layout_height="300dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1" />
+                            <TextView
+                                android:id="@+id/textViewArticleContent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:text=""
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp" />
+
+                            <ImageView
+                                android:id="@+id/artticleimage"
+                                android:layout_width="300dp"
+                                android:layout_height="300dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/LayoutComment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/top_gray_border"
-                        android:paddingTop="20dp"
+                        android:paddingTop="10dp"
                         android:orientation="vertical">
 
                         <LinearLayout
