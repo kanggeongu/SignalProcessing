@@ -121,11 +121,12 @@
                 android:textSize="12dp" />
 
             <!--  쪽지 내용 TextView id 필요 -->
-            <TextView
+            <EditText
                 android:id="@+id/textViewMessageContent"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/brown_round_rectangle"
+                android:gravity="top"
                 android:hint="쪽지 내용"
                 android:padding="10dp"
                 android:text=""

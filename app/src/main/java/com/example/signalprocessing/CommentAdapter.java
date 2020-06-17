@@ -79,7 +79,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
         holder.buttonUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SendMessageDialog sendMessageDialog = new SendMessageDialog(v.getContext(), user.getUserName(), holder.textViewUserName.getText().toString());
+                sendMessageDialog.show();
             }
         });
     }
@@ -117,7 +118,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
 
     //날짜
     private void addDate(@NonNull CommentAdapter.CustomViewHolder holder, final Comment comment) {
-        holder.textViewEndDate.setText(comment.getEndDate());
+        String date = comment.getEndDate();
+        holder.textViewEndDate.setText(date.substring(4,6) + "월 " + date.substring(6,8) +
+                "일 " + date.substring(8,10) + ":" + date.substring(10, 12));
     }
 
     //좋아요

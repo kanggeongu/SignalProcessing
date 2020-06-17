@@ -97,7 +97,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         holder.buttonUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SendMessageDialog sendMessageDialog = new SendMessageDialog(v.getContext(), user.getUserName(), holder.textViewUserName.getText().toString());
+                sendMessageDialog.show();
             }
         });
     }
@@ -135,7 +136,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
 
     //날짜
     private void addDate(@NonNull CustomViewHolder holder, final Article article) {
-        holder.textViewEndDate.setText(article.getEndDate());
+        String date = article.getEndDate();
+        holder.textViewEndDate.setText(date.substring(4,6) + "월 " + date.substring(6,8) +
+                "일 " + date.substring(8,10) + ":" + date.substring(10, 12));
     }
 
     //좋아요
