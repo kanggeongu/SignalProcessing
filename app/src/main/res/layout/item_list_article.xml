@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="400dp"
-        android:layout_height="240dp"
+        android:layout_height="200dp"
         android:layout_margin="5dp"
         app:cardCornerRadius="10dp"
         android:id="@+id/mArticleView"
@@ -23,7 +23,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:orientation="horizontal"
                 android:background="@drawable/no_bottom_radius_brown">
 
@@ -55,8 +55,10 @@
 
                     <Button
                         android:id="@+id/buttonDelete"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right|end"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/ic_delete_black_24dp"
                         android:text="" />
                 </LinearLayout>
@@ -72,13 +74,17 @@
                     android:id="@+id/textViewEndDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="" />
+                    android:gravity="right"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="1dp"
+                    android:textSize="12dp"
+                    android:text="2020/05/12" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1.5"
                 android:orientation="horizontal">
 
                 <TextView
@@ -98,22 +104,29 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:orientation="horizontal"
+                android:padding="3dp"
                 android:background="@drawable/no_top_radius_brown">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/buttonAddLover"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/red_empty_heart"
-                    android:layout_weight="6"
+                    android:layout_weight="3"
                     android:text="" />
 
                 <TextView
@@ -121,8 +134,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="+1"
-                    android:textSize="40sp"
-                    android:layout_weight="11"
+                    android:textSize="18dp"
+                    android:layout_weight="5"
                     android:gravity="center_vertical"
                     />
 
@@ -130,22 +143,27 @@
                     android:id="@+id/buttonAddComment"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/comment"
-                    android:layout_weight="6"
+                    android:background="@drawable/icon_final_chat"
+                    android:layout_weight="3"
                     android:text="" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="11"/>
+                    android:layout_weight="26"/>
 
                 <Button
                     android:id="@+id/buttonAddReporter"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/red_alert"
-                    android:layout_weight="6"
+                    android:background="@drawable/icon_pink_alert"
+                    android:layout_weight="3"
                     android:text="" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

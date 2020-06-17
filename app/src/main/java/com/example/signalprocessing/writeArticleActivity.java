@@ -266,6 +266,7 @@ public class writeArticleActivity extends AppCompatActivity {
                     try{
                         Bitmap bitmap=MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                         selectedImage.setImageBitmap(bitmap);
+                        selectedImage.setVisibility(View.VISIBLE);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
