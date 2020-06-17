@@ -18,10 +18,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class FreeBoardActivity extends AppCompatActivity{
+public class FreeBoardActivity extends AppCompatActivity implements View.OnClickListener{
 
     //파이어베이스
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -66,6 +69,10 @@ public class FreeBoardActivity extends AppCompatActivity{
     private TextView textMypage,textName;
     ///////////////////////////////////////////////
 
+    private boolean isFabOpen=false;
+    private Animation fab_open,fab_close;
+    private FloatingActionButton fab,fab1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +85,15 @@ public class FreeBoardActivity extends AppCompatActivity{
 
         initPalette();
         func();
+
+        fab_open= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
+        fab_close=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+
+        fab=(FloatingActionButton)findViewById(R.id.mypage_fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.mypage_fab1);
+
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
 
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
@@ -215,13 +231,36 @@ public class FreeBoardActivity extends AppCompatActivity{
         });
     }
 
+    @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.buttonPopUp:
-                FreeBoardDialog freeBoardDialog = new FreeBoardDialog(this);
-                freeBoardDialog.show();
+        Intent intent=null;
+        switch(view.getId()){
+            case R.id.mypage_fab:
+                anim();
+                break;
+            case R.id.mypage_fab1:
+                anim();
+                FreeBoardshowDialog();
                 break;
         }
+    }
+
+    public void anim(){
+        if(isFabOpen){
+            fab1.startAnimation(fab_close);
+            fab1.setClickable(false);
+            isFabOpen=false;
+        }
+        else{
+            fab1.startAnimation(fab_open);
+            fab1.setClickable(true);
+            isFabOpen=true;
+        }
+    }
+
+    public void FreeBoardshowDialog() {
+        FreeBoardDialog freeBoardDialog = new FreeBoardDialog(this);
+        freeBoardDialog.show();
     }
 
     class FreeBoardDialog extends Dialog {

@@ -110,14 +110,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonPopUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:background="@drawable/ic_add_circle_outline_black_24dp"
-            android:onClick="onClick" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/mypage_fab"
             android:layout_width="wrap_content"
