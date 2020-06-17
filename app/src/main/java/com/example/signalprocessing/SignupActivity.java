@@ -119,7 +119,7 @@ public class SignupActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMdd");
         final String date=simpleDateFormat.format(mDate);
         final String converted=email.replace('.','_');
-        mRef.child("Restricted").child(converted).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child("Restricted").child("Users").child(converted).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){

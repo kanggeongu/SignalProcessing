@@ -53,11 +53,12 @@
                     android:layout_weight="3"
                     android:orientation="vertical">
 
+<!---->
                     <Button
                         android:id="@+id/buttonDelete"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="right|end"
+
                         android:layout_marginRight="10dp"
                         android:background="@drawable/ic_delete_black_24dp"
                         android:text="" />
