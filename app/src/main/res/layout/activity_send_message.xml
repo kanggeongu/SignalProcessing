@@ -122,7 +122,7 @@
 
             <!--  쪽지 내용 TextView id 필요 -->
             <TextView
-
+                android:id="@+id/textViewMessageContent"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/brown_round_rectangle"
@@ -135,6 +135,7 @@
         <!--  쪽지  전송 Button id 필요 -->
 
         <Button
+            android:id="@+id/buttonSendMessage"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="100dp"
