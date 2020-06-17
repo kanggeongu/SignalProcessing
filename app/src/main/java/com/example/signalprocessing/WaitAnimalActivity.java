@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -51,6 +52,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
     private List<WaitItem> items=new ArrayList<WaitItem>();
     private AllDataAdapter radapter;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rview;
     private TextView textAll,textAdmit,textReject,textIng;
     private int numAll=0,numAdmit=0,numReject=0,numIng=0;
@@ -98,46 +100,24 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
         fab1.setOnClickListener(this);
 
         rview=(RecyclerView)findViewById(R.id.wait_rview);
-        rview.setLayoutManager(new LinearLayoutManager(this));
-        radapter=new AllDataAdapter();
-        rview.setAdapter(radapter);
+        func();
 
-        final ProgressDialog pdialog=new ProgressDialog(this);
-        pdialog.setTitle("정보를 불러오는 중입니다");
-        pdialog.show();
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout_name_contest);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
 
-        mRef.child("Waits").child("경북대학교").addValueEventListener(new ValueEventListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                items.clear();
-                numAll=numAdmit=numReject=numIng=0;
-                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    WaitItem waitItem=snapshot.getValue(WaitItem.class);
-                    items.add(waitItem);
-                    numAll++;
-                    if(waitItem.getStatus().equals("심사중")){
-                        numIng++;
-                    }
-                    else if(waitItem.getStatus().equals("거부")){
-                        numReject++;
-                    }
-                    else{
-                        numAdmit++;
-                    }
-                }
-                Collections.reverse(items);
-                radapter.notifyDataSetChanged();
-                textAll.setText(""+numAll);
-                textAdmit.setText(""+numAdmit);
-                textReject.setText(""+numReject);
-                textIng.setText(""+numIng);
-                pdialog.dismiss();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onRefresh() {
+                func();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
+
 
         // 네비게이션 바
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -220,6 +200,49 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
         });
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+
+    private void func() {
+        rview.setLayoutManager(new LinearLayoutManager(this));
+        radapter=new AllDataAdapter();
+        rview.setAdapter(radapter);
+
+        final ProgressDialog pdialog=new ProgressDialog(this);
+        pdialog.setTitle("정보를 불러오는 중입니다");
+        pdialog.show();
+
+        mRef.child("Waits").child("경북대학교").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                items.clear();
+                numAll=numAdmit=numReject=numIng=0;
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    WaitItem waitItem=snapshot.getValue(WaitItem.class);
+                    items.add(waitItem);
+                    numAll++;
+                    if(waitItem.getStatus().equals("심사중")){
+                        numIng++;
+                    }
+                    else if(waitItem.getStatus().equals("거부")){
+                        numReject++;
+                    }
+                    else{
+                        numAdmit++;
+                    }
+                }
+                Collections.reverse(items);
+                radapter.notifyDataSetChanged();
+                textAll.setText(""+numAll);
+                textAdmit.setText(""+numAdmit);
+                textReject.setText(""+numReject);
+                textIng.setText(""+numIng);
+                pdialog.dismiss();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
