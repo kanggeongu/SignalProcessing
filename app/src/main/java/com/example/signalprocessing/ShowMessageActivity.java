@@ -87,10 +87,24 @@ public class ShowMessageActivity extends AppCompatActivity {
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 넣자
-                updateMessage();
-                btnReport.setText("신고 접수가 완료되었습니다");
-                btnReport.setEnabled(false);
+                RestrictedData restrictedData = new RestrictedData(user.getUserEmail(), contents.getText().toString());
+
+                Long now = System.currentTimeMillis();
+                mRef.child("Restricted").child("Messages").child(Long.toString(now)).setValue(restrictedData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            updateMessage();
+                            btnReport.setText("신고 접수가 완료되었습니다");
+                            btnReport.setEnabled(false);
+                        }
+                        else {
+                            updateMessage();
+                            btnReport.setText("와이파이 문제로 신고 접수를 실패하였습니다");
+                            btnReport.setEnabled(false);
+                        }
+                    }
+                });
             }
         });
 

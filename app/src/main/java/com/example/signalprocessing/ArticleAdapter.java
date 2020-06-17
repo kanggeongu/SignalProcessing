@@ -211,6 +211,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
                                         if (article1.addReporter(user.getUserName())) {
                                             databaseReference.child("Articles").child(user.getUserUniv()).child(article.getArticleID()).child("reporters").setValue(article1.getReporters());
                                             Toast.makeText(v.getContext(), "신고 완료되었습니다", Toast.LENGTH_SHORT).show();
+
+                                            if (article1.getReporters().size() == 1) {
+                                                Long now = System.currentTimeMillis();
+                                                RestrictedData restrictedData = new RestrictedData(user.getUserEmail(), article1.getContent());
+                                                databaseReference.child("Restricted").child("Articles").child(Long.toString(now)).setValue(restrictedData);
+                                            }
                                         }
                                         else {
                                             Toast.makeText(v.getContext(), "이미 신고한 게시글입니다", Toast.LENGTH_SHORT).show();

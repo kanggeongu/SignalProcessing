@@ -194,6 +194,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
                                         if (comment1.addReporter(user.getUserName())) {
                                             databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(comment.getCommentID()).child("reporters").setValue(comment1.getReporters());
                                             Toast.makeText(v.getContext(), "신고 완료되었습니다", Toast.LENGTH_SHORT).show();
+
+                                            if (comment1.getReporters().size() == 1) {
+                                                Long now = System.currentTimeMillis();
+                                                RestrictedData restrictedData = new RestrictedData(user.getUserEmail(), comment1.getContent());
+                                                databaseReference.child("Restricted").child("Comments").child(Long.toString(now)).setValue(restrictedData);
+                                            }
                                         }
                                         else {
                                             Toast.makeText(v.getContext(), "이미 신고한 댓글입니다", Toast.LENGTH_SHORT).show();
