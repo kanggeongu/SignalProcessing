@@ -243,6 +243,7 @@ public class FreeBoardActivity extends AppCompatActivity{
                     intent = new Intent(getApplicationContext(), writeArticleActivity.class);
                     intent.putExtra("userInformation", user);
                     startActivity(intent);
+                    dismiss();
                 }
             });
 
@@ -253,6 +254,7 @@ public class FreeBoardActivity extends AppCompatActivity{
                     intent = new Intent(getApplicationContext(), SearchActivity.class);
                     intent.putExtra("userInformation", user);
                     startActivity(intent);
+                    dismiss();
                 }
             });
 

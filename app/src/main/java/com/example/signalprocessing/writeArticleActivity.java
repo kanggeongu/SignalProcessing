@@ -7,6 +7,7 @@ import androidx.core.content.FileProvider;
 import androidx.loader.content.CursorLoader;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,6 +45,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class writeArticleActivity extends AppCompatActivity {
@@ -65,6 +67,7 @@ public class writeArticleActivity extends AppCompatActivity {
     private User user;
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
+    private ProgressDialog pdialog=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +100,10 @@ public class writeArticleActivity extends AppCompatActivity {
     }
 
     public void upload(){
+        Log.v("123123", "upload()");
+        pdialog=new ProgressDialog(writeArticleActivity.this);
+        pdialog.setTitle("업로드 중입니다");
+        pdialog.show();
         uploadTask = articleRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -104,6 +111,7 @@ public class writeArticleActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
                 Toast.makeText(writeArticleActivity.this, "실패", Toast.LENGTH_SHORT).show();
+                Log.v("123123", "fail");
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -113,24 +121,42 @@ public class writeArticleActivity extends AppCompatActivity {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                         if (!task.isSuccessful()) {
+                            Log.v("132123", "???");
                             throw task.getException();
                         }
 
                         // Continue with the task to get the download URL
+                        Log.v("12312", "!!!");
                         return articleRef.getDownloadUrl();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
+                            Log.v("123123", "success");
                             downloadUri = task.getResult();
                             Long now = System.currentTimeMillis();
+                            Calendar c = Calendar.getInstance();
+                            c.setTimeInMillis(now);
+                            c.add(Calendar.DATE, 7);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                            Log.v("123123", "before null");
                             assert downloadUri != null;
-                            Article article = new Article(Long.toString(now), user.getUserUniv(), user.getUserName(), contents.getText().toString(), downloadUri.toString());
-                            databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now)).setValue(article);
+                            Log.v("123123", "after null");
+                            Article article = new Article(Long.toString(now), user.getUserUniv(), user.getUserName(), contents.getText().toString(), downloadUri.toString(), dateFormat.format(c.getTime()));
+                            databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.v("123213", "finish");
+                                    pdialog.dismiss();
+                                    finish();
+                                }
+                            });
+
                         } else {
                             // Handle failures
                             // ...
+                            Log.v("123123", "why not?");
                         }
                     }
                 });

@@ -20,7 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CocommentActivity extends AppCompatActivity {
 
@@ -144,8 +146,12 @@ public class CocommentActivity extends AppCompatActivity {
         editTextWriteCocomment.setText("");
 
         Long now = System.currentTimeMillis();
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(now);
+        c.add(Calendar.DATE, 7);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        Cocomment cocomment = new Cocomment(Long.toString(now), user.getUserUniv(), user.getUserName(), textCocomment);
+        Cocomment cocomment = new Cocomment(Long.toString(now), user.getUserUniv(), user.getUserName(), textCocomment, dateFormat.format(c.getTime()));
         databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(commentID).child("Cocomments").child(Long.toString(now)).setValue(cocomment);
         ToastText("작성 완료되었습니다.");
         func();

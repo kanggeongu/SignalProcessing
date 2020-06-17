@@ -23,7 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class commentActivity extends AppCompatActivity {
 
@@ -152,7 +154,12 @@ public class commentActivity extends AppCompatActivity {
         editTextWriteComment.setText("");
 
         Long now = System.currentTimeMillis();
-        Comment comment = new Comment(Long.toString(now), user.getUserUniv(), user.getUserName(), textComment);
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(now);
+        c.add(Calendar.DATE, 7);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
+        Comment comment = new Comment(Long.toString(now), user.getUserUniv(), user.getUserName(), textComment, dateFormat.format(c.getTime()));
         databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(Long.toString(now)).setValue(comment);
         ToastText("작성 완료되었습니다.");
         func();

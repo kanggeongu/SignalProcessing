@@ -11,6 +11,7 @@ public class Cocomment {
     private String content;
     private List<String> lovers;
     private List<String> reporters;
+    private String endDate;
 
     Cocomment() {
         cocommentID = "";
@@ -20,13 +21,14 @@ public class Cocomment {
         reporters = new ArrayList<>();
     }
 
-    Cocomment(String cocommentID, String univName, String userID, String content) {
+    Cocomment(String cocommentID, String univName, String userID, String content, String endDate) {
         this.cocommentID = cocommentID;
         this.univName = univName;
         this.userID = userID;
         this.content = content;
         lovers = new ArrayList<>();
         reporters = new ArrayList<>();
+        this.endDate = endDate;
     }
 
     public String getCocommentID() {
@@ -75,6 +77,14 @@ public class Cocomment {
 
     public void setReporters(List<String> reporters) {
         this.reporters = reporters;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public boolean addLover(String loverID) {

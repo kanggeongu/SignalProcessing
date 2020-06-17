@@ -63,6 +63,9 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
         //삭제
         addDelete(holder, cocomment);
 
+        //날짜
+        addDate(holder, cocomment);
+
         //좋아요
         addLove(holder, cocomment);
 
@@ -112,6 +115,11 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
         else {
             holder.linearDelete.removeAllViews();
         }
+    }
+
+    //날짜
+    private void addDate(@NonNull CocommentAdapter.CustomViewHolder holder, final Cocomment cocomment) {
+        holder.textViewEndDate.setText(cocomment.getEndDate());
     }
 
     //좋아요
@@ -203,7 +211,7 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         protected LinearLayout linearDelete;
-        protected TextView textViewUserName, textViewContent, textViewTheNumberOfLovers;
+        protected TextView textViewUserName, textViewContent, textViewTheNumberOfLovers, textViewEndDate;
         protected Button buttonUser, buttonDelete, buttonAddLover, buttonAddReporter;
 
         public CustomViewHolder(@NonNull View itemView) {
@@ -214,6 +222,7 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
             this.textViewUserName = (TextView)itemView.findViewById(R.id.textViewUserName);
             this.textViewContent = (TextView)itemView.findViewById(R.id.textViewContent);
             this.textViewTheNumberOfLovers = (TextView)itemView.findViewById(R.id.textViewTheNumberOfLovers);
+            this.textViewEndDate = (TextView)itemView.findViewById(R.id.textViewEndDate);
 
             this.buttonUser = (Button)itemView.findViewById(R.id.buttonUser);
             this.buttonDelete = (Button)itemView.findViewById(R.id.buttonDelete);

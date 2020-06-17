@@ -12,6 +12,7 @@ public class Article {
     private List<String> lovers;
     private List<String> reporters;
     private String image;
+    private String endDate;
 
     Article() {
         userID = "";
@@ -22,7 +23,7 @@ public class Article {
         reporters = new ArrayList<>();
     }
 
-    Article(String articleID, String univName, String userID, String content, String image) {
+    Article(String articleID, String univName, String userID, String content, String image, String endDate) {
         this.articleID = articleID;
         this.univName = univName;
         this.userID = userID;
@@ -30,6 +31,7 @@ public class Article {
         this.image = image;
         lovers = new ArrayList<>();
         reporters = new ArrayList<>();
+        this.endDate = endDate;
     }
 
     public String getArticleID() {
@@ -86,6 +88,14 @@ public class Article {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public boolean addLover(String loverID) {

@@ -61,6 +61,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
         //삭제
         addDelete(holder, comment);
 
+        //날짜
+        addDate(holder, comment);
+
         //좋아요
         addLove(holder, comment);
 
@@ -113,6 +116,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
         else {
             holder.linearDelete.removeAllViews();
         }
+    }
+
+    //날짜
+    private void addDate(@NonNull CommentAdapter.CustomViewHolder holder, final Comment comment) {
+        holder.textViewEndDate.setText(comment.getEndDate());
     }
 
     //좋아요
@@ -218,7 +226,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         protected LinearLayout linearDelete;
-        protected TextView textViewUserName, textViewContent, textViewTheNumberOfLovers;
+        protected TextView textViewUserName, textViewContent, textViewTheNumberOfLovers, textViewEndDate;
         protected Button buttonUser, buttonDelete, buttonAddLover, buttonAddComment, buttonAddReporter;
         protected ImageView imageView;
 
@@ -230,6 +238,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
             this.textViewUserName = (TextView)itemView.findViewById(R.id.textViewUserName);
             this.textViewContent = (TextView)itemView.findViewById(R.id.textViewContent);
             this.textViewTheNumberOfLovers = (TextView)itemView.findViewById(R.id.textViewTheNumberOfLovers);
+            this.textViewEndDate = (TextView)itemView.findViewById(R.id.textViewEndDate);
 
             this.buttonUser = (Button)itemView.findViewById(R.id.buttonUser);
             this.buttonDelete = (Button)itemView.findViewById(R.id.buttonDelete);
