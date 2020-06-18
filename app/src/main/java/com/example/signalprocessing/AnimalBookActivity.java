@@ -3,6 +3,7 @@ package com.example.signalprocessing;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -136,6 +137,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                             intent.putExtra("userInfo", getIntent().getSerializableExtra("userInfo"));
                             intent.putExtra("animalID", AnimalBooks.get(pos).getAnimalID());
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
                             Bitmap bitmap = ((GlideBitmapDrawable)animal.getDrawable()).getBitmap();
                             float scale = (1024/(float)bitmap.getWidth());
                             int image_w = (int) (bitmap.getWidth() * scale);
