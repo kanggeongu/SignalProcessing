@@ -308,6 +308,12 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                 }
             });
             ((CustomViewHolder)holder).status.setText(item.getStatus());
+            if(item.getStatus().equals("거부")){
+                ((CustomViewHolder)holder).itemView.setBackgroundResource(R.drawable.wait_reject);
+            }
+            else if(item.getStatus().equals("심사완료")){
+                ((CustomViewHolder)holder).itemView.setBackgroundResource(R.drawable.wait_done);
+            }
             ((CustomViewHolder)holder).detail.setText(item.getFeature());
         }
 

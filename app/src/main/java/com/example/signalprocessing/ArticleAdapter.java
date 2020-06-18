@@ -88,6 +88,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         //신고
         addReport(holder, article);
 
+        clickItem(holder,article);
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) holder.itemView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int deviceWidth = displayMetrics.widthPixels;
@@ -104,6 +106,19 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
             public void onClick(View v) {
                 SendMessageDialog sendMessageDialog = new SendMessageDialog(v.getContext(), user.getUserName(), holder.textViewUserName.getText().toString());
                 sendMessageDialog.show();
+            }
+        });
+    }
+
+    //아이템 클릭
+    private void clickItem(@NonNull CustomViewHolder holder, final Article article) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), commentActivity.class);
+                intent.putExtra("userInformation", user);
+                intent.putExtra("articleInformation", article.getArticleID());
+                v.getContext().startActivity(intent);
             }
         });
     }
