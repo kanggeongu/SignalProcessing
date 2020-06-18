@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,10 +35,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AnimalBookDetailActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private EditText editName;
-    private EditText editMean;
-    private EditText editGender;
-    private EditText editLocation;
+    private TextView Name;
+    private TextView Mean;
+    private TextView Gender;
+    private TextView Location;
     private EditText editContent;
     private ImageView image;
     private Button add;
@@ -58,10 +59,10 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
 
         contents = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
-        editName = findViewById(R.id.editName);
-        editGender = findViewById(R.id.editGender);
-        editMean = findViewById(R.id.editMean);
-        editLocation = findViewById(R.id.editLocation);
+        Name = findViewById(R.id.editName);
+        Gender = findViewById(R.id.editGender);
+        Mean = findViewById(R.id.editMean);
+        Location = findViewById(R.id.editLocation);
         editContent = findViewById(R.id.editContent);
         image = findViewById(R.id.image);
         add = findViewById(R.id.add);
@@ -74,11 +75,22 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
         recyclerView.setAdapter(listAdapter);
 
         Intent detail = getIntent();
-        editName.setText(detail.getStringExtra("이름"));
-        editGender.setText(detail.getStringExtra("성별"));
-        editMean.setText(detail.getStringExtra("뜻"));
-        editLocation.setText(detail.getStringExtra("위치"));
         animalID = detail.getStringExtra("animalID");
+        databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                AnimalBook animalBook = dataSnapshot.getValue(AnimalBook.class);
+                Name.setText(animalBook.getName());
+                Mean.setText(animalBook.getMean());
+                Gender.setText(animalBook.getGender());
+                Location.setText(animalBook.getLocation());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).child("Contents").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -95,10 +107,9 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
 
             }
         });
-        if(getIntent().getByteArrayExtra("사진")!=null) {
-            byte[] byteArray = getIntent().getByteArrayExtra("사진");
-            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            image.setImageBitmap(bitmap);
+        if(getIntent().getStringExtra("사진")!=null) {
+            String imageUrl = getIntent().getStringExtra("사진");
+            Glide.with(AnimalBookDetailActivity.this).load(imageUrl).into(image);
         }
 
 
@@ -107,7 +118,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AnimalBookCustomDialog customDialog = new AnimalBookCustomDialog(AnimalBookDetailActivity.this);
 
-                customDialog.callFunction(editContent, animalID, user.getUserEmail());
+                customDialog.callFunction(editContent, animalID, user.getUserName());
             }
         });
     }
@@ -174,7 +185,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
                                 Content content = dataSnapshot.getValue(Content.class);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AnimalBookDetailActivity.this);
 
-                                builder.setTitle("작성자 정보").setMessage("아이디: " + content.getUserEmail());
+                                builder.setTitle("작성자 정보").setMessage("이름: " + content.getUserName());
 
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -202,7 +213,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
                 });
                 break;
             case R.id.report:
-                databaseReference.child("Users").child(user.getUserEmail()).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("Users").child(user.getUserName()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         user = dataSnapshot.getValue(User.class);
@@ -211,7 +222,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Content content = dataSnapshot.getValue(Content.class);
                                 assert content != null;
-                                if (content.addReporter(user.getUserEmail())) {
+                                if (content.addReporter(user.getUserName())) {
                                     Toast.makeText(AnimalBookDetailActivity.this, "신고되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(AnimalBookDetailActivity.this, "이미 신고되었습니다.", Toast.LENGTH_SHORT).show();

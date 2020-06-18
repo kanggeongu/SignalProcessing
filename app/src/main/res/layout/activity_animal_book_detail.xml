@@ -100,43 +100,42 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <EditText
+                <TextView
                     android:id="@+id/editName"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:gravity="center"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBrown"
                     android:fontFamily="@font/bmjua"
                     android:textSize="15dp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/editMean"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBrown"
                     android:fontFamily="@font/bmjua"
                     android:textSize="15dp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/editLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBrown"
                     android:fontFamily="@font/bmjua"
-                    android:textSize="15dp"
-                    android:text="지도 이동"/>
+                    android:textSize="15dp"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/editGender"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBrown"
                     android:fontFamily="@font/bmjua"
                     android:textSize="15dp" />
             </LinearLayout>

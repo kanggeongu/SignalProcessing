@@ -33,7 +33,7 @@ public class AnimalBookCustomDialog {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg.setContentView(R.layout.custom_dialog);
+        dlg.setContentView(R.layout.animalbook_custom_dialog);
 
         // 커스텀 다이얼로그를 노출한다.
         dlg.show();

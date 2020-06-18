@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Content implements Serializable {
 
     private String content;
-    private String userEmail;
+    private String userName;
     private String contentID;
     private ArrayList<String> reporter;
 
@@ -18,23 +18,23 @@ public class Content implements Serializable {
         this.contentID = contentID;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserName(String userEmail) {
+        this.userName = userEmail;
     }
 
     public Content(){
         content = "";
-        userEmail = "";
+        userName = "";
         reporter = new ArrayList<>();
     }
 
     public Content(String content, String userID){
         this.content = content;
-        this.userEmail = userID;
+        this.userName = userID;
         reporter = new ArrayList<>();
     }
 

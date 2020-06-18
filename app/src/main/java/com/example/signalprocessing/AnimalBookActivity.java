@@ -333,22 +333,9 @@ public class AnimalBookActivity extends AppCompatActivity {
                         int pos = getAdapterPosition();
                         if(pos != RecyclerView.NO_POSITION){
                             final Intent intent = new Intent(AnimalBookActivity.this, AnimalBookDetailActivity.class);
-                            intent.putExtra("이름", name.getText().toString());
-                            intent.putExtra("뜻", mean.getText().toString());
-                            intent.putExtra("위치", location.getText().toString());
-                            intent.putExtra("성별", gender.getText().toString());
                             intent.putExtra("userInfo", getIntent().getSerializableExtra("userInfo"));
                             intent.putExtra("animalID", AnimalBooks.get(pos).getAnimalID());
-                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-                            Bitmap bitmap = ((GlideBitmapDrawable)animal.getDrawable()).getBitmap();
-                            float scale = (1024/(float)bitmap.getWidth());
-                            int image_w = (int) (bitmap.getWidth() * scale);
-                            int image_h = (int) (bitmap.getHeight() * scale);
-                            Bitmap resize = Bitmap.createScaledBitmap(bitmap, image_w, image_h, true);
-                            resize.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                            byte[] byteArray = stream.toByteArray();
-                            intent.putExtra("사진", byteArray);
+                            intent.putExtra("사진", AnimalBooks.get(pos).getImage());
                             startActivity(intent);
                         }
                     }
@@ -398,7 +385,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     animalBook3 = dataSnapshot.getValue(AnimalBook.class);
                                     assert animalBook3 != null;
-                                    if (animalBook3.addLiker(user.getUserEmail())) {
+                                    if (animalBook3.addLiker(user.getUserName())) {
                                         ((CustomViewHolder) holder).like.setBackgroundResource(R.drawable.filled);
                                         ((CustomViewHolder) holder).likes.setText(""+animalBook3.getLiker().size());
                                     } else {
