@@ -165,6 +165,11 @@ public class commentActivity extends AppCompatActivity {
         func();
     }
 
+    public void onClick(View view) {
+        SendMessageDialog sendMessageDialog = new SendMessageDialog(view.getContext(), user.getUserName(), textViewUserID.getText().toString());
+        sendMessageDialog.show();
+    }
+
     private void ToastText(String text) {
         Toast.makeText(commentActivity.this, text, Toast.LENGTH_SHORT).show();
     }
