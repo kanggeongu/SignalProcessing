@@ -389,6 +389,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                             intent.putExtra("cp", cp);
                             intent.putExtra("gp", gp);
                             intent.putExtra("mUniv", nextUniv);
+                            intent.putExtra("university",university);
                             startActivity(intent);
                             finish();
                         }
@@ -399,6 +400,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
+                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;
@@ -408,6 +410,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
+                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;
@@ -417,6 +420,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
+                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;
