@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,8 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ConnectorActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +37,8 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
     private Button logout,mypage,waitanimal,freeboard, namecontest, animalbook;
     private User user;
+
+    private List<String> university=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +67,30 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
         loadInfo(mAuth.getCurrentUser().getEmail());
     }
 
+    public void initUniversity(){
+        mRef.child("Universities").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                university.clear();
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    String name=snapshot.getKey();
+                    university.add(name);
+                }
+                goFreeBoard();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void goFreeBoard() {
         Intent intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
         intent.putExtra("mUniv",user.getUserUniv());
         intent.putExtra("userInfo",user);
+        intent.putExtra("university", (Serializable) university);
+        Log.e("university",university.toString());
         startActivity(intent);
         finish();
     }
@@ -83,7 +110,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
                     String date=simpleDateFormat.format(mDate);
 
                     if(restricted.getEndDate() < Integer.parseInt(date)){
-                        goFreeBoard();
+                        initUniversity();
                     }
                     else{
                         int year = restricted.getEndDate() / 10000;

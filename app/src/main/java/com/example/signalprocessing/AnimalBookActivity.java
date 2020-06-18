@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -68,6 +69,8 @@ public class AnimalBookActivity extends AppCompatActivity {
 
     private TextView pageTitle;
 
+    private Serializable university=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +87,7 @@ public class AnimalBookActivity extends AppCompatActivity {
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
+        university=getIntent().getSerializableExtra("university");
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 동물 도감");
@@ -125,7 +129,7 @@ public class AnimalBookActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        myHelper=new ExpandableListHelper(this);
+        myHelper=new ExpandableListHelper((List<String>) university);
 
 
         initHeader();

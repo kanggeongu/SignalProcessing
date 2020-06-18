@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,6 +72,7 @@ public class NameContestActivity extends AppCompatActivity {
     private String mUniv="";
 
     private TextView pageTitle;
+    private Serializable university=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class NameContestActivity extends AppCompatActivity {
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
+        university=getIntent().getSerializableExtra("university");
         context = this;
 
         pageTitle=findViewById(R.id.pageTitle);
@@ -111,7 +114,7 @@ public class NameContestActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        myHelper=new ExpandableListHelper(this);
+        myHelper=new ExpandableListHelper((List<String>) university);
 
 
         initHeader();

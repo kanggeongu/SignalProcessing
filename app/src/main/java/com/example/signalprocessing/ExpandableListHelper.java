@@ -17,16 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ExpandableListHelper {
-    //파이어베이스
-    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     private List<ExpandedMenuModel> listDataHeader;
     private HashMap<ExpandedMenuModel, List<String>> listDataChild;
     private List<String> heading=new ArrayList<>();
     private List<String> university=new ArrayList<>();
-
-    private Context context;
 
     public List<ExpandedMenuModel> getListDataHeader() {
         return listDataHeader;
@@ -36,37 +31,10 @@ public class ExpandableListHelper {
         return listDataChild;
     }
 
-    public ExpandableListHelper(Context context){
+    public ExpandableListHelper(List<String> university){
         listDataHeader=new ArrayList<ExpandedMenuModel>();
         listDataChild = new HashMap<ExpandedMenuModel, List<String>>();
-        this.context=context;
-    }
-
-    public void initUniversity(Context context){
-        databaseReference.child("Universities").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                university.clear();
-                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    String name=snapshot.getKey();
-                    university.add(name);
-                }
-                initHeading();
-                Log.e("error1",""+university.size());
-                Log.e("error2",""+university.toString());
-                for(int i=0;i<university.size();i++){
-                    ExpandedMenuModel item=new ExpandedMenuModel();
-                    item.setIconName(university.get(i));
-                    Log.e("error3",university.get(i));
-                    listDataHeader.add(item);
-                    listDataChild.put(listDataHeader.get(i),heading);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        this.university=university;
     }
 
     public void initHeading(){
@@ -77,7 +45,13 @@ public class ExpandableListHelper {
     }
 
     public void initItem(){
-        initUniversity(context);
+        initHeading();
+        for(int i=0;i<university.size();i++) {
+            ExpandedMenuModel item = new ExpandedMenuModel();
+            item.setIconName(university.get(i));
+            listDataHeader.add(item);
+            listDataChild.put(listDataHeader.get(i), heading);
+        }
     }
 
 }

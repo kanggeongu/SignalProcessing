@@ -40,6 +40,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,6 +80,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
     private String mUniv="";
 
     private TextView pageTitle;
+    private Serializable university=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
+        university=getIntent().getSerializableExtra("university");
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 신규 동물 요청");
@@ -136,7 +139,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        myHelper=new ExpandableListHelper(this);
+        myHelper=new ExpandableListHelper((List<String>) university);
 
 
         initHeader();
