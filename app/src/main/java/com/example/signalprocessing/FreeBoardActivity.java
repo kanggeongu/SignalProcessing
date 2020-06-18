@@ -25,6 +25,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,6 +47,9 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
     //파이어베이스
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+    private SharedPreferences auto;
+    private FirebaseAuth mAuth= FirebaseAuth.getInstance();
 
     //뷰
     private RecyclerView recyclerViewFreeBoard;
@@ -75,6 +79,9 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
     private NavigationView navigationView;
     ///////////////////////////////////////////////
 
+    private ImageView img_navi;
+    private ImageView img_logout;
+
     private boolean isFabOpen=false;
     private Animation fab_open,fab_close;
     private FloatingActionButton fab,fab1;
@@ -94,6 +101,26 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 자유게시판");
+
+        img_navi = (ImageView)findViewById(R.id.img_navi);
+        img_navi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer();
+            }
+        });
+
+        img_logout = (ImageView)findViewById(R.id.img_logout);
+        img_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auto =getSharedPreferences("autologin", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=auto.edit();
+                editor.clear();
+                editor.commit();
+                mAuth.signOut();
+            }
+        });
 
         initPalette();
         func();
@@ -130,7 +157,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        myHelper=new ExpandableListHelper(this);
+        myHelper=new ExpandableListHelper(this, university);
 
 
         initHeader();
@@ -314,6 +341,10 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                 });
     }
 
+    private void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
     private void closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
@@ -412,9 +443,24 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
             closeDrawer();
         }
         else{
-            moveMyBoard();
-            finish();
-            super.onBackPressed();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("앱을 종료합니다");
+            builder.setMessage("정말 종료하시겠습니가?");
+            builder.setPositiveButton(android.R.string.yes,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.no,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            builder.show();
         }
     }
 
