@@ -62,8 +62,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
 
     private void goFreeBoard() {
         Intent intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
-        intent.putExtra("cp",0);
-        intent.putExtra("gp",0);
+        intent.putExtra("mUniv",user.getUserUniv());
         intent.putExtra("userInfo",user);
         startActivity(intent);
         finish();
