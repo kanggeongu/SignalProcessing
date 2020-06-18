@@ -39,6 +39,7 @@ public class commentActivity extends AppCompatActivity {
 
     public String articleID;
     private Article article;
+    private String mUniv;
 
     public User user;
     public static Context context;
@@ -58,6 +59,8 @@ public class commentActivity extends AppCompatActivity {
         context = this;
         articleID = (String)getIntent().getSerializableExtra("articleInformation");
         user = (User)getIntent().getSerializableExtra("userInformation");
+
+        mUniv = ((FreeBoardActivity)FreeBoardActivity.context).mUniv;
 
         initPallete();
         func();
@@ -99,7 +102,7 @@ public class commentActivity extends AppCompatActivity {
         commentAdapter = new CommentAdapter(arrayList);
         recyclerViewComment.setAdapter(commentAdapter);
 
-        databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Articles").child(mUniv).child(articleID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 article = dataSnapshot.getValue(Article.class);
@@ -125,7 +128,7 @@ public class commentActivity extends AppCompatActivity {
     }
 
     private void viewComments() {
-        databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {

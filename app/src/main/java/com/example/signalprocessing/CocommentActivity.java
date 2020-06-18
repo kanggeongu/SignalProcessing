@@ -37,6 +37,7 @@ public class CocommentActivity extends AppCompatActivity {
     public User user;
     public String commentID;
     private Comment comment;
+    private String mUniv;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerViewCocomment;
@@ -56,6 +57,7 @@ public class CocommentActivity extends AppCompatActivity {
         articleID = (String)getIntent().getSerializableExtra("articleInformation");
         user = (User)getIntent().getSerializableExtra("userInformation");
         commentID = (String)getIntent().getSerializableExtra("commentID");
+        mUniv = ((FreeBoardActivity)FreeBoardActivity.context).mUniv;
 
         initPallete();
         func();
@@ -96,7 +98,7 @@ public class CocommentActivity extends AppCompatActivity {
         cocommentAdapter = new CocommentAdapter(arrayList);
         recyclerViewCocomment.setAdapter(cocommentAdapter);
 
-        databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(commentID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(commentID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 comment = dataSnapshot.getValue(Comment.class);
@@ -117,7 +119,7 @@ public class CocommentActivity extends AppCompatActivity {
     }
 
     private void viewCocomments() {
-        databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(commentID).child("Cocomments").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(commentID).child("Cocomments").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {

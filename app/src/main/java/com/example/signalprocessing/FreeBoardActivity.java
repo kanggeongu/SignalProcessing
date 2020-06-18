@@ -66,7 +66,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
     private ArrayList<Article> arrayList;
     private ArticleAdapter articleAdapter;
     private int thiscp,thisgp;
-    private String mUniv="";
+    public String mUniv="";
 
     ///////////////////////////////////////////////// 네비게이션 바
     /////////////////////////////////////////////////

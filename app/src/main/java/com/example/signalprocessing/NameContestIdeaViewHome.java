@@ -43,6 +43,7 @@ public class NameContestIdeaViewHome extends AppCompatActivity implements View.O
 
     public static Context context;
     public String startTime, endTime;
+    private String mUniv;
 
     private boolean isFabOpen=false;
     private Animation fab_open,fab_close;
@@ -55,6 +56,7 @@ public class NameContestIdeaViewHome extends AppCompatActivity implements View.O
 
         NameContestID = (String)getIntent().getSerializableExtra("contestID");
         user = ((NameContestActivity)NameContestActivity.context).user;
+        mUniv = ((NameContestActivity)NameContestActivity.context).mUniv;
         context = this;
         initPallete();
         setTime();
@@ -122,7 +124,7 @@ public class NameContestIdeaViewHome extends AppCompatActivity implements View.O
     }
 
     private void setTime() {
-        databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("NameContests").child(mUniv).child(NameContestID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 NameContestData nameContestData = dataSnapshot.getValue(NameContestData.class);
@@ -152,7 +154,7 @@ public class NameContestIdeaViewHome extends AppCompatActivity implements View.O
         nameContestViewIdeaAdapter = new NameContestViewIdeaAdapter(arrayList);
         recyclerViewContestIdea.setAdapter(nameContestViewIdeaAdapter);
 
-        databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).child("Ideas").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("NameContests").child(mUniv).child(NameContestID).child("Ideas").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){

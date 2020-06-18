@@ -75,7 +75,7 @@ public class NameContestActivity extends AppCompatActivity {
     ///////////////////////////////////////////////
 
     private int thiscp,thisgp;
-    private String mUniv="";
+    public String mUniv="";
 
     private TextView pageTitle;
     private Serializable university=new ArrayList<>();
