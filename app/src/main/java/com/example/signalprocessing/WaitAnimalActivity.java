@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.text.Layout;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,6 +85,12 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
     private TextView pageTitle;
     private Serializable university=new ArrayList<>();
 
+    private ImageView img_navi;
+    private ImageView img_logout;
+
+    private SharedPreferences auto;
+    private FirebaseAuth mAuth= FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +104,26 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 신규 동물 요청");
+
+        img_navi = (ImageView)findViewById(R.id.img_navi);
+        img_navi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer();
+            }
+        });
+
+        img_logout = (ImageView)findViewById(R.id.img_logout);
+        img_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auto =getSharedPreferences("autologin", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=auto.edit();
+                editor.clear();
+                editor.commit();
+                mAuth.signOut();
+            }
+        });
 
         Log.e("user","user "+user.getUserName());
 
@@ -367,6 +396,10 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                         return true;
                     }
                 });
+    }
+
+    private void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
     private void closeDrawer() {

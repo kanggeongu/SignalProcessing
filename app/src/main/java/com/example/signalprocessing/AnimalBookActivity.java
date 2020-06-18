@@ -1,6 +1,8 @@
 package com.example.signalprocessing;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +74,12 @@ public class AnimalBookActivity extends AppCompatActivity {
 
     private Serializable university=new ArrayList<>();
 
+    private ImageView img_navi;
+    private ImageView img_logout;
+
+    private SharedPreferences auto;
+    private FirebaseAuth mAuth= FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +100,26 @@ public class AnimalBookActivity extends AppCompatActivity {
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 동물 도감");
+
+        img_navi = (ImageView)findViewById(R.id.img_navi);
+        img_navi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer();
+            }
+        });
+
+        img_logout = (ImageView)findViewById(R.id.img_logout);
+        img_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auto =getSharedPreferences("autologin", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=auto.edit();
+                editor.clear();
+                editor.commit();
+                mAuth.signOut();
+            }
+        });
 
         databaseReference.child("AnimalBooks").child(mUniv).addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -189,6 +218,10 @@ public class AnimalBookActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    private void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
     private void closeDrawer() {

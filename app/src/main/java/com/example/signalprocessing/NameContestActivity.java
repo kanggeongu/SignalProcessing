@@ -8,17 +8,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,6 +78,12 @@ public class NameContestActivity extends AppCompatActivity {
     private TextView pageTitle;
     private Serializable university=new ArrayList<>();
 
+    private ImageView img_navi;
+    private ImageView img_logout;
+
+    private SharedPreferences auto;
+    private FirebaseAuth mAuth= FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +98,26 @@ public class NameContestActivity extends AppCompatActivity {
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 이름 공모전");
+
+        img_navi = (ImageView)findViewById(R.id.img_navi);
+        img_navi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer();
+            }
+        });
+
+        img_logout = (ImageView)findViewById(R.id.img_logout);
+        img_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auto =getSharedPreferences("autologin", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=auto.edit();
+                editor.clear();
+                editor.commit();
+                mAuth.signOut();
+            }
+        });
 
         initPallete();
         func();
@@ -173,6 +203,10 @@ public class NameContestActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    private void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
     private void closeDrawer() {
