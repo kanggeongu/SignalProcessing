@@ -50,8 +50,13 @@ public class NameContestAdapter extends RecyclerView.Adapter<NameContestAdapter.
         String Time = arrayList.get(position).getTime();
         String startTime = Time.substring(0, 14);
         String endTime = Time.substring(14, 28);
-        if(Long.parseLong(endTime) < Long.parseLong(curTime)) {
-            holder.linear1.setBackgroundResource(R.drawable.circus_border_grey);
+
+        String status = arrayList.get(position).getStatus();
+        if (status.equals("심사완료")) {
+            holder.linear1.setBackgroundResource(R.drawable.contest_done);
+        }
+        else if (status.equals("거부")) {
+            holder.linear1.setBackgroundResource(R.drawable.contest_reject);
         }
 
         /*startTime = startTime.substring(0,4) + "-" + startTime.substring(4,6) + "-" + startTime.substring(6,8) + "-" +

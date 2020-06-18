@@ -318,12 +318,15 @@ public class NameContestActivity extends AppCompatActivity {
                     String curTime = simpleDateFormat.format(mDate);
                     if(Long.parseLong(curTime) <= Long.parseLong(nameContestData.getEndTime()) && nameContestData.getStatus().equals("심사중")) {
                         numIng++;
+                        nameContestViewData.setStatus("심사중");
                     }
                     else if(nameContestData.getStatus().equals("심사완료")) {
                         numAdmit++;
+                        nameContestViewData.setStatus("심사완료");
                     }
                     else {
                         numReject++;
+                        nameContestViewData.setStatus("거부");
                     }
 
                     arrayList.add(nameContestViewData);

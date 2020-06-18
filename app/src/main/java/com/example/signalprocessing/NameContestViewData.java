@@ -10,6 +10,7 @@ public class NameContestViewData implements Comparable<NameContestViewData> {
     private String oneSentence;
     private String Time;
     private String userName;
+    private String status;
 
     public NameContestViewData(String ID, String image, List<String> participants, String oneSentence, String Time, String userName) {
         this.ID = ID;
@@ -66,6 +67,14 @@ public class NameContestViewData implements Comparable<NameContestViewData> {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
