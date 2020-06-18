@@ -129,7 +129,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        myHelper=new ExpandableListHelper();
+        myHelper=new ExpandableListHelper(this);
 
 
         initHeader();

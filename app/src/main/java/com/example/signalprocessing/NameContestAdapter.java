@@ -67,6 +67,7 @@ public class NameContestAdapter extends RecyclerView.Adapter<NameContestAdapter.
 
         Glide.with(NameContestActivity.context).load(arrayList.get(position).getImage()).into(holder.imageViewnameContest);
 
+
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package com.example.signalprocessing;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if(groupPosition==mgroupId&&childPosition==mitemId){
             textlistChild.setTextColor(Color.parseColor("#FFC000"));
             textlistChild.setTextSize(20);
+        }
+        else{
+            textlistChild.setTextColor(Color.parseColor("#7F7F7F"));
+            textlistChild.setTextSize(15);
         }
         return convertView;
     }

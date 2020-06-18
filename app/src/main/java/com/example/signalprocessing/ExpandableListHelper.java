@@ -1,14 +1,32 @@
 package com.example.signalprocessing;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ExpandableListHelper {
+    //파이어베이스
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+
     private List<ExpandedMenuModel> listDataHeader;
     private HashMap<ExpandedMenuModel, List<String>> listDataChild;
     private List<String> heading=new ArrayList<>();
     private List<String> university=new ArrayList<>();
+
+    private Context context;
 
     public List<ExpandedMenuModel> getListDataHeader() {
         return listDataHeader;
@@ -18,14 +36,41 @@ public class ExpandableListHelper {
         return listDataChild;
     }
 
-    public ExpandableListHelper(){
+    public ExpandableListHelper(Context context){
         listDataHeader=new ArrayList<ExpandedMenuModel>();
         listDataChild = new HashMap<ExpandedMenuModel, List<String>>();
+        this.context=context;
     }
 
-    public void initUniversity(){
-        university.add("경북대학교");
-        university.add("부산대학교");
+    public void initUniversity(Context context){
+        final ProgressDialog pdialog=new ProgressDialog(context);
+        pdialog.setTitle("정보를 불러오는 중입니다");
+        pdialog.show();
+        databaseReference.child("Universities").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                university.clear();
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    String name=snapshot.getKey();
+                    university.add(name);
+                }
+                initHeading();
+                Log.e("error1",""+university.size());
+                Log.e("error2",""+university.toString());
+                for(int i=0;i<university.size();i++){
+                    ExpandedMenuModel item=new ExpandedMenuModel();
+                    item.setIconName(university.get(i));
+                    Log.e("error3",university.get(i));
+                    listDataHeader.add(item);
+                    listDataChild.put(listDataHeader.get(i),heading);
+                }
+                pdialog.dismiss();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void initHeading(){
@@ -36,14 +81,7 @@ public class ExpandableListHelper {
     }
 
     public void initItem(){
-        initUniversity();
-        initHeading();
-        for(int i=0;i<university.size();i++){
-            ExpandedMenuModel item=new ExpandedMenuModel();
-            item.setIconName(university.get(i));
-            listDataHeader.add(item);
-            listDataChild.put(listDataHeader.get(i),heading);
-        }
+        initUniversity(context);
     }
 
 }

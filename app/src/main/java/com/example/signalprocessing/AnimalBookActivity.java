@@ -125,7 +125,7 @@ public class AnimalBookActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        myHelper=new ExpandableListHelper();
+        myHelper=new ExpandableListHelper(this);
 
 
         initHeader();
@@ -371,7 +371,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                     user = dataSnapshot.getValue(User.class);
                     ((CustomViewHolder)holder).likes.setText(String.valueOf(AnimalBooks.get(position).getLiker().size()));
 
-                    if(AnimalBooks.get(position).getLiker().contains(user.getUserEmail())){
+                    if(AnimalBooks.get(position).getLiker().contains(user.getUserName())){
                         ((CustomViewHolder) holder).like.setBackgroundResource(R.drawable.filled);
                     }else {
                         ((CustomViewHolder) holder).like.setBackgroundResource(R.drawable.empty);
