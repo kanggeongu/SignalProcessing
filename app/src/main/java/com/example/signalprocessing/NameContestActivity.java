@@ -3,6 +3,7 @@ package com.example.signalprocessing;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -11,9 +12,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +31,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class NameContestActivity extends AppCompatActivity {
 
@@ -48,12 +55,30 @@ public class NameContestActivity extends AppCompatActivity {
 
     public static Context context;
 
+    ///////////////////////////////////////////////// 네비게이션 바
+    /////////////////////////////////////////////////
+    private DrawerLayout mDrawerLayout;
+    private ExpandableListAdapter mMenuAdapter;
+    private ExpandableListView expandableList;
+    private List<ExpandedMenuModel> listDataHeader;
+    private HashMap<ExpandedMenuModel, List<String>> listDataChild;
+    private TextView textMypage,textName;
+    private ExpandableListHelper myHelper;
+    private NavigationView navigationView;
+    ///////////////////////////////////////////////
+
+    private int thiscp,thisgp;
+    private String mUniv="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name_contest);
 
         user = (User)getIntent().getSerializableExtra("userInfo");
+        thiscp=getIntent().getIntExtra("cp",-1);
+        thisgp=getIntent().getIntExtra("gp",-1);
+        mUniv=getIntent().getStringExtra("mUniv");
         context = this;
 
         initPallete();
@@ -73,7 +98,181 @@ public class NameContestActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        // 네비게이션 바
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        myHelper=new ExpandableListHelper();
+
+
+        initHeader();
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+
+        prepareListData();
+        mMenuAdapter = new ExpandableListAdapter(thisgp,thiscp,user.getUserUniv(),this, listDataHeader, listDataChild, expandableList);
+        expandableList.setAdapter(mMenuAdapter);
+
+        openMenuNavi();
+        movePageNavi();
+
+        expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                return false;
+            }
+        });
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
+
+    // 네비게이션 바 코드
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    private void prepareListData() {
+        myHelper.initItem();
+        listDataChild=myHelper.getListDataChild();
+        listDataHeader=myHelper.getListDataHeader();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+    }
+
+    private void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public void initHeader(){
+        // 헤더
+        View header=navigationView.getHeaderView(0);
+
+        textName=(TextView)header.findViewById(R.id.navi_name);
+        textName.setText(user.getUserName()+"님");
+
+        textMypage=(TextView)header.findViewById(R.id.navi_mypage);
+        textMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),MypageActivity.class);
+                intent.putExtra("userInfo",user);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    public void movePageNavi(){
+        // 클릭 시 이동
+        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                int cp=(int)mMenuAdapter.getChildId(i,i1);
+                int gp=(int)mMenuAdapter.getGroupId(i);
+                ExpandedMenuModel mModel=(ExpandedMenuModel)mMenuAdapter.getGroup(gp);
+                String nextUniv=mModel.getIconName();
+                Intent intent=null;
+                switch (cp){
+                    case 0:
+                        intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",nextUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case 1:
+                        intent=new Intent(getApplicationContext(),WaitAnimalActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",nextUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case 2:
+                        intent=new Intent(getApplicationContext(),AnimalBookActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",nextUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case 3:
+                        if(!nextUniv.equals(mUniv)) {
+                            intent = new Intent(getApplicationContext(), NameContestActivity.class);
+                            intent.putExtra("userInfo", user);
+                            intent.putExtra("cp", cp);
+                            intent.putExtra("gp", gp);
+                            intent.putExtra("mUniv", nextUniv);
+                            startActivity(intent);
+                            finish();
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    public void openMenuNavi(){
+        for(int i=0;i<mMenuAdapter.getGroupCount();i++) {
+            expandableList.expandGroup(i);
+        }
+    }
+
+    public void moveMyBoard(){
+        Intent intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
+        intent.putExtra("userInfo",user);
+        intent.putExtra("mUniv",user.getUserUniv());
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+            closeDrawer();
+        }
+        else{
+            moveMyBoard();
+            finish();
+            super.onBackPressed();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     private void initPallete() {
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout_name_contest);
@@ -147,17 +346,5 @@ public class NameContestActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddNameContestActivity.class);
         intent.putExtra("userInformation", user);
         startActivity(intent);
-    }
-
-    public void updateUI(){
-        Intent intent=new Intent(NameContestActivity.this,FreeBoardActivity.class);
-        intent.putExtra("userInfo",user);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        updateUI();
     }
 }

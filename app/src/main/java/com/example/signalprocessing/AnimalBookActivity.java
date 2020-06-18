@@ -8,14 +8,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,11 +29,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +51,21 @@ public class AnimalBookActivity extends AppCompatActivity {
     private MyAdapter myAdapter;
     private AnimalBook animalBook3;
 
+    ///////////////////////////////////////////////// 네비게이션 바
+    /////////////////////////////////////////////////
+    private DrawerLayout mDrawerLayout;
+    private ExpandableListAdapter mMenuAdapter;
+    private ExpandableListView expandableList;
+    private List<ExpandedMenuModel> listDataHeader;
+    private HashMap<ExpandedMenuModel, List<String>> listDataChild;
+    private TextView textMypage,textName;
+    private ExpandableListHelper myHelper;
+    private NavigationView navigationView;
+    ///////////////////////////////////////////////
+
+    private int thiscp,thisgp;
+    private String mUniv="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +79,11 @@ public class AnimalBookActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
         user = (User)getIntent().getSerializableExtra("userInfo");
 
+        thiscp=getIntent().getIntExtra("cp",-1);
+        thisgp=getIntent().getIntExtra("gp",-1);
+        mUniv=getIntent().getStringExtra("mUniv");
 
-
-        databaseReference.child("AnimalBooks").child("경북대학교").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("AnimalBooks").child(mUniv).addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -89,7 +113,181 @@ public class AnimalBookActivity extends AppCompatActivity {
             }
         });
 
+        // 네비게이션 바
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        myHelper=new ExpandableListHelper();
+
+
+        initHeader();
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+
+        prepareListData();
+        mMenuAdapter = new ExpandableListAdapter(thisgp,thiscp,user.getUserUniv(),this, listDataHeader, listDataChild, expandableList);
+        expandableList.setAdapter(mMenuAdapter);
+
+        openMenuNavi();
+        movePageNavi();
+
+        expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                return false;
+            }
+        });
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     }
+
+    // 네비게이션 바 코드
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    private void prepareListData() {
+        myHelper.initItem();
+        listDataChild=myHelper.getListDataChild();
+        listDataHeader=myHelper.getListDataHeader();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+    }
+
+    private void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public void initHeader(){
+        // 헤더
+        View header=navigationView.getHeaderView(0);
+
+        textName=(TextView)header.findViewById(R.id.navi_name);
+        textName.setText(user.getUserName()+"님");
+
+        textMypage=(TextView)header.findViewById(R.id.navi_mypage);
+        textMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),MypageActivity.class);
+                intent.putExtra("userInfo",user);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    public void movePageNavi(){
+        // 클릭 시 이동
+        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                int cp=(int)mMenuAdapter.getChildId(i,i1);
+                int gp=(int)mMenuAdapter.getGroupId(i);
+                ExpandedMenuModel mModel=(ExpandedMenuModel)mMenuAdapter.getGroup(gp);
+                String nextUniv=mModel.getIconName();
+                Intent intent=null;
+                switch (cp){
+                    case 0:
+                        intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",nextUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case 1:
+                        intent=new Intent(getApplicationContext(),WaitAnimalActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",nextUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case 2:
+                        if(!nextUniv.equals(mUniv)) {
+                            intent = new Intent(getApplicationContext(), AnimalBookActivity.class);
+                            intent.putExtra("userInfo", user);
+                            intent.putExtra("cp", cp);
+                            intent.putExtra("gp", gp);
+                            intent.putExtra("mUniv", nextUniv);
+                            startActivity(intent);
+                            finish();
+                        }
+                        break;
+                    case 3:
+                        intent=new Intent(getApplicationContext(),NameContestActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",nextUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    public void openMenuNavi(){
+        for(int i=0;i<mMenuAdapter.getGroupCount();i++) {
+            expandableList.expandGroup(i);
+        }
+    }
+
+    public void moveMyBoard(){
+        Intent intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
+        intent.putExtra("userInfo",user);
+        intent.putExtra("mUniv",user.getUserUniv());
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+            closeDrawer();
+        }
+        else{
+            moveMyBoard();
+            finish();
+            super.onBackPressed();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 

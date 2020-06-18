@@ -65,17 +65,19 @@ public class MypageActivity extends AppCompatActivity {
     private List<String> uidList=new ArrayList<>();
     private boolean isSend=false;
 
-    private int thiscp,thisgp;
-
     ///////////////////////////////////////////////// 네비게이션 바
     /////////////////////////////////////////////////
     private DrawerLayout mDrawerLayout;
-    ExpandableListAdapter mMenuAdapter;
-    ExpandableListView expandableList;
-    List<ExpandedMenuModel> listDataHeader;
-    HashMap<ExpandedMenuModel, List<String>> listDataChild;
-    private TextView textMypage,textnaviName;
+    private ExpandableListAdapter mMenuAdapter;
+    private ExpandableListView expandableList;
+    private List<ExpandedMenuModel> listDataHeader;
+    private HashMap<ExpandedMenuModel, List<String>> listDataChild;
+    private TextView textMypage,textNaviName;
+    private ExpandableListHelper myHelper;
+    private NavigationView navigationView;
     ///////////////////////////////////////////////
+    private int thiscp,thisgp;
+    private String mUniv="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,7 @@ public class MypageActivity extends AppCompatActivity {
         user=(User)getIntent().getSerializableExtra("userInfo");
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
+        mUniv=getIntent().getStringExtra("mUniv");
 
         mAuth=FirebaseAuth.getInstance();
         mDatabase=FirebaseDatabase.getInstance();
@@ -177,72 +180,21 @@ public class MypageActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        myHelper=new ExpandableListHelper();
 
-        // 헤더
-        View header=navigationView.getHeaderView(0);
 
-        textnaviName=(TextView)header.findViewById(R.id.navi_name);
-        textnaviName.setText(user.getUserName()+"님");
-
-        textMypage=(TextView)header.findViewById(R.id.navi_mypage);
-//        textMypage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(getApplicationContext(),MypageActivity.class);
-//                intent.putExtra("userInfo",user);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-
-        // 네비게이션 뷰 초기화
+        initHeader();
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
 
         prepareListData();
         mMenuAdapter = new ExpandableListAdapter(thisgp,thiscp,user.getUserUniv(),this, listDataHeader, listDataChild, expandableList);
-
         expandableList.setAdapter(mMenuAdapter);
-        for(int i=0;i<mMenuAdapter.getGroupCount();i++) {
-            expandableList.expandGroup(i);
-        }
-        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                int cp=(int)mMenuAdapter.getChildId(i,i1);
-                int gp=(int)mMenuAdapter.getGroupId(i);
-                if(gp==0){
-                    if(cp==0){
-                        Intent intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
-                        intent.putExtra("userInfo",user);
-                        intent.putExtra("cp",cp);
-                        intent.putExtra("gp",gp);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else if(cp==1){
-                        Intent intent=new Intent(getApplicationContext(),WaitAnimalActivity.class);
-                        intent.putExtra("userInfo",user);
-                        intent.putExtra("cp",cp);
-                        intent.putExtra("gp",gp);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else if(cp==2){
-                        // 이름 공모전
-                    }
-                    else{
-                        // 동물 도감
-                    }
-                }
-                else{
 
-                }
-                return false;
-            }
-        });
+        openMenuNavi();
+        movePageNavi();
 
         expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -490,26 +442,9 @@ public class MypageActivity extends AppCompatActivity {
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
     private void prepareListData() {
-        listDataHeader = new ArrayList<ExpandedMenuModel>();
-        listDataChild = new HashMap<ExpandedMenuModel, List<String>>();
-
-        ExpandedMenuModel item1 = new ExpandedMenuModel();
-        item1.setIconName("경북대학교");
-        listDataHeader.add(item1);
-
-        ExpandedMenuModel item2 = new ExpandedMenuModel();
-        item2.setIconName("부산대학교");
-        listDataHeader.add(item2);
-
-        List<String> heading1 = new ArrayList<String>();
-        heading1.add("자유게시판");
-        heading1.add("대기동물 게시판");
-        heading1.add("동물 도감");
-        heading1.add("이름 공모전");
-
-        listDataChild.put(listDataHeader.get(0), heading1);
-        listDataChild.put(listDataHeader.get(1), heading1);
-
+        myHelper.initItem();
+        listDataChild=myHelper.getListDataChild();
+        listDataHeader=myHelper.getListDataHeader();
     }
 
     @Override
@@ -543,15 +478,95 @@ public class MypageActivity extends AppCompatActivity {
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
+    public void initHeader(){
+        // 헤더
+        View header=navigationView.getHeaderView(0);
+
+        textNaviName=(TextView)header.findViewById(R.id.navi_name);
+        textNaviName.setText(user.getUserName()+"님");
+
+        textMypage=(TextView)header.findViewById(R.id.navi_mypage);
+    }
+
+    public void movePageNavi(){
+        // 클릭 시 이동
+        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                int cp=(int)mMenuAdapter.getChildId(i,i1);
+                int gp=(int)mMenuAdapter.getGroupId(i);
+                ExpandedMenuModel mModel=(ExpandedMenuModel)mMenuAdapter.getGroup(gp);
+                String mUniv=mModel.getIconName();
+                Intent intent=null;
+                switch (cp){
+                    case 0:
+                        intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",mUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case 1:
+                        intent=new Intent(getApplicationContext(),WaitAnimalActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",mUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case 2:
+                        intent=new Intent(getApplicationContext(),AnimalBookActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",mUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case 3:
+                        intent=new Intent(getApplicationContext(),NameContestActivity.class);
+                        intent.putExtra("userInfo",user);
+                        intent.putExtra("cp",cp);
+                        intent.putExtra("gp",gp);
+                        intent.putExtra("mUniv",mUniv);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    public void openMenuNavi(){
+        for(int i=0;i<mMenuAdapter.getGroupCount();i++) {
+            expandableList.expandGroup(i);
+        }
+    }
+
+    public void moveMyBoard(){
+        Intent intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
+        intent.putExtra("userInfo",user);
+        intent.putExtra("mUniv",user.getUserUniv());
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onBackPressed() {
         if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
             closeDrawer();
         }
         else{
-            updateUI();
+            moveMyBoard();
+            finish();
+            super.onBackPressed();
         }
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
 }
