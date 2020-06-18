@@ -90,7 +90,6 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
         intent.putExtra("mUniv",user.getUserUniv());
         intent.putExtra("userInfo",user);
         intent.putExtra("university", (Serializable) university);
-        Log.e("university",university.toString());
         startActivity(intent);
         finish();
     }
@@ -102,7 +101,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Restricted restricted = dataSnapshot.getValue(Restricted.class);
                 if (restricted == null) {
-                    goFreeBoard();
+                    initUniversity();
                 }
                 else {
                     Date mDate=new Date(System.currentTimeMillis());
