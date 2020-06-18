@@ -112,7 +112,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
 
     //아이템 클릭
     private void clickItem(@NonNull CustomViewHolder holder, final Article article) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.textViewContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), commentActivity.class);
