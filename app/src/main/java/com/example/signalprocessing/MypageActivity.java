@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +85,9 @@ public class MypageActivity extends AppCompatActivity {
     private String mUniv="";
     private Serializable university=new ArrayList<>();
 
+    private ImageView img_navi;
+    private ImageView img_logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +118,26 @@ public class MypageActivity extends AppCompatActivity {
         rview.setLayoutManager(new LinearLayoutManager(this));
         messageAdapter=new MessageAdapter();
         rview.setAdapter(messageAdapter);
+
+        img_navi = (ImageView)findViewById(R.id.img_navi);
+        img_navi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer();
+            }
+        });
+
+        img_logout = (ImageView)findViewById(R.id.img_logout);
+        img_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auto =getSharedPreferences("autologin", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=auto.edit();
+                editor.clear();
+                editor.commit();
+                mAuth.signOut();
+            }
+        });
 
         loadMessageInfo(user.getUserName());
 
@@ -490,6 +514,10 @@ public class MypageActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    private void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
     private void closeDrawer() {
