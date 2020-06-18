@@ -5,42 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ConnectorActivity">
-
-    <Button
-        android:id="@+id/board_btn_animalbook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="동물도감" />
-
-    <Button
-        android:id="@+id/board_btn_namecontest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="이름공모" />
-
-    <Button
-        android:id="@+id/board_btn_waitanimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="대기동물페이지" />
-
-    <Button
-        android:id="@+id/board_btn_mypage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="마이페이지" />
-
-    <Button
-        android:id="@+id/board_btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="로그아웃" />
-
-    <Button
-        android:id="@+id/board_btn_board"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="자유게시판" />
-
-</LinearLayout>
+    android:background="@drawable/img_icon"
+    tools:context=".ConnectorActivity"/>
