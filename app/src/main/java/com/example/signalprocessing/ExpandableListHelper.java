@@ -43,9 +43,6 @@ public class ExpandableListHelper {
     }
 
     public void initUniversity(Context context){
-        final ProgressDialog pdialog=new ProgressDialog(context);
-        pdialog.setTitle("정보를 불러오는 중입니다");
-        pdialog.show();
         databaseReference.child("Universities").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -64,7 +61,6 @@ public class ExpandableListHelper {
                     listDataHeader.add(item);
                     listDataChild.put(listDataHeader.get(i),heading);
                 }
-                pdialog.dismiss();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

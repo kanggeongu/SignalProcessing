@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -138,6 +139,8 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         }
 
         prepareListData();
+        Log.e("freeboard",""+listDataChild.size());
+        Log.e("freeboard",""+listDataHeader.size());
         mMenuAdapter = new ExpandableListAdapter(thisgp,thiscp,user.getUserUniv(),this, listDataHeader, listDataChild, expandableList);
         expandableList.setAdapter(mMenuAdapter);
 
