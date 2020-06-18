@@ -38,6 +38,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
     private Button logout,mypage,waitanimal,freeboard, namecontest, animalbook;
     private User user;
 
+    private int initGroup=0,initItem=0;
     private List<String> university=new ArrayList<>();
 
     @Override
@@ -72,9 +73,15 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 university.clear();
+                int index=0;
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     String name=snapshot.getKey();
                     university.add(name);
+                    if(name.equals(user.getUserUniv())){
+                        initGroup=index;
+                        initItem=0;
+                    }
+                    index+=1;
                 }
                 goFreeBoard();
             }
@@ -90,6 +97,8 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
         intent.putExtra("mUniv",user.getUserUniv());
         intent.putExtra("userInfo",user);
         intent.putExtra("university", (Serializable) university);
+        intent.putExtra("gp",initGroup);
+        intent.putExtra("cp",initItem);
         startActivity(intent);
         finish();
     }
