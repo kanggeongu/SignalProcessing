@@ -2,6 +2,7 @@ package com.example.signalprocessing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -150,6 +153,12 @@ public class MypageActivity extends AppCompatActivity {
                 isSend=false;
                 //loadMessageInfo(user.getUserName());
                 messageAdapter.notifyDataSetChanged();
+
+                btnReceive.setBackgroundResource(R.drawable.yellow_round_rectangle);
+                btnReceive.setTextColor(0xFFFFFFFF);
+
+                btnSend.setBackgroundResource(R.drawable.empty_yellow_round_rectangle);
+                btnSend.setTextColor(0xFFFFC000);
             }
         });
 
@@ -160,6 +169,12 @@ public class MypageActivity extends AppCompatActivity {
                 isSend=true;
                 //loadMessageInfo(user.getUserName());
                 messageAdapter.notifyDataSetChanged();
+
+                btnSend.setBackgroundResource(R.drawable.yellow_round_rectangle);
+                btnSend.setTextColor(0xFFFFFFFF);
+
+                btnReceive.setBackgroundResource(R.drawable.empty_yellow_round_rectangle);
+                btnReceive.setTextColor(0xFFFFC000);
             }
         });
 
