@@ -78,6 +78,8 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
     private int thiscp,thisgp;
     private String mUniv="";
 
+    private TextView pageTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +89,9 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
+
+        pageTitle=findViewById(R.id.pageTitle);
+        pageTitle.setText(mUniv+" 신규 동물 요청");
 
         Log.e("user","user "+user.getUserName());
 

@@ -66,6 +66,8 @@ public class AnimalBookActivity extends AppCompatActivity {
     private int thiscp,thisgp;
     private String mUniv="";
 
+    private TextView pageTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,9 @@ public class AnimalBookActivity extends AppCompatActivity {
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
+
+        pageTitle=findViewById(R.id.pageTitle);
+        pageTitle.setText(mUniv+" 동물 도감");
 
         databaseReference.child("AnimalBooks").child(mUniv).addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)

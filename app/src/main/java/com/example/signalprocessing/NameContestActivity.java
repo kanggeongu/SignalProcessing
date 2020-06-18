@@ -70,6 +70,8 @@ public class NameContestActivity extends AppCompatActivity {
     private int thiscp,thisgp;
     private String mUniv="";
 
+    private TextView pageTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,9 @@ public class NameContestActivity extends AppCompatActivity {
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
         context = this;
+
+        pageTitle=findViewById(R.id.pageTitle);
+        pageTitle.setText(mUniv+" 이름 공모전");
 
         initPallete();
         func();

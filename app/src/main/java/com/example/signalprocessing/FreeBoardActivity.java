@@ -78,6 +78,8 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
     private Animation fab_open,fab_close;
     private FloatingActionButton fab,fab1;
 
+    private TextView pageTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,9 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
+
+        pageTitle=findViewById(R.id.pageTitle);
+        pageTitle.setText(mUniv+" 자유게시판");
 
         initPalette();
         func();
