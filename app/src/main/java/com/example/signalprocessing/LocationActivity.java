@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,9 @@ public class LocationActivity extends AppCompatActivity {
     float layoutX=1080,layoutY=1794;
     Typeface tf;
 
+    public String mUniv="";
+    public Serializable university=new ArrayList<>();
+
     //boolean isNew=false;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
@@ -69,6 +73,9 @@ public class LocationActivity extends AppCompatActivity {
         mLinear=(LinearLayout) findViewById(R.id.mLocLinear);
         Vview=(View)findViewById(R.id.Vview);
         mContext=this;
+
+        mUniv=getIntent().getStringExtra("mUniv");
+        university=getIntent().getSerializableExtra("universityReturn");
 
         Intent intent = getIntent();
         final User user=(User)intent.getSerializableExtra("userInfo");

@@ -351,6 +351,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
     public void moveAddPage(){
         Intent intent=new Intent(WaitAnimalActivity.this,AddWaitAnimalActivity.class);
         intent.putExtra("userInfo",user);
+        intent.putExtra("mUniv",mUniv);
         startActivity(intent);
         finish();
     }
@@ -442,6 +443,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
+                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;
@@ -452,6 +454,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                             intent.putExtra("cp", cp);
                             intent.putExtra("gp", gp);
                             intent.putExtra("mUniv", nextUniv);
+                            intent.putExtra("university",university);
                             startActivity(intent);
                             finish();
                         }
@@ -462,6 +465,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
+                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;
@@ -471,6 +475,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
+                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;

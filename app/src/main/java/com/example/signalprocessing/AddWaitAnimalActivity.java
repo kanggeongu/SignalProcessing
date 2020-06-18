@@ -89,12 +89,15 @@ public class AddWaitAnimalActivity extends AppCompatActivity implements AdapterV
     private String selected="알 수 없음";
     private List<String> genders=new ArrayList<>();
 
+    private String mUniv="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_wait_animal);
 
         user=(User)getIntent().getSerializableExtra("userInfo");
+        mUniv=getIntent().getStringExtra("mUniv");
 
         btnCamera=findViewById(R.id.addwait_btn_Camera);
         btnAdd=findViewById(R.id.addwait_btn_upload);
@@ -342,6 +345,7 @@ public class AddWaitAnimalActivity extends AppCompatActivity implements AdapterV
     public void updateUI(){
         Intent intent=new Intent(AddWaitAnimalActivity.this,WaitAnimalActivity.class);
         intent.putExtra("userInfo",user);
+        intent.putExtra("mUniv",mUniv);
         startActivity(intent);
         finish();
     }
