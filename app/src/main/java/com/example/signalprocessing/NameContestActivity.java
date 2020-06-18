@@ -2,6 +2,7 @@ package com.example.signalprocessing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -146,5 +147,17 @@ public class NameContestActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddNameContestActivity.class);
         intent.putExtra("userInformation", user);
         startActivity(intent);
+    }
+
+    public void updateUI(){
+        Intent intent=new Intent(NameContestActivity.this,FreeBoardActivity.class);
+        intent.putExtra("userInfo",user);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        updateUI();
     }
 }

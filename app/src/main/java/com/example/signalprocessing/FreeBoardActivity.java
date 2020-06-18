@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -379,8 +381,25 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         }
         else{
             //updateUI();
-            finish();
-            super.onBackPressed();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("앱을 종료합니다");
+            builder.setMessage("정말 종료하시겠습니가?");
+            builder.setPositiveButton(android.R.string.yes,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.no,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            builder.show();
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////

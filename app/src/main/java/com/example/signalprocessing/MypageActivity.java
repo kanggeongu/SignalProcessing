@@ -365,6 +365,7 @@ public class MypageActivity extends AppCompatActivity {
 
     public void updateUI(){
         Intent intent=new Intent(MypageActivity.this,FreeBoardActivity.class);
+        intent.putExtra("userInfo",user);
         startActivity(intent);
         finish();
     }
@@ -549,8 +550,6 @@ public class MypageActivity extends AppCompatActivity {
         }
         else{
             updateUI();
-            finish();
-            super.onBackPressed();
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
