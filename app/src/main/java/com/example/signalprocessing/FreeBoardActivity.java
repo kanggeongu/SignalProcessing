@@ -37,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -87,6 +88,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
     private FloatingActionButton fab,fab1;
 
     private TextView pageTitle;
+    private Serializable university=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
+        university=getIntent().getSerializableExtra("university");
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 자유게시판");
@@ -157,7 +160,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableList = (ExpandableListView) findViewById(R.id.nav_menu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        myHelper=new ExpandableListHelper(this, university);
+        myHelper=new ExpandableListHelper((List<String>) university);
 
 
         initHeader();
