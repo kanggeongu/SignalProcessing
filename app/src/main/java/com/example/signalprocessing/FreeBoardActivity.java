@@ -101,9 +101,19 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",0);
         mUniv = getIntent().getStringExtra("mUniv");
-        Log.e("univ0",university.toString());
-        university= ((ConnectorActivity)ConnectorActivity.context).university;
+        Log.e("thisgp-gp",""+thisgp);
+        Log.e("thisgp-cp",""+thiscp);
+        //university= ((ConnectorActivity)ConnectorActivity.context).university;
+        university.add("경북대학교");
+        university.add("고려대학교");
+        university.add("부산대학교");
+        university.add("서울대학교");
+        university.add("연세대학교");
+        university.add("한양대학교");
+
         Log.e("univ1",university.toString());
+        int fromConnector=getIntent().getIntExtra("from",-100);
+        Log.e("thisgp-from",""+fromConnector);
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 자유게시판");

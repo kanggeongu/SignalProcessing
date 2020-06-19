@@ -39,6 +39,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
     private User user;
 
     private int initGroup=0,initItem=0;
+    private int fromConnector=0;
     public static List<String> university=new ArrayList<>();
     public static Context context;
 
@@ -101,6 +102,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
         intent.putExtra("userInfo",user);
         // intent.putExtra("university", (Serializable) university);
         intent.putExtra("gp",initGroup);
+        intent.putExtra("from",100);
         intent.putExtra("cp",initItem);
         startActivity(intent);
         finish();
