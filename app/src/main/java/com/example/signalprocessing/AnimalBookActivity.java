@@ -437,7 +437,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                     ((CustomViewHolder)holder).like.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).addListenerForSingleValueEvent(new ValueEventListener() {
+                            databaseReference.child("AnimalBooks").child(mUniv).child(animalID).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     animalBook3 = dataSnapshot.getValue(AnimalBook.class);
@@ -450,7 +450,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                                         ((CustomViewHolder) holder).likes.setText("" + animalBook3.getLiker().size());
                                     }
 
-                                    databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).child("liker").setValue(animalBook3.getLiker());
+                                    databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("liker").setValue(animalBook3.getLiker());
                                 }
 
                                 @Override
