@@ -103,7 +103,8 @@ public class writeArticleActivity extends AppCompatActivity {
                     return;
                 }
 
-                article = new Article(Long.toString(now), user.getUserUniv(), user.getUserName(), contents.getText().toString(), "", dateFormat.format(c.getTime()));
+                Long now1 = System.currentTimeMillis();
+                article = new Article(Long.toString(now1), user.getUserUniv(), user.getUserName(), contents.getText().toString(), "", dateFormat.format(c.getTime()));
                 if(file!=null){
                     upload(file);
                 }

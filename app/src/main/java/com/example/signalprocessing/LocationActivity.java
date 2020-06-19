@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +85,8 @@ public class LocationActivity extends AppCompatActivity {
         final int[] num = {0};
         final float[] x = new float[1];
         final float[] y = new float[1];
-        tf = getResources().getFont(R.font.bmjua);
+        //tf = getResources().getFont(R.font.bmjua);
+        tf = ResourcesCompat.getFont(LocationActivity.this, R.font.bmjua);
 
         final String animalId=intent.getStringExtra("animalId");
         final List<Location> Loc = new ArrayList<>();
