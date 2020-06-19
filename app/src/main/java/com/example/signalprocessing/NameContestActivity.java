@@ -19,10 +19,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +44,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class NameContestActivity extends AppCompatActivity {
+public class NameContestActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -59,6 +62,10 @@ public class NameContestActivity extends AppCompatActivity {
     // 대시보드
     private TextView wait_text_all, wait_text_admit, wait_text_reject, wait_text_ing;
     private int numAll=0,numAdmit=0,numReject=0,numIng=0;
+
+    private boolean isFabOpen=false;
+    private Animation fab_open,fab_close;
+    private FloatingActionButton fab,fab1;
 
     public static Context context;
 
@@ -97,6 +104,15 @@ public class NameContestActivity extends AppCompatActivity {
         mUniv=getIntent().getStringExtra("mUniv");
         university=getIntent().getSerializableExtra("university");
         context = this;
+
+        fab_open= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
+        fab_close=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+
+        fab=(FloatingActionButton)findViewById(R.id.mypage_fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.mypage_fab1);
+
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 이름 공모전");
@@ -169,6 +185,33 @@ public class NameContestActivity extends AppCompatActivity {
         });
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent=null;
+        switch(view.getId()){
+            case R.id.mypage_fab:
+                anim();
+                break;
+            case R.id.mypage_fab1:
+                anim();
+                onClickNameContest();
+                break;
+        }
+    }
+
+    public void anim(){
+        if(isFabOpen){
+            fab1.startAnimation(fab_close);
+            fab1.setClickable(false);
+            isFabOpen=false;
+        }
+        else{
+            fab1.startAnimation(fab_open);
+            fab1.setClickable(true);
+            isFabOpen=true;
+        }
     }
 
     // 네비게이션 바 코드
@@ -404,7 +447,7 @@ public class NameContestActivity extends AppCompatActivity {
         });
     }
 
-    public void onClickNameContest(View v) {
+    public void onClickNameContest() {
         Intent intent = new Intent(this, AddNameContestActivity.class);
         intent.putExtra("userInformation", user);
         startActivity(intent);
