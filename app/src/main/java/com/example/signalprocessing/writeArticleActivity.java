@@ -169,7 +169,6 @@ public class writeArticleActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Log.v("123213", "finish");
-                                    pdialog.dismiss();
                                     Toast.makeText(writeArticleActivity.this,"업로드 완료",Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
@@ -184,6 +183,14 @@ public class writeArticleActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (pdialog.isShowing()) {
+            pdialog.dismiss();
+        }
+        super.onDestroy();
     }
 
     private void tedPermission() {
