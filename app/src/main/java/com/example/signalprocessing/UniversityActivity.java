@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,6 +65,9 @@ public class UniversityActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final User user=(User)intent.getSerializableExtra("userInfo");
         final boolean ischange=intent.getBooleanExtra("ischange",false);
+
+        Log.e("ischange","ischange : "+ischange);
+
         mDatabaseReference.child("Universities").addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
