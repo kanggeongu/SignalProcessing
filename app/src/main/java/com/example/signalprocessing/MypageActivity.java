@@ -215,6 +215,7 @@ public class MypageActivity extends AppCompatActivity {
                 intent.putExtra("ischange",true);
                 intent.putExtra("userInfo",user);
                 startActivity(intent);
+                finish();
             }
         });
 
