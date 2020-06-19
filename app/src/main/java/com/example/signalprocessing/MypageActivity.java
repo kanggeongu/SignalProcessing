@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -60,7 +61,8 @@ public class MypageActivity extends AppCompatActivity {
     private Button btnSend,btnReceive,btnUserBye,btnPW,btnUniv;
     private View thislayout;
 
-    private User user;
+    public static Context context;
+    public User user;
     private SharedPreferences auto;
 
     private RecyclerView rview;
@@ -92,6 +94,7 @@ public class MypageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
+        context = this;
 
         user=(User)getIntent().getSerializableExtra("userInfo");
         thiscp=getIntent().getIntExtra("cp",-1);

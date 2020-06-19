@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -71,6 +72,8 @@ public class UniversityActivity extends AppCompatActivity {
                     Universityitem Uvitem=postSnapshot.getValue(Universityitem.class);
                     uv.add(Uvitem);
                 }
+                Collections.sort(uv);
+                /*
                 uv.sort(new Comparator<Universityitem>(){
                     @Override
                     public int compare(Universityitem o1, Universityitem o2) {
@@ -89,6 +92,7 @@ public class UniversityActivity extends AppCompatActivity {
                         }
                     }
                 });
+                */
                 mAdapter = new UniversityAdapter(uv,mContext,user,ischange);
                 recyclerView.setAdapter(mAdapter);
             }
