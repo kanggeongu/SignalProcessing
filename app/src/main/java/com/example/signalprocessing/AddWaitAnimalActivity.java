@@ -311,7 +311,7 @@ public class AddWaitAnimalActivity extends AppCompatActivity implements AdapterV
                 if(task.isSuccessful()){
                     showToast("업로드 완료");
                     pdialog.dismiss();
-                    updateUI();
+                    finish();
                 }
                 else{
                     showToast("업로드 실패");
@@ -348,12 +348,6 @@ public class AddWaitAnimalActivity extends AppCompatActivity implements AdapterV
         intent.putExtra("mUniv",mUniv);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        updateUI();
     }
 
     public void showToast(String toastMessage){

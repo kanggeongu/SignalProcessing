@@ -21,9 +21,10 @@
     <EditText
         android:id="@+id/mesgase"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/empty_border"
         android:gravity="center"
+        android:minLines="8"
         android:textColor="#000000"
         android:textSize="16dp"
         android:hint="내용을 입력하세요."/>

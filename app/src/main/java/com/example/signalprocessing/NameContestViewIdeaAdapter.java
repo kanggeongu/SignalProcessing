@@ -28,6 +28,7 @@ public class NameContestViewIdeaAdapter extends RecyclerView.Adapter<NameContest
     private User user;
     private String NameContestID;
     private boolean Flag;
+    private String mUniv;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -45,6 +46,7 @@ public class NameContestViewIdeaAdapter extends RecyclerView.Adapter<NameContest
 
         user = ((NameContestActivity)NameContestActivity.context).user;
         NameContestID = ((NameContestIdeaViewHome)NameContestIdeaViewHome.context).NameContestID;
+        mUniv = ((NameContestActivity)NameContestActivity.context).mUniv;
 
         return holder;
     }
@@ -68,6 +70,11 @@ public class NameContestViewIdeaAdapter extends RecyclerView.Adapter<NameContest
         holder.buttonCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!user.getUserUniv().equals(mUniv)) {
+                    Toast.makeText(v.getContext(), mUniv + " 학생이 아니라서 투표할 수 없습니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Long now = System.currentTimeMillis();
                 Date mDate = new Date(now);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");

@@ -50,6 +50,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
     private ListAdapter listAdapter;
     private String animalID;
     private String contentID;
+    private String mUniv;
 
 
     @Override
@@ -67,6 +68,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
         add = findViewById(R.id.add);
         user = (User)getIntent().getSerializableExtra("userInfo");
+        mUniv = ((AnimalBookActivity)AnimalBookActivity.context).mUniv;
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -76,7 +78,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
 
         Intent detail = getIntent();
         animalID = detail.getStringExtra("animalID");
-        databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 AnimalBook animalBook = dataSnapshot.getValue(AnimalBook.class);
@@ -91,7 +93,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
 
             }
         });
-        databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).child("Contents").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 contents.clear();
@@ -116,6 +118,11 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!user.getUserUniv().equals(mUniv)) {
+                    Toast.makeText(AnimalBookDetailActivity.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 AnimalBookCustomDialog customDialog = new AnimalBookCustomDialog(AnimalBookDetailActivity.this);
 
                 customDialog.callFunction(editContent, animalID, user.getUserName());
@@ -174,12 +181,12 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.userID:
-                databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("AnimalBooks").child(mUniv).child(animalID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         AnimalBook animalBook = dataSnapshot.getValue(AnimalBook.class);
                         assert animalBook != null;
-                        databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).child("Contents").child(contentID).addValueEventListener(new ValueEventListener() {
+                        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").child(contentID).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Content content = dataSnapshot.getValue(Content.class);
@@ -217,7 +224,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         user = dataSnapshot.getValue(User.class);
-                        databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).child("Contents").child(contentID).addListenerForSingleValueEvent(new ValueEventListener() {
+                        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").child(contentID).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Content content = dataSnapshot.getValue(Content.class);
@@ -227,7 +234,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
                                 } else {
                                     Toast.makeText(AnimalBookDetailActivity.this, "이미 신고되었습니다.", Toast.LENGTH_SHORT).show();
                                 }
-                                databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).child("Contents").child(content.getContentID()).child("reporter").setValue(content.getReporter());
+                                databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").child(content.getContentID()).child("reporter").setValue(content.getReporter());
                             }
 
                             @Override

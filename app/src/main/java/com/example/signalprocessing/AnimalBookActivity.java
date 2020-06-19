@@ -1,6 +1,9 @@
 package com.example.signalprocessing;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -32,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +72,8 @@ public class AnimalBookActivity extends AppCompatActivity {
     ///////////////////////////////////////////////
 
     private int thiscp,thisgp;
-    private String mUniv="";
+    public static Context context;
+    public String mUniv="";
 
     private TextView pageTitle;
 
@@ -85,6 +90,7 @@ public class AnimalBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_book);
 
+        context = this;
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(this,2);
@@ -131,17 +137,7 @@ public class AnimalBookActivity extends AppCompatActivity {
 
                     AnimalBooks.add(animalBook);
                 }
-                AnimalBooks.sort(new Comparator<AnimalBook>() {
-                    @Override
-                    public int compare(AnimalBook t1, AnimalBook t2) {
-                        int like1 = t1.getLiker().size();
-                        int like2 = t2.getLiker().size();
-
-                        if(like1 == like2) return 0;
-                        else if(like1 < like2) return 1;
-                        else return -1;
-                    }
-                });
+                Collections.sort(AnimalBooks);
                 myAdapter.notifyDataSetChanged();
             }
 
@@ -329,9 +325,24 @@ public class AnimalBookActivity extends AppCompatActivity {
             closeDrawer();
         }
         else{
-            moveMyBoard();
-            finish();
-            super.onBackPressed();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("앱을 종료합니다");
+            builder.setMessage("정말 종료하시겠습니가?");
+            builder.setPositiveButton(android.R.string.yes,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.no,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            builder.show();
         }
     }
 

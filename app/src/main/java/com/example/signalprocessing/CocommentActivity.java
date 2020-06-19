@@ -139,6 +139,11 @@ public class CocommentActivity extends AppCompatActivity {
     }
 
     public void onClickCocomment(View v){
+        if (!user.getUserUniv().equals(mUniv)) {
+            Toast.makeText(CocommentActivity.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String textCocomment = editTextWriteCocomment.getText().toString();
         if(textCocomment.equals("")){
             ToastText("내용을 입력해주세요.");

@@ -24,6 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -397,7 +398,7 @@ public class NameContestActivity extends AppCompatActivity implements View.OnCli
         nameContestAdapter = new NameContestAdapter(arrayList);
         recyclerViewNameContest.setAdapter(nameContestAdapter);
 
-        databaseReference.child("NameContests").child(user.getUserUniv()).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("NameContests").child(mUniv).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 numAll=numAdmit=numReject=numIng=0;
@@ -448,6 +449,11 @@ public class NameContestActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void onClickNameContest() {
+        if (!user.getUserUniv().equals(mUniv)) {
+            Toast.makeText(NameContestActivity.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Intent intent = new Intent(this, AddNameContestActivity.class);
         intent.putExtra("userInformation", user);
         startActivity(intent);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AnimalBook {
+public class AnimalBook implements Comparable<AnimalBook>{
     private String name;
     private String mean;
     private String location;
@@ -108,6 +108,16 @@ public class AnimalBook {
         else {
             return false;
         }
+    }
+
+    @Override
+    public int compareTo(AnimalBook o) {
+        int myLovers = this.liker.size();
+        int yourLovers = o.liker.size();
+
+        if (myLovers < yourLovers) return 1;
+        else if (myLovers > yourLovers) return -1;
+        return 0;
     }
 }
 

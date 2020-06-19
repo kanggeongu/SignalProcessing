@@ -174,6 +174,11 @@ public class NameContestIdeaViewHome extends AppCompatActivity implements View.O
     }
 
     public void onClickAddContestIdea() {
+        if (!user.getUserUniv().equals(mUniv)) {
+            Toast.makeText(NameContestIdeaViewHome.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Long now = System.currentTimeMillis();
         Date mDate = new Date(now);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");

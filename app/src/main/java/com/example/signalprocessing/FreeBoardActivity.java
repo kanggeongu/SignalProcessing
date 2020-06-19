@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -272,6 +273,11 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
             buttonWriteArticle1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!user.getUserUniv().equals(mUniv)) {
+                        Toast.makeText(FreeBoardActivity.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     intent = new Intent(getApplicationContext(), writeArticleActivity.class);
                     intent.putExtra("userInformation", user);
                     startActivity(intent);

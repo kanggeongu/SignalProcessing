@@ -18,6 +18,7 @@ public class AnimalBookCustomDialog {
     private Context context;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private String mUniv;
 
     public AnimalBookCustomDialog(Context context) {
         this.context = context;
@@ -25,6 +26,7 @@ public class AnimalBookCustomDialog {
 
     // 호출할 다이얼로그 함수를 정의한다.
     public void callFunction(final TextView editContent, final String animalID, final String userID) {
+        mUniv = ((AnimalBookActivity)AnimalBookActivity.context).mUniv;
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
         final Dialog dlg = new Dialog(context);
@@ -52,9 +54,13 @@ public class AnimalBookCustomDialog {
                 //*******리스트뷰에 추가하기*********
                 Long now = System.currentTimeMillis();
                 editContent.setText(message.getText().toString());
+                if (editContent.getText().toString().equals("")) {
+                    Toast.makeText(context, "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Content content = new Content(editContent.getText().toString(), userID);
                 content.setContentID(Long.toString(now));
-                databaseReference.child("AnimalBooks").child("경북대학교").child(animalID).child("Contents").child(content.getContentID()).setValue(content);
+                databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").child(content.getContentID()).setValue(content);
 
                 // 커스텀 다이얼로그를 종료한다.
                 dlg.dismiss();

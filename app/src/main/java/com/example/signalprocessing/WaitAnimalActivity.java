@@ -32,6 +32,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -349,11 +350,15 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void moveAddPage(){
+        if (!user.getUserUniv().equals(mUniv)) {
+            Toast.makeText(WaitAnimalActivity.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Intent intent=new Intent(WaitAnimalActivity.this,AddWaitAnimalActivity.class);
         intent.putExtra("userInfo",user);
         intent.putExtra("mUniv",mUniv);
         startActivity(intent);
-        finish();
     }
 
     public void updateUI(){

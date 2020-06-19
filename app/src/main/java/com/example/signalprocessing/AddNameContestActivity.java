@@ -283,6 +283,7 @@ public class AddNameContestActivity extends AppCompatActivity {
                     pdialog.dismiss();
                     Log.v("ADDNAMECONTEST", "Finish");
                     ToastText("업로드가 완료되었습니다");
+                    finish();
                 }
                 else {
                     ToastText("업로드에 실패하였습니다");
