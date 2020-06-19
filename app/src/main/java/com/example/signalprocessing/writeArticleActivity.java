@@ -98,6 +98,11 @@ public class writeArticleActivity extends AppCompatActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (contents.getText().toString().equals("")) {
+                    Toast.makeText(writeArticleActivity.this, "한마디라도 적어주세요!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 article = new Article(Long.toString(now), user.getUserUniv(), user.getUserName(), contents.getText().toString(), "", dateFormat.format(c.getTime()));
                 if(file!=null){
                     upload(file);

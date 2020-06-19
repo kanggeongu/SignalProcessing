@@ -57,5 +57,6 @@ public class NameContestAddContestIdea extends AppCompatActivity {
         NameContestIdea nameContestIdea = new NameContestIdea(ID, user.getUserName(), Name, Reason);
         databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).child("Ideas").child(ID).setValue(nameContestIdea);
         makeToast("업로드 완료되었습니다.");
+        finish();
     }
 }
