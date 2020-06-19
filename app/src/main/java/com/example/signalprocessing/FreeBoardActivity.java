@@ -105,6 +105,13 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         Log.e("thisgp-cp",""+thiscp);
         university= ((ConnectorActivity)ConnectorActivity.context).university;
 
+        if(user.getUserUniv().equals("")){
+            Intent intent=new Intent(this,UniversityActivity.class);
+            intent.putExtra("userInfo",user);
+            startActivity(intent);
+            finish();
+        }
+
         Log.e("univ1",university.toString());
         int fromConnector=getIntent().getIntExtra("from",-100);
         Log.e("thisgp-from",""+fromConnector);

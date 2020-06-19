@@ -38,6 +38,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
     private Boolean ischange;
     private User user;
 
+    public static String selected="";
+
     private FirebaseDatabase Database = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = Database.getReference();
 
@@ -102,6 +104,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
         this.user=user;
         userId=user.getUserName();
         this.ischange = ischange;
+        selected=user.getUserUniv();
     }
 
     // Create new views (invoked by the layout manager)
@@ -144,6 +147,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
         }
         if(user.getUserUniv().equals(university.getUniversityName())) {
             holder.LikeButton.setBackgroundResource(R.drawable.red_fill_heart);
+            selected=user.getUserUniv();
         }
 
         holder.LikeButton.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +164,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                             follow[0]++;
                             holder.LikeNum.setText(String.valueOf(follow[0]));
                             user.setUserUniv(university.getUniversityName());
+                            selected=university.getUniversityName();
                             mDatabaseReference.child("Users").child(userId).child("userUniv").setValue(university.getUniversityName());
                             mDatabaseReference.child("Universities").child(university.getUniversityName()).child("followers").setValue(follow[0]);
 
@@ -179,6 +184,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                             Log.v("university", "else if");
                             holder.LikeButton.setBackgroundResource(R.drawable.red_empty_heart);
                             follow[0]--;
+                            selected="";
                             holder.LikeNum.setText(String.valueOf(follow[0]));
                             mDatabaseReference.child("Users").child(userId).child("userUniv").setValue("");
                             mDatabaseReference.child("Universities").child(university.getUniversityName()).child("followers").setValue(follow[0]);

@@ -145,4 +145,14 @@ public class UniversityActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if(!(UniversityAdapter.selected.equals(""))){
+            super.onBackPressed();
+        }
+        else{
+            Toast.makeText(UniversityActivity.this,"대학을 선택하세요",Toast.LENGTH_SHORT).show();
+        }
+    }
 }
