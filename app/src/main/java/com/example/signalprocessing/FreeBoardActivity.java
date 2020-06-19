@@ -101,8 +101,6 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",0);
         mUniv = getIntent().getStringExtra("mUniv");
-        Log.e("thisgp-gp",""+thisgp);
-        Log.e("thisgp-cp",""+thiscp);
         university= ((ConnectorActivity)ConnectorActivity.context).university;
 
         if(user.getUserUniv().equals("")){
