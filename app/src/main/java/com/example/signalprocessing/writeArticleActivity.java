@@ -102,14 +102,18 @@ public class writeArticleActivity extends AppCompatActivity {
                 if(file!=null){
                     upload(file);
                 }
-                databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.v("123213", "finish");
-                        // pdialog.dismiss();
-                        finish();
-                    }
-                });
+                uploadArticle(article);
+            }
+        });
+    }
+
+    public void uploadArticle(Article article){
+        databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.v("123213", "finish");
+                Toast.makeText(writeArticleActivity.this,"업로드 완료",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -161,6 +165,7 @@ public class writeArticleActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Log.v("123213", "finish");
                                     pdialog.dismiss();
+                                    Toast.makeText(writeArticleActivity.this,"업로드 완료",Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });
