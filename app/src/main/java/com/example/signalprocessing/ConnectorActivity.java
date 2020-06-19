@@ -39,12 +39,15 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
     private User user;
 
     private int initGroup=0,initItem=0;
-    private List<String> university=new ArrayList<>();
+    public static List<String> university=new ArrayList<>();
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connector);
+
+        context=this;
 
         /*
         logout=(Button)findViewById(R.id.board_btn_logout);
@@ -96,7 +99,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
         Intent intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
         intent.putExtra("mUniv",user.getUserUniv());
         intent.putExtra("userInfo",user);
-        intent.putExtra("university", (Serializable) university);
+        // intent.putExtra("university", (Serializable) university);
         intent.putExtra("gp",initGroup);
         intent.putExtra("cp",initItem);
         startActivity(intent);

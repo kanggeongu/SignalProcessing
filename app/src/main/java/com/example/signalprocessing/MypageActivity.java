@@ -83,7 +83,7 @@ public class MypageActivity extends AppCompatActivity {
     ///////////////////////////////////////////////
     private int thiscp,thisgp;
     private String mUniv="";
-    private Serializable university=new ArrayList<>();
+    private List<String> university=new ArrayList<>();
 
     private ImageView img_navi;
     private ImageView img_logout;
@@ -97,7 +97,7 @@ public class MypageActivity extends AppCompatActivity {
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",-1);
         mUniv=getIntent().getStringExtra("mUniv");
-        university=getIntent().getSerializableExtra("university");
+        university= ((ConnectorActivity)ConnectorActivity.context).university;
 
         mAuth=FirebaseAuth.getInstance();
         mDatabase=FirebaseDatabase.getInstance();
@@ -235,7 +235,7 @@ public class MypageActivity extends AppCompatActivity {
         mMenuAdapter = new ExpandableListAdapter(thisgp,thiscp,user.getUserUniv(),this, listDataHeader, listDataChild, expandableList);
         expandableList.setAdapter(mMenuAdapter);
 
-        openMenuNavi();
+        // openMenuNavi();
         movePageNavi();
 
         expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {

@@ -89,7 +89,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
     private FloatingActionButton fab,fab1;
 
     private TextView pageTitle;
-    private Serializable university=new ArrayList<>();
+    public List<String> university=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +99,11 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         context = this;
         user=(User)getIntent().getSerializableExtra("userInfo");
         thiscp=getIntent().getIntExtra("cp",-1);
-        thisgp=getIntent().getIntExtra("gp",-1);
-        mUniv=getIntent().getStringExtra("mUniv");
-        university=getIntent().getSerializableExtra("university");
+        thisgp=getIntent().getIntExtra("gp",0);
+        mUniv = getIntent().getStringExtra("mUniv");
+        Log.e("univ0",university.toString());
+        university= ((ConnectorActivity)ConnectorActivity.context).university;
+        Log.e("univ1",university.toString());
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 자유게시판");
@@ -395,7 +397,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                             intent.putExtra("cp", cp);
                             intent.putExtra("gp", gp);
                             intent.putExtra("mUniv", nextUniv);
-                            intent.putExtra("university",university);
+                            intent.putExtra("university", (Serializable) university);
                             startActivity(intent);
                             finish();
                         }
@@ -406,7 +408,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
+                        intent.putExtra("university", (Serializable) university);
                         startActivity(intent);
                         finish();
                         break;
@@ -416,7 +418,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
+                        intent.putExtra("university", (Serializable) university);
                         startActivity(intent);
                         finish();
                         break;
@@ -426,7 +428,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
+                        intent.putExtra("university", (Serializable) university);
                         startActivity(intent);
                         finish();
                         break;
@@ -438,7 +440,8 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
 
     public void openMenuNavi(){
         for(int i=0;i<mMenuAdapter.getGroupCount();i++) {
-            expandableList.expandGroup(i);
+            if(i==thisgp)
+                expandableList.expandGroup(i);
         }
     }
 

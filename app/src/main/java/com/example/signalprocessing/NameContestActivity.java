@@ -86,7 +86,7 @@ public class NameContestActivity extends AppCompatActivity implements View.OnCli
     public String mUniv="";
 
     private TextView pageTitle;
-    private Serializable university=new ArrayList<>();
+    private List<String> university=new ArrayList<>();
 
     private ImageView img_navi;
     private ImageView img_logout;
@@ -101,9 +101,9 @@ public class NameContestActivity extends AppCompatActivity implements View.OnCli
 
         user = (User)getIntent().getSerializableExtra("userInfo");
         thiscp=getIntent().getIntExtra("cp",-1);
-        thisgp=getIntent().getIntExtra("gp",-1);
+        thisgp=getIntent().getIntExtra("gp",3);
         mUniv=getIntent().getStringExtra("mUniv");
-        university=getIntent().getSerializableExtra("university");
+        university= ((ConnectorActivity)ConnectorActivity.context).university;
         context = this;
 
         fab_open= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
@@ -335,7 +335,8 @@ public class NameContestActivity extends AppCompatActivity implements View.OnCli
 
     public void openMenuNavi(){
         for(int i=0;i<mMenuAdapter.getGroupCount();i++) {
-            expandableList.expandGroup(i);
+            if(i==thisgp)
+                expandableList.expandGroup(i);
         }
     }
 
@@ -453,7 +454,6 @@ public class NameContestActivity extends AppCompatActivity implements View.OnCli
             Toast.makeText(NameContestActivity.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
             return;
         }
-
         Intent intent = new Intent(this, AddNameContestActivity.class);
         intent.putExtra("userInformation", user);
         startActivity(intent);

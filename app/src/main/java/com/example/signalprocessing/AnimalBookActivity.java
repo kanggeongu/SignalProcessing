@@ -77,7 +77,7 @@ public class AnimalBookActivity extends AppCompatActivity {
 
     private TextView pageTitle;
 
-    private Serializable university=new ArrayList<>();
+    public List<String> university=new ArrayList<>();
 
     private ImageView img_navi;
     private ImageView img_logout;
@@ -100,9 +100,9 @@ public class AnimalBookActivity extends AppCompatActivity {
         user = (User)getIntent().getSerializableExtra("userInfo");
 
         thiscp=getIntent().getIntExtra("cp",-1);
-        thisgp=getIntent().getIntExtra("gp",-1);
-        mUniv=getIntent().getStringExtra("mUniv");
-        university=getIntent().getSerializableExtra("university");
+        thisgp=getIntent().getIntExtra("gp",2);
+        mUniv = getIntent().getStringExtra("mUniv");
+        university= ((ConnectorActivity)ConnectorActivity.context).university;
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 동물 도감");
@@ -237,7 +237,7 @@ public class AnimalBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(),MypageActivity.class);
                 intent.putExtra("userInfo",user);
-                intent.putExtra("university",university);
+                intent.putExtra("university", (Serializable) university);
                 intent.putExtra("mUniv",mUniv);
                 startActivity(intent);
                 finish();
@@ -262,7 +262,6 @@ public class AnimalBookActivity extends AppCompatActivity {
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;
@@ -272,7 +271,6 @@ public class AnimalBookActivity extends AppCompatActivity {
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;
@@ -283,7 +281,6 @@ public class AnimalBookActivity extends AppCompatActivity {
                             intent.putExtra("cp", cp);
                             intent.putExtra("gp", gp);
                             intent.putExtra("mUniv", nextUniv);
-                            intent.putExtra("university",university);
                             startActivity(intent);
                             finish();
                         }
@@ -294,7 +291,6 @@ public class AnimalBookActivity extends AppCompatActivity {
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
                         startActivity(intent);
                         finish();
                         break;
@@ -306,7 +302,8 @@ public class AnimalBookActivity extends AppCompatActivity {
 
     public void openMenuNavi(){
         for(int i=0;i<mMenuAdapter.getGroupCount();i++) {
-            expandableList.expandGroup(i);
+            if(i==thisgp)
+                expandableList.expandGroup(i);
         }
     }
 
@@ -314,7 +311,6 @@ public class AnimalBookActivity extends AppCompatActivity {
         Intent intent=new Intent(getApplicationContext(),FreeBoardActivity.class);
         intent.putExtra("userInfo",user);
         intent.putExtra("mUniv",user.getUserUniv());
-        intent.putExtra("university",university);
         startActivity(intent);
         finish();
     }
@@ -391,7 +387,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                             intent.putExtra("userInfo", getIntent().getSerializableExtra("userInfo"));
                             intent.putExtra("animalID", AnimalBooks.get(pos).getAnimalID());
                             intent.putExtra("사진", AnimalBooks.get(pos).getImage());
-                            intent.putExtra("university",university);
+                            intent.putExtra("university", (Serializable) university);
                             intent.putExtra("mUniv",mUniv);
                             startActivity(intent);
                         }
@@ -417,7 +413,7 @@ public class AnimalBookActivity extends AppCompatActivity {
                     intent.putExtra("userInfo",user);
                     intent.putExtra("university",""/*동물 도감 대학 정보 넘겨주기*/);
                     intent.putExtra("animalId",animalID);
-                    intent.putExtra("universityReturn",university);
+                    intent.putExtra("universityReturn", (Serializable) university);
                     intent.putExtra("mUniv",mUniv);
                     startActivity(intent);
                 }

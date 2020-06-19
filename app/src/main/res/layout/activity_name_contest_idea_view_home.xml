@@ -98,6 +98,7 @@
             android:layout_marginBottom="120dp"
             android:clickable="true"
             android:visibility="invisible"
+            app:srcCompat="@drawable/icon_add"
             app:pressedTranslationZ="10dp" />
 
 <!--        <Button-->

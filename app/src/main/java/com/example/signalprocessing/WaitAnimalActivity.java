@@ -84,7 +84,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
     private String mUniv="";
 
     private TextView pageTitle;
-    private Serializable university=new ArrayList<>();
+    private List<String> university=new ArrayList<>();
 
     private ImageView img_navi;
     private ImageView img_logout;
@@ -99,9 +99,9 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
 
         user=(User)getIntent().getSerializableExtra("userInfo");
         thiscp=getIntent().getIntExtra("cp",-1);
-        thisgp=getIntent().getIntExtra("gp",-1);
+        thisgp=getIntent().getIntExtra("gp",1);
         mUniv=getIntent().getStringExtra("mUniv");
-        university=getIntent().getSerializableExtra("university");
+        university= ((ConnectorActivity)ConnectorActivity.context).university;
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 신규 동물 요청");
@@ -448,7 +448,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
+                        intent.putExtra("university", (Serializable) university);
                         startActivity(intent);
                         finish();
                         break;
@@ -459,7 +459,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                             intent.putExtra("cp", cp);
                             intent.putExtra("gp", gp);
                             intent.putExtra("mUniv", nextUniv);
-                            intent.putExtra("university",university);
+                            intent.putExtra("university", (Serializable) university);
                             startActivity(intent);
                             finish();
                         }
@@ -470,7 +470,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
+                        intent.putExtra("university", (Serializable) university);
                         startActivity(intent);
                         finish();
                         break;
@@ -480,7 +480,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                         intent.putExtra("cp",cp);
                         intent.putExtra("gp",gp);
                         intent.putExtra("mUniv",nextUniv);
-                        intent.putExtra("university",university);
+                        intent.putExtra("university", (Serializable) university);
                         startActivity(intent);
                         finish();
                         break;
@@ -492,7 +492,8 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
 
     public void openMenuNavi(){
         for(int i=0;i<mMenuAdapter.getGroupCount();i++) {
-            expandableList.expandGroup(i);
+            if(i==thisgp)
+                expandableList.expandGroup(i);
         }
     }
 
