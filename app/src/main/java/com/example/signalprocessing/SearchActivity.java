@@ -39,6 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     DatabaseReference mDatabaseReference = Database.getReference();
 
     public User user;
+    private String mUniv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class SearchActivity extends AppCompatActivity {
         SearchButton=(Button)findViewById(R.id.searchButton);
         recyclerView=(RecyclerView)findViewById(R.id.searchRecycler);
         mContext=this;
+        mUniv = ((FreeBoardActivity)FreeBoardActivity.context).mUniv;
 
         user=(User)getIntent().getSerializableExtra("userInformation");
         final ArrayList<Article> articleList = new ArrayList<>();
@@ -58,7 +60,7 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new ArticleAdapter(articleList);
 
-        mDatabaseReference.child("Articles").child(user.getUserUniv()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.child("Articles").child(mUniv).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {

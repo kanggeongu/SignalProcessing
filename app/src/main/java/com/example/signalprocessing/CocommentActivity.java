@@ -37,7 +37,7 @@ public class CocommentActivity extends AppCompatActivity {
     public User user;
     public String commentID;
     private Comment comment;
-    private String mUniv;
+    public String mUniv;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerViewCocomment;

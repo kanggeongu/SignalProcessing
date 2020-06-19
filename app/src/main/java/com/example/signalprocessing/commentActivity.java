@@ -39,7 +39,7 @@ public class commentActivity extends AppCompatActivity {
 
     public String articleID;
     private Article article;
-    private String mUniv;
+    public String mUniv;
 
     public User user;
     public static Context context;

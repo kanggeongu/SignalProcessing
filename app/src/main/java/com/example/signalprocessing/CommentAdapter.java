@@ -28,6 +28,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
     private ArrayList<Comment> arrayList;
     private User user;
     private String articleID;
+    private String mUniv;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -41,6 +42,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
     public CommentAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         user = ((commentActivity)commentActivity.context).user;
         articleID = ((commentActivity)commentActivity.context).articleID;
+        mUniv = ((commentActivity)commentActivity.context).mUniv;
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_comment, parent, false);
         CommentAdapter.CustomViewHolder holder = new CommentAdapter.CustomViewHolder(view);
         return holder;
@@ -97,7 +100,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(comment.getCommentID()).removeValue();
+                                    databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(comment.getCommentID()).removeValue();
                                     Toast.makeText(v.getContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show();
                                 }
                             })
@@ -137,7 +140,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
         holder.buttonAddLover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(comment.getCommentID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(comment.getCommentID()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Comment comment1 = dataSnapshot.getValue(Comment.class);
@@ -150,7 +153,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
                             holder.textViewTheNumberOfLovers.setText(" + " + comment1.getLovers().size());
                         }
 
-                        databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(comment.getCommentID()).child("lovers").setValue(comment1.getLovers());
+                        databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(comment.getCommentID()).child("lovers").setValue(comment1.getLovers());
                     }
 
                     @Override
@@ -187,12 +190,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(comment.getCommentID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(comment.getCommentID()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         Comment comment1 = dataSnapshot.getValue(Comment.class);
                                         if (comment1.addReporter(user.getUserName())) {
-                                            databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(comment.getCommentID()).child("reporters").setValue(comment1.getReporters());
+                                            databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(comment.getCommentID()).child("reporters").setValue(comment1.getReporters());
                                             Toast.makeText(v.getContext(), "신고 완료되었습니다", Toast.LENGTH_SHORT).show();
 
                                             if (comment1.getReporters().size() == 1) {

@@ -172,6 +172,11 @@ public class LocationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(!user.getUserUniv().equals(mUniv)) {
+                    Toast.makeText(mContext, mUniv + " 학생이 아니라서 위치 추가를 못 합니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if(addnum<=0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle("위치 등록").setMessage("위치를 등록하시겠습니까?");
@@ -179,6 +184,7 @@ public class LocationActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int id)
                         {
+                            et.setText("");
                             et.setTextSize(20);
                             et.setHint(" 위치를 입력하세요");
                             et.setPadding(10,0,0,0);

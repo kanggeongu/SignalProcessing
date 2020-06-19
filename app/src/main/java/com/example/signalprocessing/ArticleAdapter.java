@@ -35,6 +35,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
     private ArrayList<Article> arrayList;
     private ArrayList<Article> unfilteredList;
     private User user;
+    private String mUniv;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -49,6 +50,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         user = ((FreeBoardActivity)FreeBoardActivity.context).user;
+        mUniv = ((FreeBoardActivity)FreeBoardActivity.context).mUniv;
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_article, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
         return holder;
@@ -135,7 +138,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    databaseReference.child("Articles").child(user.getUserUniv()).child(article.getArticleID()).removeValue();
+                                    databaseReference.child("Articles").child(mUniv).child(article.getArticleID()).removeValue();
                                     Toast.makeText(v.getContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show();
                                 }
                             })
@@ -175,7 +178,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         holder.buttonAddLover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child("Articles").child(user.getUserUniv()).child(article.getArticleID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child("Articles").child(mUniv).child(article.getArticleID()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Article article1 = dataSnapshot.getValue(Article.class);
@@ -188,7 +191,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
                             holder.textViewTheNumberOfLovers.setText(" + " + article1.getLovers().size());
                         }
 
-                        databaseReference.child("Articles").child(user.getUserUniv()).child(article.getArticleID()).child("lovers").setValue(article1.getLovers());
+                        databaseReference.child("Articles").child(mUniv).child(article.getArticleID()).child("lovers").setValue(article1.getLovers());
                     }
 
                     @Override
@@ -224,12 +227,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                databaseReference.child("Articles").child(user.getUserUniv()).child(article.getArticleID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReference.child("Articles").child(mUniv).child(article.getArticleID()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         Article article1 = dataSnapshot.getValue(Article.class);
                                         if (article1.addReporter(user.getUserName())) {
-                                            databaseReference.child("Articles").child(user.getUserUniv()).child(article.getArticleID()).child("reporters").setValue(article1.getReporters());
+                                            databaseReference.child("Articles").child(mUniv).child(article.getArticleID()).child("reporters").setValue(article1.getReporters());
                                             Toast.makeText(v.getContext(), "신고 완료되었습니다", Toast.LENGTH_SHORT).show();
 
                                             if (article1.getReporters().size() == 1) {

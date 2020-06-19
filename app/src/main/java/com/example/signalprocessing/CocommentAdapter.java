@@ -28,6 +28,7 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
     private User user;
     private String articleID;
     private String commentID;
+    private String mUniv;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -43,6 +44,8 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
         user = ((CocommentActivity)CocommentActivity.context).user;
         articleID = ((CocommentActivity)CocommentActivity.context).articleID;
         commentID = ((CocommentActivity)CocommentActivity.context).commentID;
+        mUniv = ((CocommentActivity)CocommentActivity.context).mUniv;
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_cocomment, parent, false);
         CocommentAdapter.CustomViewHolder holder = new CocommentAdapter.CustomViewHolder(view);
         return holder;
@@ -96,7 +99,7 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).removeValue();
+                                    databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).removeValue();
                                     Toast.makeText(v.getContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show();
                                 }
                             })
@@ -136,7 +139,7 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
         holder.buttonAddLover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Cocomment cocomment1 = dataSnapshot.getValue(Cocomment.class);
@@ -149,7 +152,7 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
                             holder.textViewTheNumberOfLovers.setText(" + " + cocomment1.getLovers().size());
                         }
 
-                        databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).child("lovers").setValue(cocomment1.getLovers());
+                        databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).child("lovers").setValue(cocomment1.getLovers());
                     }
 
                     @Override
@@ -172,12 +175,12 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         Cocomment cocomment1 = dataSnapshot.getValue(Cocomment.class);
                                         if (cocomment1.addReporter(user.getUserName())) {
-                                            databaseReference.child("Articles").child(user.getUserUniv()).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).child("reporters").setValue(cocomment1.getReporters());
+                                            databaseReference.child("Articles").child(mUniv).child(articleID).child("Comments").child(commentID).child("Cocomments").child(cocomment.getCocommentID()).child("reporters").setValue(cocomment1.getReporters());
                                             Toast.makeText(v.getContext(), "신고 완료되었습니다", Toast.LENGTH_SHORT).show();
 
                                             if (cocomment1.getReporters().size() == 1) {
