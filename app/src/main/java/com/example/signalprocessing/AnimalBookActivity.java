@@ -129,7 +129,7 @@ public class AnimalBookActivity extends AppCompatActivity {
             }
         });
 
-        databaseReference.child("AnimalBooks").child(mUniv).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("AnimalBooks").child(mUniv).addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

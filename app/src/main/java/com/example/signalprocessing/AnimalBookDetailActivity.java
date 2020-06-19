@@ -78,7 +78,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
 
         Intent detail = getIntent();
         animalID = detail.getStringExtra("animalID");
-        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 AnimalBook animalBook = dataSnapshot.getValue(AnimalBook.class);
@@ -93,7 +93,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
 
             }
         });
-        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 contents.clear();
@@ -181,12 +181,12 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.userID:
-                databaseReference.child("AnimalBooks").child(mUniv).child(animalID).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("AnimalBooks").child(mUniv).child(animalID).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         AnimalBook animalBook = dataSnapshot.getValue(AnimalBook.class);
                         assert animalBook != null;
-                        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").child(contentID).addValueEventListener(new ValueEventListener() {
+                        databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").child(contentID).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Content content = dataSnapshot.getValue(Content.class);
@@ -220,7 +220,7 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
                 });
                 break;
             case R.id.report:
-                databaseReference.child("Users").child(user.getUserName()).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("Users").child(user.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         user = dataSnapshot.getValue(User.class);
