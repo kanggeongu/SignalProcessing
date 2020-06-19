@@ -135,6 +135,8 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                 editor.clear();
                 editor.commit();
                 mAuth.signOut();
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 

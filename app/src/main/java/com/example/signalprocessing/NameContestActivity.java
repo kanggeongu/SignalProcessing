@@ -135,6 +135,8 @@ public class NameContestActivity extends AppCompatActivity implements View.OnCli
                 editor.clear();
                 editor.commit();
                 mAuth.signOut();
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 

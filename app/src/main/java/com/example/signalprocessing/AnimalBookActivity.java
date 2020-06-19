@@ -124,6 +124,8 @@ public class AnimalBookActivity extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
                 mAuth.signOut();
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 

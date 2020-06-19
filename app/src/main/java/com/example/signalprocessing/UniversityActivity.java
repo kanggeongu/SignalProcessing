@@ -80,8 +80,8 @@ public class UniversityActivity extends AppCompatActivity {
                     uv.add(Uvitem);
                 }
                 Collections.sort(uv);
-                /*
-                uv.sort(new Comparator<Universityitem>(){
+
+                /*uv.sort(new Comparator<Universityitem>(){
                     @Override
                     public int compare(Universityitem o1, Universityitem o2) {
                         String name1 = o1.getUniversityName();
@@ -98,8 +98,8 @@ public class UniversityActivity extends AppCompatActivity {
                             else return -1;
                         }
                     }
-                });
-                */
+                });*/
+
                 mAdapter = new UniversityAdapter(uv,mContext,user,ischange);
                 recyclerView.setAdapter(mAdapter);
             }

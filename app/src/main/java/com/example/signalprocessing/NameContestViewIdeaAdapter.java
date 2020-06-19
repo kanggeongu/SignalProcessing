@@ -123,12 +123,12 @@ public class NameContestViewIdeaAdapter extends RecyclerView.Adapter<NameContest
                                     return;
                                 }
                                 else {
-                                    databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).child("Ideas").child(arrayList.get(position).getID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    databaseReference.child("NameContests").child(mUniv).child(NameContestID).child("Ideas").child(arrayList.get(position).getID()).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             NameContestIdea nameContestIdea = dataSnapshot.getValue(NameContestIdea.class);
                                             if (nameContestIdea.addReporter(user.getUserName())) {
-                                                databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).child("Ideas").child(arrayList.get(position).getID()).child("reporters").setValue(nameContestIdea.getReporters());
+                                                databaseReference.child("NameContests").child(mUniv).child(NameContestID).child("Ideas").child(arrayList.get(position).getID()).child("reporters").setValue(nameContestIdea.getReporters());
 
                                                 if (nameContestIdea.getReporters().size() >= 10) {
                                                     RestrictedData restrictedData = new RestrictedData(nameContestIdea.getUserName(), nameContestIdea.getAnimalName() + "\n" + nameContestIdea.getReason());
@@ -183,12 +183,12 @@ public class NameContestViewIdeaAdapter extends RecyclerView.Adapter<NameContest
     }
 
     private void addNameContestVote(final String NameContestID) {
-        databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("NameContests").child(mUniv).child(NameContestID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 NameContestData nameContestData = dataSnapshot.getValue(NameContestData.class);
                 nameContestData.addVoter(user.getUserName());
-                databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).child("voters").setValue(nameContestData.getVoters());
+                databaseReference.child("NameContests").child(mUniv).child(NameContestID).child("voters").setValue(nameContestData.getVoters());
             }
 
             @Override
@@ -199,13 +199,13 @@ public class NameContestViewIdeaAdapter extends RecyclerView.Adapter<NameContest
     }
 
     private void addNameContestIdeaVote(final NameContestViewIdeaAdapter.CustomViewHolder holder, final String NameContestID, final String NameContestIdeaID) {
-        databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).child("Ideas").child(NameContestIdeaID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("NameContests").child(mUniv).child(NameContestID).child("Ideas").child(NameContestIdeaID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 NameContestIdea nameContestIdea = dataSnapshot.getValue(NameContestIdea.class);
                 nameContestIdea.addVoter(user.getUserName());
                 holder.textViewTheNumberOfVoters.setText(nameContestIdea.getVoters().size() + "");
-                databaseReference.child("NameContests").child(user.getUserUniv()).child(NameContestID).child("Ideas").child(NameContestIdeaID).setValue(nameContestIdea);
+                databaseReference.child("NameContests").child(mUniv).child(NameContestID).child("Ideas").child(NameContestIdeaID).setValue(nameContestIdea);
             }
 
             @Override
