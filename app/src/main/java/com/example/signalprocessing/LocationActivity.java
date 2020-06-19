@@ -85,7 +85,6 @@ public class LocationActivity extends AppCompatActivity {
         final float[] y = new float[1];
         tf = getResources().getFont(R.font.bmjua);
 
-        final String uvName="경북대학교";//인텐트나 다른 무언가로 동물 도감의 대학 정보 가져오기
         final String animalId=intent.getStringExtra("animalId");
         final List<Location> Loc = new ArrayList<>();
         class NewRunnable implements Runnable {
@@ -96,7 +95,7 @@ public class LocationActivity extends AppCompatActivity {
             public void run() {
                 layoutX=mapImage.getWidth();
                 layoutY=mapImage.getHeight();
-                mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Locations").addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabaseReference.child("AnimalBooks").child(mUniv).child(animalId).child("Locations").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -120,7 +119,7 @@ public class LocationActivity extends AppCompatActivity {
         final NewRunnable nr = new NewRunnable() ;
         final Thread t = new Thread(nr) ;
         //이미지 불러오기
-        mDatabaseReference.child("Universities").child(uvName).child("mapphoto").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.child("Universities").child(mUniv).child("mapphoto").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 downloadurl[0] = dataSnapshot.getValue(String.class);
@@ -226,7 +225,7 @@ public class LocationActivity extends AppCompatActivity {
                     }
                     else {
                         if(num[0]==5){
-                            mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Locations").addListenerForSingleValueEvent(new ValueEventListener() {
+                            mDatabaseReference.child("AnimalBooks").child(mUniv).child(animalId).child("Locations").addListenerForSingleValueEvent(new ValueEventListener() {
                                 final List<Location> Lt = new ArrayList<>();
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -241,7 +240,7 @@ public class LocationActivity extends AppCompatActivity {
                                     newloc.setX((x[0]-30)/layoutX);
                                     newloc.setY((y[0]-189)/layoutY);
                                     Lt.add(newloc);
-                                    mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Locations").setValue(Lt);
+                                    mDatabaseReference.child("AnimalBooks").child(mUniv).child(animalId).child("Locations").setValue(Lt);
                                 }
 
                                 @Override
@@ -262,7 +261,7 @@ public class LocationActivity extends AppCompatActivity {
                                     lc.setContent(content);
                                     lc.setX((x[0]-30)/layoutX);
                                     lc.setY((y[0]-194)/layoutY);
-                                    mDatabaseReference.child("AnimalBooks").child(uvName).child(animalId).child("Locations").child(String.valueOf(num[0]-1)).setValue(lc);
+                                    mDatabaseReference.child("AnimalBooks").child(mUniv).child(animalId).child("Locations").child(String.valueOf(num[0]-1)).setValue(lc);
                                 }
 
                                 @Override
