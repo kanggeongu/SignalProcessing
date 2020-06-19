@@ -106,7 +106,7 @@ public class writeArticleActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Log.v("123213", "finish");
-                        pdialog.dismiss();
+                        // pdialog.dismiss();
                         finish();
                     }
                 });
