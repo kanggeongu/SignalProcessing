@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,6 +153,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         final User user = dataSnapshot.getValue(User.class);
+
+                        Log.v("university", user.getUserUniv());
                         if (user.getUserUniv().equals("")) {
                             holder.LikeButton.setBackgroundResource(R.drawable.red_fill_heart);
                             follow[0]++;
@@ -159,6 +162,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                             user.setUserUniv(university.getUniversityName());
                             mDatabaseReference.child("Users").child(userId).child("userUniv").setValue(university.getUniversityName());
                             mDatabaseReference.child("Universities").child(university.getUniversityName()).child("followers").setValue(follow[0]);
+
+                            Log.v("university", "ischange -> " + ischange);
                             if(ischange){
                                 Intent intent = new Intent(mContext, MypageActivity.class);
                                 intent.putExtra("userInfo",user);
@@ -171,12 +176,14 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                                 ((Activity) mContext).finish();
                             }
                         } else if (user.getUserUniv().equals(university.getUniversityName())) {
+                            Log.v("university", "else if");
                             holder.LikeButton.setBackgroundResource(R.drawable.red_empty_heart);
                             follow[0]--;
                             holder.LikeNum.setText(String.valueOf(follow[0]));
                             mDatabaseReference.child("Users").child(userId).child("userUniv").setValue("");
                             mDatabaseReference.child("Universities").child(university.getUniversityName()).child("followers").setValue(follow[0]);
                         } else {
+                            Log.v("university", "else");
                             Toast.makeText(mContext, "이미 선택하셨습니다", Toast.LENGTH_SHORT).show();
                         }
                     }

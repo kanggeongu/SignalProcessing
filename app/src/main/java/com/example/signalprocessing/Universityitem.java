@@ -46,15 +46,7 @@ public class Universityitem implements Comparable<Universityitem>{
 
     @Override
     public int compareTo(Universityitem o) {
-        User user = ((MypageActivity)MypageActivity.context).user;
-        if (user == null) {
-            int followers1 = this.getFollowers();
-            int followers2 = o.getFollowers();
-
-            if (followers1 == followers2) return 0;
-            else if (followers1 < followers2) return 1;
-            else return -1;
-        }
+        User user = ((UniversityActivity)UniversityActivity.mContext).user;
 
         String name1 = this.getUniversityName();
         String name2 = o.getUniversityName();

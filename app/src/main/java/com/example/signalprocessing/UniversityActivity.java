@@ -32,10 +32,12 @@ public class UniversityActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private UniversityAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Context mContext;
+    public static Context mContext;
     private Button SButton,RButton;
     private EditText editSUv,editRUv;
     private String userId;
+
+    public User user;
 
     FirebaseDatabase Database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseReference = Database.getReference();
@@ -50,6 +52,8 @@ public class UniversityActivity extends AppCompatActivity {
         editSUv=(EditText)findViewById(R.id.editSUv);
         editRUv=(EditText)findViewById(R.id.editRUv);
         mContext=this;
+        Intent intent = getIntent();
+        user=(User)intent.getSerializableExtra("userInfo");
 
         Toast.makeText(UniversityActivity.this, "하트를 눌러 자신의 대학교를 팔로우하세요", Toast.LENGTH_SHORT).show();
         // use this setting to improve performance if you know that changes
@@ -62,8 +66,7 @@ public class UniversityActivity extends AppCompatActivity {
 
         // specify an adapter (see also next example)
         final List<Universityitem> uv = new ArrayList<>();
-        Intent intent = getIntent();
-        final User user=(User)intent.getSerializableExtra("userInfo");
+
         final boolean ischange=intent.getBooleanExtra("ischange",false);
 
         Log.e("ischange","ischange : "+ischange);
