@@ -73,7 +73,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void initUniversity(){
-        mRef.child("Universities").addValueEventListener(new ValueEventListener() {
+        mRef.child("Universities").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 university.clear();
@@ -89,6 +89,7 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
                 }
                 goFreeBoard();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
