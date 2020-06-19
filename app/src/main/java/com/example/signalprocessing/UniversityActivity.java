@@ -149,9 +149,14 @@ public class UniversityActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(!(UniversityAdapter.selected.equals(""))){
+            Intent intent = new Intent(this, MypageActivity.class);
+            intent.putExtra("userInfo",user);
+            startActivity(intent);
+            finish();
             super.onBackPressed();
         }
         else{
+            // 그
             Toast.makeText(UniversityActivity.this,"대학을 선택하세요",Toast.LENGTH_SHORT).show();
         }
     }
