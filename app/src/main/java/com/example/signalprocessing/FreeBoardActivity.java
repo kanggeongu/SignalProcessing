@@ -103,13 +103,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         mUniv = getIntent().getStringExtra("mUniv");
         Log.e("thisgp-gp",""+thisgp);
         Log.e("thisgp-cp",""+thiscp);
-        //university= ((ConnectorActivity)ConnectorActivity.context).university;
-        university.add("경북대학교");
-        university.add("고려대학교");
-        university.add("부산대학교");
-        university.add("서울대학교");
-        university.add("연세대학교");
-        university.add("한양대학교");
+        university= ((ConnectorActivity)ConnectorActivity.context).university;
 
         Log.e("univ1",university.toString());
         int fromConnector=getIntent().getIntExtra("from",-100);
