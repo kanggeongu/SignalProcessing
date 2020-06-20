@@ -103,6 +103,7 @@ public class writeArticleActivity extends AppCompatActivity {
                     return;
                 }
 
+                btn_save.setEnabled(false);
                 Long now1 = System.currentTimeMillis();
                 article = new Article(Long.toString(now1), user.getUserUniv(), user.getUserName(), contents.getText().toString(), "", dateFormat.format(c.getTime()));
                 if(file!=null){
