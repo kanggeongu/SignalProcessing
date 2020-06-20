@@ -226,7 +226,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
                     Article article = snapshot.getValue(Article.class);
                     arrayList.add(article);
                 }
-
+                Log.e("freeboardarraylist",""+arrayList.size());
                 Collections.reverse(arrayList);
                 articleAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();

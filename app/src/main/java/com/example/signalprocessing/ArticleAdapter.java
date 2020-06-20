@@ -66,11 +66,18 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         holder.textViewUserName.setText(article.getUserID());
         holder.textViewContent.setText(article.getContent());
         Log.e("자유게시판 사진", article.getImage().toString());
+        Log.e("arrayList",""+article.getArticleID());
+        Log.e("arrayList",""+article.getImage().equals(""));
+
 
         // 이미지 추가=> 맞나
         if(!article.getImage().equals("")) {
+            Log.e("arrayList",""+"실행됨");
             holder.imageView.setVisibility(View.VISIBLE);
             Glide.with(FreeBoardActivity.context).load(article.getImage()).into(holder.imageView);
+        }
+        else{
+            holder.imageView.setVisibility(View.GONE);
         }
 
         //쪽지
