@@ -311,6 +311,9 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
             else if(item.getStatus().equals("심사완료")){
                 ((CustomViewHolder)holder).itemView.setBackgroundResource(R.drawable.wait_done);
             }
+            else{
+                ((CustomViewHolder)holder).itemView.setBackgroundResource(R.drawable.topbottom_yellow);
+            }
             ((CustomViewHolder)holder).detail.setText(item.getFeature());
         }
 
