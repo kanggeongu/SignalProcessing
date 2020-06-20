@@ -106,9 +106,11 @@ public class writeArticleActivity extends AppCompatActivity {
                 Long now1 = System.currentTimeMillis();
                 article = new Article(Long.toString(now1), user.getUserUniv(), user.getUserName(), contents.getText().toString(), "", dateFormat.format(c.getTime()));
                 if(file!=null){
-                    upload(file);
+                    upload(file, now1);
                 }
-                uploadArticle(article,now1);
+                else {
+                    uploadArticle(article,now1);
+                }
             }
         });
     }
@@ -124,7 +126,7 @@ public class writeArticleActivity extends AppCompatActivity {
         });
     }
 
-    public void upload(Uri file){
+    public void upload(Uri file, final Long now1){
         Log.v("123123", "upload()");
         pdialog=new ProgressDialog(writeArticleActivity.this);
         pdialog.setTitle("업로드 중입니다");
@@ -160,13 +162,13 @@ public class writeArticleActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.v("123123", "success");
                             downloadUri = task.getResult();
-                            c.setTimeInMillis(now);
+                            c.setTimeInMillis(now1);
                             c.add(Calendar.DATE, 7);
                             Log.v("123123", "before null");
                             assert downloadUri != null;
                             Log.v("123123", "after null");
                             article.setImage(downloadUri.toString());
-                            databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now1)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Log.v("123213", "finish");
