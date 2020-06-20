@@ -371,13 +371,8 @@ public class MypageActivity extends AppCompatActivity {
     }
 
     private void sortArray(){
-        Collections.sort(messages, new Comparator<Message>() {
-            @Override
-            public int compare(Message o1, Message o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        });
         Collections.reverse(messages);
+        Collections.reverse(uidList);
     }
 
     private void deleteMessage(final int position){
