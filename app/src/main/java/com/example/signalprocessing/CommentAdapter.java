@@ -115,7 +115,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
             });
         }
         else {
-            holder.linearDelete.removeAllViews();
+            holder.buttonDelete.setVisibility(View.GONE);
         }
     }
 

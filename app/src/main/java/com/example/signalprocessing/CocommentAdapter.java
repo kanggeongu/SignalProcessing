@@ -114,7 +114,7 @@ public class CocommentAdapter extends RecyclerView.Adapter<CocommentAdapter.Cust
             });
         }
         else {
-            holder.linearDelete.removeAllViews();
+            holder.buttonDelete.setVisibility(View.GONE);
         }
     }
 
