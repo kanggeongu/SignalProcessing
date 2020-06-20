@@ -136,6 +136,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
     //삭제
     private void addDelete(@NonNull CustomViewHolder holder, final Article article) {
         if(holder.textViewUserName.getText().toString().equals(user.getUserName())) {
+            holder.buttonDelete.setVisibility(View.VISIBLE);
             holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -160,7 +161,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
             });
         }
         else {
-            holder.linearDelete.removeAllViews();
+            holder.buttonDelete.setVisibility(View.GONE);
+            // holder.linearDelete.removeAllViews();
         }
     }
 
