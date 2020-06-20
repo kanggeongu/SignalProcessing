@@ -54,6 +54,7 @@ public class SignupActivity extends AppCompatActivity {
         esignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isValid=true;
                 String email=textInputEmail.getEditText().getText().toString().trim();
                 String pw=textInputPassword.getEditText().getText().toString().trim();
                 String nickname=textInputName.getEditText().getText().toString().trim();
@@ -184,7 +185,7 @@ public class SignupActivity extends AppCompatActivity {
             if (!emailVerified) {
                 showToast("이메일 인증 후 사용할 수 있습니다");
             }
-            Intent intent = new Intent(SignupActivity.this, UniversityActivity.class);
+            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
