@@ -29,7 +29,7 @@ public class ShowMessageActivity extends AppCompatActivity {
     private Message message;
     private boolean isSend=false;
     private String destUser="";
-    private String myUid;
+    private Long myUid;
     private int errorCode=0;
 
     private FirebaseDatabase mDatabase;
@@ -55,7 +55,7 @@ public class ShowMessageActivity extends AppCompatActivity {
         // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         user= (User)getIntent().getSerializableExtra("userInfo");
         message=(Message)getIntent().getSerializableExtra("messageInfo");
-        myUid=(String)getIntent().getSerializableExtra("uidInfo");
+        myUid=getIntent().getLongExtra("uidInfo",0);
 
         if(message.getReceiver().equals(user.getUserName())){
             destUser=message.getSender();
@@ -129,7 +129,7 @@ public class ShowMessageActivity extends AppCompatActivity {
 
     private void updateMessage(){
         message.setReported(true);
-        mRef.child("Users").child(user.getUserName()).child("Messages").child(myUid).setValue(message);
+        mRef.child("Users").child(user.getUserName()).child("Messages").child(Long.toString(myUid)).setValue(message);
     }
 
     public void addUserMessage(final Message myMessage){
