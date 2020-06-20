@@ -519,7 +519,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
         else{
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
             builder.setTitle("앱을 종료합니다");
-            builder.setMessage("정말 종료하시겠습니가?");
+            builder.setMessage("정말 종료하시겠습니까?");
             builder.setPositiveButton(android.R.string.yes,
                     new DialogInterface.OnClickListener() {
                         @Override

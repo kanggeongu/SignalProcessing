@@ -473,7 +473,7 @@ public class FreeBoardActivity extends AppCompatActivity implements View.OnClick
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("앱을 종료합니다");
-            builder.setMessage("정말 종료하시겠습니가?");
+            builder.setMessage("정말 종료하시겠습니까?");
             builder.setPositiveButton(android.R.string.yes,
                     new DialogInterface.OnClickListener() {
                         @Override
