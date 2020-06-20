@@ -364,7 +364,7 @@ public class MypageActivity extends AppCompatActivity {
     }
 
     public void updateUI(){
-        Intent intent=new Intent(MypageActivity.this,FreeBoardActivity.class);
+        Intent intent=new Intent(MypageActivity.this,MainActivity.class);
         intent.putExtra("userInfo",user);
         startActivity(intent);
         finish();

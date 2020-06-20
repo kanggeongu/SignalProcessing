@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:fontFamily="@font/bmjua"
-        android:textSize="12dp"
+        android:textSize="15dp"
         android:padding="10dp"
         android:background="@drawable/skin_brown_round_rectangle"
         android:layout_marginLeft="40dp"
