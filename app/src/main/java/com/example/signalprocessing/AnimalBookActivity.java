@@ -93,6 +93,9 @@ public class AnimalBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_book);
 
+        thiscp=getIntent().getIntExtra("cp",-1);
+        thisgp=getIntent().getIntExtra("gp",2);
+
         init();
         initPalette();
         func();
@@ -111,10 +114,6 @@ public class AnimalBookActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        thiscp=getIntent().getIntExtra("cp",-1);
-        thisgp=getIntent().getIntExtra("gp",2);
-        mUniv = getIntent().getStringExtra("mUniv");
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 동물 도감");
@@ -187,6 +186,7 @@ public class AnimalBookActivity extends AppCompatActivity {
         context = this;
         user = (User)getIntent().getSerializableExtra("userInfo");
         university= ((ConnectorActivity)ConnectorActivity.context).university;
+        mUniv = getIntent().getStringExtra("mUniv");
     }
 
     private void initPalette() {
