@@ -280,6 +280,7 @@ public class MypageActivity extends AppCompatActivity {
                     Message message = snapshot.getValue(Message.class);
                     messages.add(message);
                 }
+                sortArray();
                 showInfo();
                 messageAdapter.notifyDataSetChanged();
                 pdialog.dismiss();
@@ -395,7 +396,6 @@ public class MypageActivity extends AppCompatActivity {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            sortArray();
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
             return new CustomViewHolder(view);
         }
