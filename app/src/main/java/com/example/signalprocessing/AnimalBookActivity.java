@@ -47,6 +47,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class AnimalBookActivity extends AppCompatActivity {
 
@@ -85,24 +86,35 @@ public class AnimalBookActivity extends AppCompatActivity {
     private SharedPreferences auto;
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_book);
 
-        context = this;
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(layoutManager);
-        myAdapter = new MyAdapter();
-        recyclerView.setAdapter(myAdapter);
-        user = (User)getIntent().getSerializableExtra("userInfo");
+        init();
+        initPalette();
+        func();
+
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                func();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         thiscp=getIntent().getIntExtra("cp",-1);
         thisgp=getIntent().getIntExtra("gp",2);
         mUniv = getIntent().getStringExtra("mUniv");
-        university= ((ConnectorActivity)ConnectorActivity.context).university;
 
         pageTitle=findViewById(R.id.pageTitle);
         pageTitle.setText(mUniv+" 동물 도감");
@@ -126,26 +138,6 @@ public class AnimalBookActivity extends AppCompatActivity {
                 mAuth.signOut();
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        databaseReference.child("AnimalBooks").child(mUniv).addListenerForSingleValueEvent(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                AnimalBooks.clear();
-                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    AnimalBook animalBook = snapshot.getValue(AnimalBook.class);
-
-                    AnimalBooks.add(animalBook);
-                }
-                Collections.sort(AnimalBooks);
-                myAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("TAG: ", "Failed to read value", databaseError.toException());
             }
         });
 
@@ -189,6 +181,45 @@ public class AnimalBookActivity extends AppCompatActivity {
         myHelper.initItem();
         listDataChild=myHelper.getListDataChild();
         listDataHeader=myHelper.getListDataHeader();
+    }
+
+    private void init(){
+        context = this;
+        user = (User)getIntent().getSerializableExtra("userInfo");
+        university= ((ConnectorActivity)ConnectorActivity.context).university;
+    }
+
+    private void initPalette() {
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new GridLayoutManager(this,2);
+        recyclerView.setLayoutManager(layoutManager);
+        myAdapter = new MyAdapter();
+        recyclerView.setAdapter(myAdapter);
+
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout);
+    }
+
+    private void func() {
+        databaseReference.child("AnimalBooks").child(mUniv).addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                AnimalBooks.clear();
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    AnimalBook animalBook = snapshot.getValue(AnimalBook.class);
+
+                    AnimalBooks.add(animalBook);
+                }
+                Collections.sort(AnimalBooks);
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("TAG: ", "Failed to read value", databaseError.toException());
+            }
+        });
     }
 
     @Override

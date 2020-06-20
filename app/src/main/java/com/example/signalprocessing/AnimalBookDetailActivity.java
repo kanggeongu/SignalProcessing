@@ -31,6 +31,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class AnimalBookDetailActivity extends AppCompatActivity {
 
@@ -52,32 +53,80 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
     private String contentID;
     private String mUniv;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_book_detail);
 
+
+        init();
+        initPalette();
+        func();
+
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                func();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!user.getUserUniv().equals(mUniv)) {
+                    Toast.makeText(AnimalBookDetailActivity.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                AnimalBookCustomDialog customDialog = new AnimalBookCustomDialog(AnimalBookDetailActivity.this);
+
+                customDialog.callFunction(editContent, animalID, user.getUserName());
+            }
+        });
+    }
+
+    private void init() {
         contents = new ArrayList<>();
-        recyclerView = findViewById(R.id.recyclerview);
-        Name = findViewById(R.id.editName);
-        Gender = findViewById(R.id.editGender);
-        Mean = findViewById(R.id.editMean);
-        Location = findViewById(R.id.editLocation);
-        editContent = findViewById(R.id.editContent);
-        image = findViewById(R.id.image);
-        add = findViewById(R.id.add);
+
         user = (User)getIntent().getSerializableExtra("userInfo");
         mUniv = ((AnimalBookActivity)AnimalBookActivity.context).mUniv;
 
+        Intent detail = getIntent();
+        animalID = detail.getStringExtra("animalID");
+    }
+
+    private void initPalette() {
+        recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         listAdapter = new ListAdapter();
         recyclerView.setAdapter(listAdapter);
 
-        Intent detail = getIntent();
-        animalID = detail.getStringExtra("animalID");
+        Name = findViewById(R.id.editName);
+        Gender = findViewById(R.id.editGender);
+        Mean = findViewById(R.id.editMean);
+        Location = findViewById(R.id.editLocation);
+        editContent = findViewById(R.id.editContent);
+
+        image = findViewById(R.id.image);
+        add = findViewById(R.id.add);
+
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout);
+    }
+
+    private void initView() {
         databaseReference.child("AnimalBooks").child(mUniv).child(animalID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -93,6 +142,9 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void float_data() {
         databaseReference.child("AnimalBooks").child(mUniv).child(animalID).child("Contents").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -109,25 +161,16 @@ public class AnimalBookDetailActivity extends AppCompatActivity {
 
             }
         });
+
         if(getIntent().getStringExtra("사진")!=null) {
             String imageUrl = getIntent().getStringExtra("사진");
             Glide.with(AnimalBookDetailActivity.this).load(imageUrl).into(image);
         }
+    }
 
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!user.getUserUniv().equals(mUniv)) {
-                    Toast.makeText(AnimalBookDetailActivity.this, mUniv + " 학생이 아니라서 글을 쓸 수 없습니다", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                AnimalBookCustomDialog customDialog = new AnimalBookCustomDialog(AnimalBookDetailActivity.this);
-
-                customDialog.callFunction(editContent, animalID, user.getUserName());
-            }
-        });
+    private void func() {
+        initView();
+        float_data();
     }
 
     class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
