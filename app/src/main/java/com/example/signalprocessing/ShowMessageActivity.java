@@ -134,6 +134,7 @@ public class ShowMessageActivity extends AppCompatActivity {
 
     public void addUserMessage(final Message myMessage){
         Long now = System.currentTimeMillis();
+        myMessage.setContentID(now);
         mRef.child("Users").child(user.getUserName()).child("Messages").child(Long.toString(now)).setValue(myMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -150,6 +151,7 @@ public class ShowMessageActivity extends AppCompatActivity {
 
     public void addDestMessage(final Message myMessage){
         Long now = System.currentTimeMillis();
+        myMessage.setContentID(now);
         mRef.child("Users").child(destUser).child("Messages").child(Long.toString(now)).setValue(myMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

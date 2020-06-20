@@ -9,6 +9,7 @@ public class Message implements Serializable {
     private String contents;
     private String isRead;
     private boolean isReported;
+    private Long contentID;
 
     public Message(){
 
@@ -69,5 +70,13 @@ public class Message implements Serializable {
 
     public void setIsRead(String isRead) {
         this.isRead = isRead;
+    }
+
+    public Long getContentID() {
+        return contentID;
+    }
+
+    public void setContentID(Long contentID) {
+        this.contentID = contentID;
     }
 }

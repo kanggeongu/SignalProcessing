@@ -64,6 +64,7 @@ public class SendMessageDialog extends Dialog {
 
     private void addUserMessage(final Message myMessage, final Context context){
         Long now = System.currentTimeMillis();
+        myMessage.setContentID(now);
         databaseReference.child("Users").child(textViewSendUser.getText().toString()).child("Messages").child(Long.toString(now)).setValue(myMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -79,6 +80,7 @@ public class SendMessageDialog extends Dialog {
 
     private void addDestMessage(final Message myMessage, final Context context){
         Long now = System.currentTimeMillis();
+        myMessage.setContentID(now);
         databaseReference.child("Users").child(textViewReceiveUser.getText().toString()).child("Messages").child(Long.toString(now)).setValue(myMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

@@ -69,7 +69,7 @@ public class MypageActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
 
     private List<Message> messages=new ArrayList<>();
-    private List<String> uidList=new ArrayList<>();
+    // private List<String> uidList=new ArrayList<>();
     private boolean isSend=false;
 
     ///////////////////////////////////////////////// 네비게이션 바
@@ -276,11 +276,9 @@ public class MypageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 messages.clear();
-                uidList.clear();
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()) {
                     Message message = snapshot.getValue(Message.class);
                     messages.add(message);
-                    uidList.add(snapshot.getKey());
                 }
                 showInfo();
                 messageAdapter.notifyDataSetChanged();
@@ -372,11 +370,10 @@ public class MypageActivity extends AppCompatActivity {
 
     private void sortArray(){
         Collections.reverse(messages);
-        Collections.reverse(uidList);
     }
 
     private void deleteMessage(final int position){
-        mRef.child("Users").child(user.getUserName()).child("Messages").child(uidList.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+        mRef.child("Users").child(user.getUserName()).child("Messages").child(Long.toString(messages.get(position).getContentID())).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 messages.remove(position);
@@ -390,7 +387,7 @@ public class MypageActivity extends AppCompatActivity {
     private void updateMessage(int position){
         Message message=messages.get(position);
         message.setIsRead("읽음");
-        mRef.child("Users").child(user.getUserName()).child("Messages").child(uidList.get(position)).setValue(message);
+        mRef.child("Users").child(user.getUserName()).child("Messages").child(Long.toString(messages.get(position).getContentID())).setValue(message);
     }
 
     class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -431,7 +428,7 @@ public class MypageActivity extends AppCompatActivity {
                     Intent intent = new Intent(MypageActivity.this,ShowMessageActivity.class);
                     intent.putExtra("userInfo",user);
                     intent.putExtra("messageInfo",message);
-                    intent.putExtra("uidInfo",uidList.get(i));
+                    intent.putExtra("uidInfo",messages.get(i).getContentID());
                     startActivity(intent);
                     finish();
                 }
