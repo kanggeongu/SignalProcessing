@@ -140,6 +140,7 @@ public class MypageActivity extends AppCompatActivity {
                 editor.commit();
                 mAuth.signOut();
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
+                finish();
                 startActivity(intent);
             }
         });

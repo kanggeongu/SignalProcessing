@@ -124,6 +124,7 @@ public class WaitAnimalActivity extends AppCompatActivity implements View.OnClic
                 editor.commit();
                 mAuth.signOut();
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
+                finish();
                 startActivity(intent);
             }
         });
