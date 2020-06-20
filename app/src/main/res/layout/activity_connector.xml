@@ -20,7 +20,7 @@
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
             app:srcCompat="@drawable/temp_logo" />
@@ -39,6 +39,14 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="wrap_content"
+        android:text="\n로딩중입니다. 잠시만 기다려 주세요..."
+        android:gravity="center"
+        android:fontFamily="@font/bmjua"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
 
 </LinearLayout>

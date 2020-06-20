@@ -154,9 +154,6 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void loadInfo(final String email){
-        final ProgressDialog pdialog=new ProgressDialog(this);
-        pdialog.setTitle("정보를 불러오는 중입니다");
-        pdialog.show();
         mRef.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -168,7 +165,6 @@ public class ConnectorActivity extends AppCompatActivity implements View.OnClick
                         checkRestricted(user.getUserEmail());
                     }
                 }
-                pdialog.dismiss();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
