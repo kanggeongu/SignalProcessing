@@ -61,7 +61,9 @@
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:layout_marginTop="-20dp"
-            android:visibility="gone"
+            android:src="@drawable/temp_logo"
+            android:background="@drawable/brown_round_rectangle"
+            android:padding="10dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true" />
 

@@ -108,13 +108,13 @@ public class writeArticleActivity extends AppCompatActivity {
                 if(file!=null){
                     upload(file);
                 }
-                uploadArticle(article);
+                uploadArticle(article,now1);
             }
         });
     }
 
-    public void uploadArticle(Article article){
-        databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public void uploadArticle(Article article,Long now1){
+        databaseReference.child("Articles").child(user.getUserUniv()).child(Long.toString(now1)).setValue(article).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Log.v("123213", "finish");
@@ -188,7 +188,7 @@ public class writeArticleActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (pdialog.isShowing()) {
+        if (pdialog!=null&&pdialog.isShowing()) {
             pdialog.dismiss();
         }
         super.onDestroy();
@@ -312,8 +312,10 @@ public class writeArticleActivity extends AppCompatActivity {
                 else{
                     exifDegree=0;
                 }
+                Log.e("errorWrite","여기");
                 bitmap=rotate(bitmap,exifDegree);
                 selectedImage.setImageBitmap(bitmap);
+                Log.e("errorWrite","여기통과");
                 String imageSaveUri=MediaStore.Images.Media.insertImage(getContentResolver(),bitmap,"사진 저장","저장되었다");
                 Uri uri = Uri.parse(imageSaveUri);
                 file = uri;

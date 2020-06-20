@@ -44,9 +44,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="13"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
                     android:fontFamily="@font/bmfont"
                     android:text="작성자" />
 
@@ -62,9 +61,7 @@
                         android:id="@+id/buttonDelete"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
-                        android:layout_gravity="right"
                         android:background="@drawable/ic_delete_black_24dp"
                         android:text="" />
                 </LinearLayout>
