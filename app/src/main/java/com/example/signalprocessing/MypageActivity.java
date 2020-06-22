@@ -147,26 +147,30 @@ public class MypageActivity extends AppCompatActivity {
 
         loadMessageInfo(user.getUserName());
 
+        btnUserBye.setEnabled(false);
+
         // 회원탈퇴
         btnUserBye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(MypageActivity.this);
-                builder.setTitle("회원탈퇴 하시겠습니까?").setCancelable(true).setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        deleteUserDatabase(user.getUserName());
-                        updateUI();
-                    }
-                })
-                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog dialog=builder.create();
-                dialog.show();
+//                AlertDialog.Builder builder=new AlertDialog.Builder(MypageActivity.this);
+//                builder.setTitle("회원탈퇴 하시겠습니까?").setCancelable(true).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        deleteUserDatabase(user.getUserName());
+//                        updateUI();
+//                    }
+//                })
+//                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                });
+//                AlertDialog dialog=builder.create();
+//                dialog.show();
+                showToast("서비스 준비중입니다");
+                btnUserBye.setEnabled(false);
             }
         });
 
