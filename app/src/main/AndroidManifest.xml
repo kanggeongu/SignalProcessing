@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.signalprocessing">
+    package="com.exam.signalprocessing">
 
     <application
         android:allowBackup="true"
@@ -10,31 +10,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LocationActivity"/>
-        <activity android:name=".Content"></activity>
-        <activity android:name=".AnimalBookActivity" />
-        <activity android:name=".AnimalBookDetailActivity"/>
-        <activity android:name=".NameContestAddContestIdea" />
-        <activity android:name=".NameContestIdeaViewHome" />
-        <activity android:name=".AddNameContestActivity" />
-        <activity android:name=".NameContestActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".CocommentActivity" />
-        <activity android:name=".commentActivity" />
-        <activity android:name=".writeArticleActivity" />
-        <activity android:name=".ConnectorActivity" />
-        <activity android:name=".AddWaitAnimalActivity" />
-        <activity android:name=".WaitAnimalActivity" />
-        <activity android:name=".VerifyEmailActivity" />
-        <activity android:name=".ShowMessageActivity" />
-        <activity android:name=".PutUniversityActivity" />
-        <activity android:name=".UniversityActivity" />
-        <activity android:name=".MypageActivity" />
-        <activity android:name=".FindpwActivity" />
-        <activity android:name=".SetNameActivity" />
-        <activity android:name=".FreeBoardActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.exam.signalprocessing.LocationActivity"/>
+        <activity android:name="com.exam.signalprocessing.Content"></activity>
+        <activity android:name="com.exam.signalprocessing.AnimalBookActivity" />
+        <activity android:name="com.exam.signalprocessing.AnimalBookDetailActivity"/>
+        <activity android:name="com.exam.signalprocessing.NameContestAddContestIdea" />
+        <activity android:name="com.exam.signalprocessing.NameContestIdeaViewHome" />
+        <activity android:name="com.exam.signalprocessing.AddNameContestActivity" />
+        <activity android:name="com.exam.signalprocessing.NameContestActivity" />
+        <activity android:name="com.exam.signalprocessing.SearchActivity" />
+        <activity android:name="com.exam.signalprocessing.CocommentActivity" />
+        <activity android:name="com.exam.signalprocessing.commentActivity" />
+        <activity android:name="com.exam.signalprocessing.writeArticleActivity" />
+        <activity android:name="com.exam.signalprocessing.ConnectorActivity" />
+        <activity android:name="com.exam.signalprocessing.AddWaitAnimalActivity" />
+        <activity android:name="com.exam.signalprocessing.WaitAnimalActivity" />
+        <activity android:name="com.exam.signalprocessing.VerifyEmailActivity" />
+        <activity android:name="com.exam.signalprocessing.ShowMessageActivity" />
+        <activity android:name="com.exam.signalprocessing.PutUniversityActivity" />
+        <activity android:name="com.exam.signalprocessing.UniversityActivity" />
+        <activity android:name="com.exam.signalprocessing.MypageActivity" />
+        <activity android:name="com.exam.signalprocessing.FindpwActivity" />
+        <activity android:name="com.exam.signalprocessing.SetNameActivity" />
+        <activity android:name="com.exam.signalprocessing.FreeBoardActivity" />
+        <activity android:name="com.exam.signalprocessing.SignupActivity" />
+        <activity android:name="com.exam.signalprocessing.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +44,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.signalprocessing"
+            android:authorities="com.exam.signalprocessing"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
